@@ -56,13 +56,12 @@
          // ground material
          var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
          groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
-<<<<<<< HEAD
+
 
          //hand
          var handMaterial = new BABYLON.StandardMaterial("handmaterial", scene);
          handMaterial.diffuseTexture = new BABYLON.Texture("images/impact.png", scene);
-=======
->>>>>>> bd249f4e03d8e47610bdd60f7e4afb5f9d60af41
+
 
 				 var precision = {
             "w" : 2,
@@ -83,7 +82,7 @@
           // actions on mouse click
       //  groundPlane.actionManager = new BABYLON.ActionManager(scene);
       //  groundPlane.actionManager.registerAction(new BABYLON.InterpolateValueAction(BABYLON.ActionManager.OnLeftPickTrigger, light, "diffuse", BABYLON.Color3.Black(), 1000));
-<<<<<<< HEAD
+
 
       var hand = BABYLON.Mesh.CreatePlane("hand", 10 , scene);
       hand.material = handMaterial;
@@ -100,7 +99,7 @@
           hand.position.y = pickResult.pickedPoint.y;
         }
     };
-=======
+
       //When pointer down event is raised
 
       // Impact impostor
@@ -118,7 +117,7 @@
              impact.position.y = pickResult.pickedPoint.y;
          }
      };
->>>>>>> bd249f4e03d8e47610bdd60f7e4afb5f9d60af41
+
 
          // Leave this function
          return scene;
