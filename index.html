@@ -59,10 +59,17 @@
             'w' : 8
           };
 
-				 var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "", 200, 200, 250, 0, 10, scene, false);
+			//	 var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "", 200, 200, 250, 0, 10, scene, false);
          // Move the sphere upward 1/2 its height
          // Let's try our built-in 'ground' shape. Params: name, width, depth, subdivisions, scene
-         var ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
+      //   var ground = BABYLON.Mesh.CreateGround("ground1", 20, 15, 2, scene);
+
+         var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
+groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
+
+var groundPlane = BABYLON.Mesh.CreatePlane("groundPlane", 10, scene);
+groundPlane.material = groundMaterial;
+
          // Leave this function
          return scene;
       }; // End of createScene function
