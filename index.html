@@ -44,7 +44,11 @@
       //   scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
 
          // This creates and positions a free camera
-         var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, 1.0, 110, BABYLON.Vector3.Zero(), scene);
+         var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 100, BABYLON.Vector3.Zero(), scene);
+         camera.lowerBetaLimit = 0.1;
+         camera.upperBetaLimit = (Math.PI / 2) * 0.9;
+         camera.lowerRadiusLimit = 30;
+         camera.upperRadiusLimit = 150;
          camera.attachControl(canvas, true);
 
          // This creates a light, aiming 0,1,0 - to the sky.
@@ -56,12 +60,6 @@
          // ground material
          var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
          groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
-
-
-         //hand
-         var handMaterial = new BABYLON.StandardMaterial("handmaterial", scene);
-         handMaterial.diffuseTexture = new BABYLON.Texture("images/impact.png", scene);
-
 
 				 var precision = {
             "w" : 2,
@@ -79,45 +77,15 @@
           groundPlane.rotation = new BABYLON.Vector3( Math.PI/2, 0, 0);
 
 
-          // actions on mouse click
-      //  groundPlane.actionManager = new BABYLON.ActionManager(scene);
-      //  groundPlane.actionManager.registerAction(new BABYLON.InterpolateValueAction(BABYLON.ActionManager.OnLeftPickTrigger, light, "diffuse", BABYLON.Color3.Black(), 1000));
-
-
-      var hand = BABYLON.Mesh.CreatePlane("hand", 10 , scene);
-      hand.material = handMaterial;
-      // rotate plane
-      hand.rotation = new BABYLON.Vector3( Math.PI/2, 0, 0);
-      hand.position = new BABYLON.Vector3(0, 0, -0.1);
-
 
       //When user clicks the ground
-      scene.onPointerDown = function (evt, pickResult) {
+  //    scene.onPointerDown = function (evt, pickResult) {
       // if the click hits the ground object, we change the impact position
-      if (pickResult.hit) {
-          hand.position.x = pickResult.pickedPoint.x;
-          hand.position.y = pickResult.pickedPoint.y;
-        }
-    };
-
-      //When pointer down event is raised
-
-      // Impact impostor
-          var impact = BABYLON.Mesh.CreatePlane("impact",15, scene);
-          impact.material = new BABYLON.StandardMaterial("impactMat", scene);
-          impact.material.diffuseTexture = new BABYLON.Texture("images/impact.png", scene);
-          impact.material.diffuseTexture.hasAlpha = false;
-          impact.position = new BABYLON.Vector3( Math.PI/2, 0, 0);
-
-
-     scene.onPointerDown = function (evt, pickResult) {
-         // if the click hits the ground object, we change the impact position
-         if (pickResult.hit) {
-             impact.position.x = pickResult.pickedPoint.x;
-             impact.position.y = pickResult.pickedPoint.y;
-         }
-     };
-
+  //    if (pickResult.hit) {
+  //        hand.position.x = pickResult.pickedPoint.x;
+  //        hand.position.y = pickResult.pickedPoint.y;
+  //      }
+  //  };
 
          // Leave this function
          return scene;
