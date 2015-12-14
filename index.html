@@ -22,6 +22,7 @@
    <script src="js/cannon.js"></script> <!-- optional physics engine -->
 </head>
 <body>
+
    <canvas id="renderCanvas"></canvas>
    <script type="text/javascript">
       // Get the canvas element from our HTML below
@@ -34,21 +35,27 @@
          // Now create a basic Babylon Scene object
          var scene = new BABYLON.Scene(engine);
          // Change the scene background color to green.
-         scene.clearColor = new BABYLON.Color3(0, 0, 0);
+         scene.clearColor = new BABYLON.Color3(0.4, 0.7, 0.9);
+
+         // ambient color
+         scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+
+         // add fog to the scene
+      //   scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+
          // This creates and positions a free camera
-         var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
-         // This targets the camera to scene origin
-         camera.setTarget(BABYLON.Vector3.Zero());
-         // This attaches the camera to the canvas
-         camera.attachControl(canvas, false);
+         var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, 1.0, 110, BABYLON.Vector3.Zero(), scene);
+         camera.attachControl(canvas, true);
+
          // This creates a light, aiming 0,1,0 - to the sky.
          var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+
          // Dim the light a small amount
-         light.intensity = .5;
+         light.intensity = 0.8;
 
+         // ground material
          var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
-
-        groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
+         groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
 
 				 var precision = {
             "w" : 2,
@@ -59,16 +66,33 @@
             'w' : 8
           };
 
-			//	 var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "", 200, 200, 250, 0, 10, scene, false);
-         // Move the sphere upward 1/2 its height
-         // Let's try our built-in 'ground' shape. Params: name, width, depth, subdivisions, scene
-      //   var ground = BABYLON.Mesh.CreateGround("ground1", 20, 15, 2, scene);
+          // ground mesh
+          var groundPlane = BABYLON.Mesh.CreatePlane("groundPlane", 60 , scene);
+          groundPlane.material = groundMaterial;
+          // rotate plane
+          groundPlane.rotation = new BABYLON.Vector3( Math.PI/2, 0, 0);
 
-         var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
-groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
 
-var groundPlane = BABYLON.Mesh.CreatePlane("groundPlane", 10, scene);
-groundPlane.material = groundMaterial;
+          // actions on mouse click
+      //  groundPlane.actionManager = new BABYLON.ActionManager(scene);
+      //  groundPlane.actionManager.registerAction(new BABYLON.InterpolateValueAction(BABYLON.ActionManager.OnLeftPickTrigger, light, "diffuse", BABYLON.Color3.Black(), 1000));
+      //When pointer down event is raised
+
+      // Impact impostor
+          var impact = BABYLON.Mesh.CreatePlane("impact",15, scene);
+          impact.material = new BABYLON.StandardMaterial("impactMat", scene);
+          impact.material.diffuseTexture = new BABYLON.Texture("images/impact.png", scene);
+          impact.material.diffuseTexture.hasAlpha = false;
+          impact.position = new BABYLON.Vector3( Math.PI/2, 0, 0);
+
+
+     scene.onPointerDown = function (evt, pickResult) {
+         // if the click hits the ground object, we change the impact position
+         if (pickResult.hit) {
+             impact.position.x = pickResult.pickedPoint.x;
+             impact.position.y = pickResult.pickedPoint.y;
+         }
+     };
 
          // Leave this function
          return scene;
