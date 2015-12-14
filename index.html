@@ -57,6 +57,10 @@
          var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
          groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
 
+         //hand
+         var handMaterial = new BABYLON.StandardMaterial("handmaterial", scene);
+         handMaterial.diffuseTexture = new BABYLON.Texture("images/impact.png", scene);
+
 				 var precision = {
             "w" : 2,
             "h" : 2
@@ -77,7 +81,21 @@
       //  groundPlane.actionManager = new BABYLON.ActionManager(scene);
       //  groundPlane.actionManager.registerAction(new BABYLON.InterpolateValueAction(BABYLON.ActionManager.OnLeftPickTrigger, light, "diffuse", BABYLON.Color3.Black(), 1000));
 
+      var hand = BABYLON.Mesh.CreatePlane("hand", 10 , scene);
+      hand.material = handMaterial;
+      // rotate plane
+      hand.rotation = new BABYLON.Vector3( Math.PI/2, 0, 0);
+      hand.position = new BABYLON.Vector3(0, 0, -0.1);
 
+
+      //When user clicks the ground
+      scene.onPointerDown = function (evt, pickResult) {
+      // if the click hits the ground object, we change the impact position
+      if (pickResult.hit) {
+          hand.position.x = pickResult.pickedPoint.x;
+          hand.position.y = pickResult.pickedPoint.y;
+        }
+    };
 
          // Leave this function
          return scene;
