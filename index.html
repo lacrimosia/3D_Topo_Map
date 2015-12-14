@@ -46,6 +46,10 @@
          // Dim the light a small amount
          light.intensity = .5;
 
+         var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
+
+        groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
+
 				 var precision = {
             "w" : 2,
             "h" : 2
