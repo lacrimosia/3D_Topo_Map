@@ -88,66 +88,44 @@
 
 
 
-         // morphing test 
-          var pl = new BABYLON.PointLight("pl", new BABYLON.Vector3(0, 0, 0), scene);
-            pl.diffuse = new BABYLON.Color3(1, 1, 1);
-            pl.specular = new BABYLON.Color3(1, 0, 0);
-            pl.intensity = 0.95;
+         // ------morphing test --------------------------------------
 
-
+          // material of morphing element
           var mat = new BABYLON.StandardMaterial("mat1", scene);
           mat.alpha = 1.0;
-          mat.diffuseColor = new BABYLON.Color3(0.5, 0.5, 1.0);
+          mat.diffuseColor = new BABYLON.Color3(0, 0, 0);
           mat.backFaceCulling = false;
-          //mat.wireframe = true;
+          mat.wireframe = true;
 
 
           // path function
           var pathFunction = function(k) {
             var path = [];
-            for (var i = 0; i < 60; i++) {
-              var x =  i - 30;
+            for (var i = 0; i < 200; i++) {
+              var x =  i - 100;
               var y = 0;
               var z = k;
+              // gets the positions of the element
               path.push(new BABYLON.Vector3(x, y, z));
             }
             return path;
           };
 
-          // update path function
-          var updatePath = function(path, k) {
-            for (var i = 0; i < path.length; i++) {
-              var x = path[i].x;
-              var z = path[i].z;
-              var y = 20 * Math.sin(i/ 10) * Math.sin(k + z / 40);
-              path[i].x = x;
-              path[i].y = y;
-              path[i].z = z;
-            }
-          };
+
 
           // ribbon creation
           var sideO = BABYLON.Mesh.BACKSIDE;
           var pathArray = [];
-          for(var i = -20; i < 20; i++) {
+          for(var i = -60; i < 60; i++) {
             pathArray.push(pathFunction(i * 2));
           }
           var mesh = BABYLON.Mesh.CreateRibbon("ribbon", pathArray, false, false, 0, scene, true, sideO);
           mesh.material = mat;
+          mesh.position = new BABYLON.Vector3( 3.2, 3.2, 3.2);
 
 
           // morphing
-          var k = 0;
-          scene.registerBeforeRender(function(){
-        	// update pathArray
-        	for(var p = 0; p < pathArray.length; p++) {
-            	updatePath(pathArray[p], k);
-          	}
-        	// ribbon update
-        	mesh = BABYLON.Mesh.CreateRibbon(null, pathArray, null, null, null, null, null, null, mesh);
-        	k += 0.05;
-        	pl.position = camera.position;
-          });
+
 
 
       //When user clicks the ground
