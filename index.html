@@ -39,22 +39,22 @@
     var createScene = function() {
       // Now create a basic Babylon Scene object
       var scene = new BABYLON.Scene(engine);
-      // Change the scene background color to green.
-      scene.clearColor = new BABYLON.Color3(0.4, 0.7, 0.9);
-
-      // ambient color
-      scene.ambientColor = new BABYLON.Color3(0.3, 0.3, 0.3);
 
       // This creates and positions a free camera
-      var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 100, BABYLON.Vector3.Zero(), scene);
+      var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 1, BABYLON.Vector3.Zero(), scene);
       camera.lowerBetaLimit = 0.1;
       camera.upperBetaLimit = (Math.PI / 2) * 0.9;
-      camera.lowerRadiusLimit = 30;
-      camera.upperRadiusLimit = 150;
+      camera.lowerRadiusLimit = 50;
+      camera.upperRadiusLimit = 300;
       camera.attachControl(canvas, true);
 
       // This creates a light, aiming 0,1,0 - to the sky.
       var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+      light.diffuse = new BABYLON.Color3(1, 0, 0);
+      light.specular = new BABYLON.Color3(1, 0, 0);
+
+      // var direction light
+      
 
       // Dim the light a small amount
       light.intensity = 0.8;
@@ -63,24 +63,49 @@
       var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
       groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
 
-      var precision = {
-        "w": 2,
-        "h": 2
-      };
-      var subdivisions = {
-        'h': 8,
-        'w': 8
-      };
+      // wireframe material
+      var wire = new BABYLON.StandardMaterial("wires", scene);
+      wire.wireframe = true;
+
+      // silk material
+      var silk = new BABYLON.StandardMaterial("silk1", scene);
+      silk.diffuseTexture =  new BABYLON.Texture("images/silk.jpg", scene);
+
+      // laser material
+      var laser = new BABYLON.StandardMaterial("laser", scene);
+      laser.diffuseTexture =  new BABYLON.Texture("images/smoke.jpg", scene);
+
 
       // ground mesh
-      var groundPlane = BABYLON.Mesh.CreateGround("ground1", 200, 200, 2, scene);
+      var groundPlane = BABYLON.Mesh.CreateGround("ground1", 1000, 1000, 2, scene);
       groundPlane.material = groundMaterial;
       // rotate plane
       groundPlane.position = new BABYLON.Vector3(3, 3, 3);
 
+      // add box - square
+      var theBox = BABYLON.Mesh.CreateBox("theBox", 20.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+      theBox.position = new BABYLON.Vector3(3, 10, 3);
+      theBox.material = silk;
+
+      // adding polygon - torus
+      var poly = BABYLON.Mesh.CreateTorus("torus", 14, 50, 10, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+      poly.position = new BABYLON.Vector3(55, 40, 3);
+      poly.material = groundMaterial;
+
+      // adding knot
+      var theKnot = BABYLON.Mesh.CreateTorusKnot("knot", 15, 15, 100, 55, 2, 3, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+      theKnot.position = new BABYLON.Vector3(-50, 30, 8);
+      theKnot.material = wire;
 
 
-      // Skybox
+
+
+      // add cylinder
+      var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 40, 20, 15, 6, 1, scene);
+      cylinder.material = laser;
+      cylinder.position = new BABYLON.Vector3(10, 13, 30);
+
+      // Skybox --- sky images
       var skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, scene);
       var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
       skyboxMaterial.backFaceCulling = false;
@@ -96,9 +121,9 @@
       // ------morphing test --------------------------------------
 
       // material of morphing element
-      var mat = new BABYLON.StandardMaterial("mat1", scene);
+    //  var mat = new BABYLON.StandardMaterial("mat1", scene);
     //  mat.alpha = 1.0;
-      mat.diffuseColor = groundMaterial
+  //    mat.diffuseColor = groundMaterial
     //  mat.backFaceCulling = false;
     //  mat.wireframe = false;
 
@@ -137,13 +162,14 @@
       for (var i = -200; i < 200; i++) {
         pathArray.push(pathFunction(i * 2));
       }
-      var mesh = BABYLON.Mesh.CreateRibbon("ribbon", pathArray, false, false, 0, scene, true, sideO);
-      mesh.material = mat;
-      mesh.position = new BABYLON.Vector3(3.2, 3.2, 3.2);
+    //  var mesh = BABYLON.Mesh.CreateRibbon("ribbon", pathArray, false, false, 0, scene, true, sideO);
+    //  mesh.material = mat;
+    //  mesh.position = new BABYLON.Vector3(3.2, 3.2, 3.2);
+
 
 
       // morphing
-      var k = 0;
+      /*var k = 0;
       scene.registerBeforeRender(function() {
         // update pathArray
         for (var p = 0; p < pathArray.length; p++) {
@@ -153,7 +179,7 @@
         mesh = BABYLON.Mesh.CreateRibbon(null, pathArray, null, null, null, null, null, null, mesh);
         k += 0.05 ;
         //	pl.position = camera.position;
-      });
+      });*/
 
 
 
@@ -170,6 +196,8 @@
       return scene;
     }; // End of createScene function
     // -------------------------------------------------------------
+
+
     // Now, call the createScene function that you just finished creating
     var scene = createScene();
     // Register a render loop to repeatedly render the scene
