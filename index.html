@@ -50,14 +50,14 @@
 
       // This creates a light, aiming 0,1,0 - to the sky.
       var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-      light.diffuse = new BABYLON.Color3(1, 0, 0);
-      light.specular = new BABYLON.Color3(1, 0, 0);
+      light.diffuse = new BABYLON.Color3(1, 1, 1);
+      light.specular = new BABYLON.Color3(1,1,1);
 
       // var direction light
-      
+
 
       // Dim the light a small amount
-      light.intensity = 0.8;
+      light.intensity = 0.9;
 
       // ground material
       var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
@@ -97,8 +97,94 @@
       theKnot.position = new BABYLON.Vector3(-50, 30, 8);
       theKnot.material = wire;
 
+      // animation
+  //    var animationBox = new BABYLON.Animation("myAnimation", "position.y", 100, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+  //    scene.beginAnimation(poly, 0, 100, true);
+
+      // shorthand Animation
+    //  BABYLON.Animation.CreateAndStartAnimation('boxScale', theBox, 'scaling.y', 30, 120, 1.0, 8.5);
+    //  BABYLON.Animation.CreateAndStartAnimation('boxScale', theBox, 'scaling.x', 30, 120, 1.0, 8.5);
+
+    // Creating an easing function
+//var easingFunction = new BABYLON.QuadraticEase();
+
+// For each easing function, you can choose beetween EASEIN (default), EASEOUT, EASEINOUT
+//easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+
+// Adding the easing function to the animation
+// animationBox.setEasingFunction(easingFunction);
+
+      // Animation keys
+    var keys = [];
+    //At the animation key 0, the value of scaling is "1"
+    keys.push({
+        frame: 0,
+        value: 15
+    });
+
+    //At the animation key 20, the value of scaling is "0.2"
+    keys.push({
+        frame: 20,
+        value: 30
+    });
+
+    //At the animation key 100, the value of scaling is "1"
+    keys.push({
+        frame: 100,
+        value: 40
+    });
+
+    //Adding keys to the animation object
+    //    animationBox.setKeys(keys);
+
+        //Then add the animation object to box1
+  //      theKnot.animations.push(animationBox);
+
+        //Finally, launch animations on box1, from key 0 to key 100 with loop activated
+  //      scene.beginAnimation(theKnot, 0, 100, true);
 
 
+  //When pointer down event is raised
+    // scene.onPointerDown = function (evt, pickResult) {
+
+scene.actionManager = new BABYLON.ActionManager(scene);
+
+var actualY = theKnot.position.y;
+
+//When pointer down event is raised
+    scene.onPointerDown = function (evt, pickResult) {
+        // if the click hits the ground object, we change the impact position
+        if (pickResult.hit) {
+            theKnot.position.x = pickResult.pickedPoint.x;
+            theKnot.position.y = pickResult.pickedPoint.y;
+            theKnot.position.z = pickResult.pickedPoint.z;
+            
+        }
+    };
+
+
+
+// keyboard shortcuts tests
+scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
+   if (evt.sourceEvent.key == "u") {
+         theKnot.position.y += 5;
+   }
+    if (evt.sourceEvent.key == "d") {
+      theKnot.position.y -= 5;
+    }
+    if (evt.sourceEvent.key == "b") {
+      theKnot.position.z += 5;
+    }
+    if (evt.sourceEvent.key == "f") {
+      theKnot.position.z -= 5;
+    }
+    if (evt.sourceEvent.key == "r") {
+      theKnot.position.x += 5;
+    }
+    if (evt.sourceEvent.key == "l") {
+      theKnot.position.x -= 5;
+    }
+}));
 
       // add cylinder
       var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 40, 20, 15, 6, 1, scene);
