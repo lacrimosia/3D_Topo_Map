@@ -57,11 +57,11 @@
 
 
       // Dim the light a small amount
-      light.intensity = 0.9;
+      light.intensity = 1.0;
 
       // ground material
       var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
-      groundMaterial.diffuseTexture = new BABYLON.Texture("images/grass.jpg", scene);
+      groundMaterial.diffuseTexture = new BABYLON.Texture("images/ground.jpg", scene);
 
       // wireframe material
       var wire = new BABYLON.StandardMaterial("wires", scene);
@@ -80,22 +80,24 @@
       var groundPlane = BABYLON.Mesh.CreateGround("ground1", 1000, 1000, 2, scene);
       groundPlane.material = groundMaterial;
       // rotate plane
-      groundPlane.position = new BABYLON.Vector3(3, 3, 3);
+      groundPlane.position = new BABYLON.Vector3(60, 0, 20);
+      // disable picking
+    //   groundPlane.isPickable = false;
 
       // add box - square
-      var theBox = BABYLON.Mesh.CreateBox("theBox", 20.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
-      theBox.position = new BABYLON.Vector3(3, 10, 3);
-      theBox.material = silk;
+    //  var theBox = BABYLON.Mesh.CreateBox("theBox", 20.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+    //  theBox.position = new BABYLON.Vector3(3, 10, 3);
+    //  theBox.material = silk;
 
       // adding polygon - torus
-      var poly = BABYLON.Mesh.CreateTorus("torus", 14, 50, 10, scene, false, BABYLON.Mesh.DEFAULTSIDE);
-      poly.position = new BABYLON.Vector3(55, 40, 3);
-      poly.material = groundMaterial;
+//      var poly = BABYLON.Mesh.CreateTorus("torus", 14, 50, 10, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+//      poly.position = new BABYLON.Vector3(55, 40, 3);
+  //    poly.material = groundMaterial;
 
       // adding knot
-      var theKnot = BABYLON.Mesh.CreateTorusKnot("knot", 15, 15, 100, 55, 2, 3, scene, false, BABYLON.Mesh.DEFAULTSIDE);
-      theKnot.position = new BABYLON.Vector3(-50, 30, 8);
-      theKnot.material = wire;
+  //    var theKnot = BABYLON.Mesh.CreateTorusKnot("knot", 15, 15, 100, 55, 2, 3, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+  //    theKnot.position = new BABYLON.Vector3(-50, 30, 8);
+  //    theKnot.material = wire;
 
       // animation
   //    var animationBox = new BABYLON.Animation("myAnimation", "position.y", 100, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
@@ -149,58 +151,87 @@
 
 scene.actionManager = new BABYLON.ActionManager(scene);
 
-var actualY = theKnot.position.y;
+// var actualY = theKnot.position.y;
 
 //When pointer down event is raised
     scene.onPointerDown = function (evt, pickResult) {
         // if the click hits the ground object, we change the impact position
         if (pickResult.hit) {
-            theKnot.position.x = pickResult.pickedPoint.x;
-            theKnot.position.y = pickResult.pickedPoint.y;
-            theKnot.position.z = pickResult.pickedPoint.z;
-            
+          // matching position on screen
+          //  theKnot.position.x = pickResult.pickedPoint.x;
+          //  theKnot.position.y = pickResult.pickedPoint.y;
+          //  theKnot.position.z = pickResult.pickedPoint.z;
+          // gets the selected mesh object and moves it up.
+    //  pickResult.pickedMesh.position.y += 7;
+
+    // matching the picked mesh to the current positions
+//   pickResult.pickedMesh.position.x = pickResult.pickedPoint.x;
+//   pickResult.pickedMesh.position.y = pickResult.pickedPoint.y;
+//   pickResult.pickedMesh.position.z = pickResult.pickedPoint.z;
+
+    var theBox2 = BABYLON.Mesh.CreateBox("theBox2", 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+  theBox2.position = new BABYLON.Vector3(pickResult.pickedPoint.x, pickResult.pickedPoint.y, pickResult.pickedPoint.z);
+  theBox2.material = groundMaterial;
+//  pickResult.pickedMesh.scaling.x = 0.5;
+//  pickResult.pickedMesh.scaling.y = 0.5;
+//  pickResult.pickedMesh.scaling.z = 0.5;
+    // scaling up the objects
+  //  pickResult.pickedMesh.scaling.y += 1;
         }
     };
+
+
+// loading dynamic boxes into scene
+/*for(var w=1; w< 30; w++){
+  for(var x=1; x<30; x++){
+    var theBox = BABYLON.Mesh.CreateBox("theBox"+x, 20.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+    theBox.position = new BABYLON.Vector3(x*20, 10, w * 20);
+    theBox.material = groundMaterial;
+  }
+}*/
 
 
 
 // keyboard shortcuts tests
 scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
    if (evt.sourceEvent.key == "u") {
-         theKnot.position.y += 5;
+      //   theKnot.position.y += 5;
    }
     if (evt.sourceEvent.key == "d") {
-      theKnot.position.y -= 5;
+    //  theKnot.position.y -= 5;
     }
     if (evt.sourceEvent.key == "b") {
-      theKnot.position.z += 5;
+    //  theKnot.position.z += 5;
     }
     if (evt.sourceEvent.key == "f") {
-      theKnot.position.z -= 5;
+    //  theKnot.position.z -= 5;
     }
     if (evt.sourceEvent.key == "r") {
-      theKnot.position.x += 5;
+  //    theKnot.position.x += 5;
     }
     if (evt.sourceEvent.key == "l") {
-      theKnot.position.x -= 5;
+  //    theKnot.position.x -= 5;
     }
 }));
 
       // add cylinder
-      var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 40, 20, 15, 6, 1, scene);
-      cylinder.material = laser;
-      cylinder.position = new BABYLON.Vector3(10, 13, 30);
+  //    var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 40, 20, 15, 6, 1, scene);
+    //  cylinder.material = laser;
+  //    cylinder.position = new BABYLON.Vector3(10, 13, 30);
 
       // Skybox --- sky images
-      var skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, scene);
+      var skybox = BABYLON.Mesh.CreateBox("skyBox", 4000.0, scene);
+    //  skybox.infiniteDistance = true;
       var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
       skyboxMaterial.backFaceCulling = false;
-      skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/skybox", scene);
+      skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay", scene);
       skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
       skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
       skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
       skyboxMaterial.disableLighting = true;
       skybox.material = skyboxMaterial;
+      // disable picking of object
+      skybox.isPickable = false;
 
 
 
