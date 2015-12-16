@@ -50,7 +50,7 @@
       var scene = new BABYLON.Scene(engine);
 
       // This creates and positions a free camera
-      var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.8, 1, BABYLON.Vector3.Zero(), scene);
+      var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0.5, 1, BABYLON.Vector3.Zero(), scene);
       camera.lowerBetaLimit = 0.1;
       camera.upperBetaLimit = (Math.PI / 2) * 0.9;
       camera.lowerRadiusLimit = 50;
@@ -63,15 +63,14 @@
       light.specular = new BABYLON.Color3(1,1,1);
 
       // fog --- darker sky environment
-      scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
-      scene.fogStart = 20.0;
-      scene.fogEnd = 60.0;
-      scene.fogDensity = 0.001;
-      scene.fogColor = new BABYLON.Color3(0, 0, 0);
-
+    //  scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+  //    scene.fogStart = 20.0;
+    //  scene.fogEnd = 60.0;
+  //    scene.fogDensity = 0.0008;
+  //    scene.fogColor = new BABYLON.Color3(0, 0, 0);
 
       // Dim the light a small amount
-      light.intensity = 0.8;
+      light.intensity = 1;
 
       // ground material
       var groundMaterial = new BABYLON.StandardMaterial("ground", scene);
@@ -93,13 +92,23 @@
       var brick = new BABYLON.StandardMaterial("laser", scene);
       brick.diffuseTexture =  new BABYLON.Texture("images/brick.jpg", scene);
 
+      // world material
+      var world = new BABYLON.StandardMaterial("worldMap", scene);
+      world.diffuseTexture =  new BABYLON.Texture("images/14-1.png", scene);
 
+      // mountain material
+      var mountain = new BABYLON.StandardMaterial("mountain", scene);
+      mountain.diffuseTexture =  new BABYLON.Texture("images/mountain.jpg", scene);
+
+      // Heightmap ground
+      var groundPlane = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 75, scene, true);
+       groundPlane.position = new BABYLON.Vector3(600, 0, 710);
       // ground mesh
-      var groundPlane = BABYLON.Mesh.CreateGround("ground1", 1400, 1400, 2, scene);
-      groundPlane.material = groundMaterial;
+    //  var groundPlane = BABYLON.Mesh.CreateGround("ground1", 1400, 1400, 2, scene);
+    groundPlane.material = wire;
       // rotate plane
     //  groundPlane.position = new BABYLON.Vector3(600, 0, 710);
-        groundPlane.position = new BABYLON.Vector3(0, 0, 0);
+    //    groundPlane.position = new BABYLON.Vector3(0, 0, 0);
       // disable picking
     //   groundPlane.isPickable = false;
 
@@ -178,62 +187,10 @@ var positions = [];
 //   pickResult.pickedMesh.position.z = pickResult.pickedPoint.z;
 
 
- var theBox2 = BABYLON.Mesh.CreateBox("theBox2", 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
- theBox2.position = new BABYLON.Vector3(pickResult.pickedPoint.x, pickResult.pickedPoint.y, pickResult.pickedPoint.z);
- theBox2.material = brick;
+// var theBox2 = BABYLON.Mesh.CreateBox("theBox2", 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+// theBox2.position = new BABYLON.Vector3(pickResult.pickedPoint.x, pickResult.pickedPoint.y, pickResult.pickedPoint.z);
+// theBox2.material = brick;
 
-// Fire Particle System
- // particle emitter
-//  var fountain = BABYLON.Mesh.CreateBox("fountain", 20.0, scene);
- // Create a particle system
-     var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
-
-     //Texture of each particle
-     particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
-
-     // Where the particles come from
-   //  particleSystem.emitter = fountain; // the starting object, the emitter
-     particleSystem.emitter = theBox2;
-     particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
-     particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
-
-     // Colors of all particles
-     particleSystem.color1 = new BABYLON.Color4(0.8, 0.1, 0, 1.0);
-     particleSystem.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
-     particleSystem.colorDead = new BABYLON.Color4(0, 0,0, 0.0);
-
-     // Size of each particle (random between...
-     particleSystem.minSize = 5;
-     particleSystem.maxSize = 10;
-
-     // Life time of each particle (random between...
-     particleSystem.minLifeTime = 0.3;
-     particleSystem.maxLifeTime = 1.5;
-
-     // Emission rate
-     particleSystem.emitRate = 2500;
-
-     // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
-     particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-
-     // Set the gravity of all particles
-     particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
-
-     // Direction of each particle after it has been emitted
-     particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
-     particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
-
-     // Angular speed, in radians
-     particleSystem.minAngularSpeed = 0;
-     particleSystem.maxAngularSpeed = Math.PI;
-
-     // Speed
-     particleSystem.minEmitPower = 1;
-     particleSystem.maxEmitPower = 3;
-     particleSystem.updateSpeed = 0.005;
-
-     // Start the particle system
-     particleSystem.start();
 
   positions.push({
     "x": pickResult.pickedPoint.x,
@@ -253,9 +210,14 @@ var positions = [];
     };
 
 
+   var theBox2 = BABYLON.Mesh.CreateBox("theBox2", 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+   theBox2.position = new BABYLON.Vector3(40, 10, 30);
+   theBox2.material = brick;
+
+
   //  add box  for rain experiment
     var rainBox = BABYLON.Mesh.CreateBox("theBox", 30.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
-    rainBox.position = new BABYLON.Vector3(3, 50, 3);
+    rainBox.position = new BABYLON.Vector3(-100, 50, 3);
     rainBox.material = brick;
 
     var rainSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
@@ -270,8 +232,8 @@ var positions = [];
     rainSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
 
     // Colors of all particles
-    rainSystem.color1 = new BABYLON.Color4(0.2, 0.9, 0.3, 1.0);
-    rainSystem.color2 = new BABYLON.Color4(0.6, 0.9, 0.0, 1.0);
+    rainSystem.color1 = new BABYLON.Color4(0.2, 0.4, 1, 1.0);
+    rainSystem.color2 = new BABYLON.Color4(0.2, 0.1, 0.7, 1.0);
     rainSystem.colorDead = new BABYLON.Color4(0, 0,0, 0.0);
 
     // Size of each particle (random between...
@@ -306,6 +268,63 @@ var positions = [];
 
     // Start the particle system
     rainSystem.start();
+
+
+
+
+    // Fire Particle System
+     // particle emitter
+    //  var fountain = BABYLON.Mesh.CreateBox("fountain", 20.0, scene);
+     // Create a particle system
+         var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+
+         //Texture of each particle
+         particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
+
+         // Where the particles come from
+       //  particleSystem.emitter = fountain; // the starting object, the emitter
+         particleSystem.emitter = theBox2;
+         particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
+         particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
+
+         // Colors of all particles
+         particleSystem.color1 = new BABYLON.Color4(0.8, 0.1, 0, 1.0);
+         particleSystem.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
+         particleSystem.colorDead = new BABYLON.Color4(0, 0,0, 0.0);
+
+         // Size of each particle (random between...
+         particleSystem.minSize = 5;
+         particleSystem.maxSize = 10;
+
+         // Life time of each particle (random between...
+         particleSystem.minLifeTime = 0.3;
+         particleSystem.maxLifeTime = 1.5;
+
+         // Emission rate
+         particleSystem.emitRate = 2500;
+
+         // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+         particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+         // Set the gravity of all particles
+         particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
+
+         // Direction of each particle after it has been emitted
+         particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
+         particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+
+         // Angular speed, in radians
+         particleSystem.minAngularSpeed = 0;
+         particleSystem.maxAngularSpeed = Math.PI;
+
+         // Speed
+         particleSystem.minEmitPower = 1;
+         particleSystem.maxEmitPower = 3;
+         particleSystem.updateSpeed = 0.005;
+
+         // Start the particle system
+         particleSystem.start();
+
 
 
 
@@ -361,15 +380,6 @@ scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionM
       skybox.material = skyboxMaterial;
       // disable picking of object
       skybox.isPickable = false;
-
-
-      // -------------------------- PARTICLE SYSTEM AREA ----------------------------------------------
-      var add_Particles = function(boxName){
-
-
-      }
-
-
 
       // ------morphing test --------------------------------------
 
