@@ -21,21 +21,45 @@
     }
     .menu{
       position: absolute;
-      top: 0px;
-      left: 0px;
+      top: 0%;
+      margin: 0;
+      width: 100px;
+      min-width: 100px;
+      height: 100%;
       z-index: 30;
-      border: 2px solid #000000;
+      /*border: 2px solid #000000;*/
+      background: #3F4B3E;
+      opacity: 0.6;
+      padding: 15px;
+    }
+
+    .buttons{
+      margin: 0 auto;
+      -webkit-border-radius: 50px;
+      -moz-border-radius: 50px;
+      -ms-border-radius: 50px;
+      -o-border-radius: 50px;
+      border-radius: 50px;
+      width: 100px;
+      height: 100px;
+      display: block;
+      margin-bottom: 10px;
     }
   </style>
   <script src="js/babylon.js"></script>
   <script src="js/hand.js"></script>
   <script src="js/cannon.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <!-- optional physics engine -->
 </head>
 
 <body>
 <div class="menu">
-  <button id="addBlocks">Help</button>
+  <button id="addBlocks" class="buttons">Help</button>
+  <button id="add_Fire" class="buttons">Add Volcano</button>
+  <button id="add_Moutain" class="buttons">Add Mountain</button>
+  <button id="add_Water" class="buttons">Add Water</button>
+  <button id="hide_showLines" class="buttons">Hide/Show Lines</button>
 </div>
   <canvas id="renderCanvas"></canvas>
   <script type="text/javascript">
@@ -48,6 +72,11 @@
     var createScene = function() {
       // Now create a basic Babylon Scene object
       var scene = new BABYLON.Scene(engine);
+      // init function
+      function init(){
+      //  $('.menu').hide();
+      }
+      init();
 
       // This creates and positions a free camera
       var camera = new BABYLON.ArcRotateCamera("Camera", 10, 40, 40, new BABYLON.Vector3(250, 15, 800), scene);
@@ -83,7 +112,7 @@
     scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
      scene.fogStart = 20.0;
      scene.fogEnd = 60.0;
-   scene.fogDensity = 0.0008;
+   scene.fogDensity = 0.0004;
    scene.fogColor = new BABYLON.Color3(0, 0, 0);
 
       // Dim the light a small amount
@@ -95,6 +124,7 @@
 
       // wireframe material
       var wire = new BABYLON.StandardMaterial("wires", scene);
+      wire.diffuseColor = new BABYLON.Color3(0, 0, 0);
       wire.wireframe = true;
 
       // silk material
@@ -111,8 +141,8 @@
 
       // world material
       var world = new BABYLON.StandardMaterial("worldMap", scene);
-      world.diffuseTexture =  new BABYLON.Texture("images/14-1.png", scene);
-
+      world.diffuseTexture =  new BABYLON.Texture("images/14-1-test.png", scene);
+      console.log("world texture", world.diffuseTexture);
       // mountain material
       var mountain = new BABYLON.StandardMaterial("mountain", scene);
       mountain.diffuseTexture =  new BABYLON.Texture("images/mountain.jpg", scene);
@@ -120,9 +150,34 @@
       // Heightmap ground
       var groundPlane = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
        groundPlane.position = new BABYLON.Vector3(600, 0, 710);
+       groundPlane.material = mountain;
+
+       // ground lines
+       var groundLines = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
+        groundLines.position = new BABYLON.Vector3(600, 0.11, 710);
+        groundLines.material = wire;
       // ground mesh
     //  var groundPlane = BABYLON.Mesh.CreateGround("ground1", 1400, 1400, 2, scene);
-    groundPlane.material = mountain;
+
+    // path function
+var pathFunction = function(k) {
+  var path = [];
+  for (var i = 0; i < 60; i++) {
+    var x = i - 30;
+    var y = 0;
+    var z = k;
+    path.push(new BABYLON.Vector3(3, 50, 30));
+  }
+  return path;
+};
+// ribbon creation
+var sideO = BABYLON.Mesh.BACKSIDE;
+var pathArray = [];
+for(var i = -20; i < 20; i++) {
+  pathArray.push(pathFunction(i * 2));
+}
+var mesh = BABYLON.Mesh.CreateRibbon("ribbon", pathArray, false, false, 0, scene, true, sideO);
+
       // rotate plane
     //  groundPlane.position = new BABYLON.Vector3(600, 0, 710);
     //    groundPlane.position = new BABYLON.Vector3(0, 0, 0);
@@ -202,7 +257,17 @@ var positions = [];
 //   pickResult.pickedMesh.position.x = pickResult.pickedPoint.x;
 //   pickResult.pickedMesh.position.y = pickResult.pickedPoint.y;
 //   pickResult.pickedMesh.position.z = pickResult.pickedPoint.z;
+var xVal = pickResult.pickedPoint.x;
+var yVal = pickResult.pickedPoint.y;
+var zVal = pickResult.pickedPoint.z;
+   console.log("x value", xVal);
+   console.log("y value", yVal);
+   console.log("z value", zVal);
 
+  function show_menu(){
+  //  $('.menu').fadeIn();
+  }
+  show_menu();
 
 // var theBox2 = BABYLON.Mesh.CreateBox("theBox2", 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
 // theBox2.position = new BABYLON.Vector3(pickResult.pickedPoint.x, pickResult.pickedPoint.y, pickResult.pickedPoint.z);
@@ -223,7 +288,7 @@ var positions = [];
 // volcanic fire area
 for (a=0; a<10; a++){
   var theBox2 = BABYLON.Mesh.CreateBox("theBox2"+a, 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
-  var randomNumber = Math.floor((Math.random() * 350) + 20);
+  var randomNumber = Math.floor((Math.random() * 790) + 20);
   theBox2.position = new BABYLON.Vector3(randomNumber, -9, a*80);
   theBox2.material = mountain;
 
@@ -410,6 +475,7 @@ scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionM
       engine.resize();
     });
   </script>
+
 </body>
 
 </html>
