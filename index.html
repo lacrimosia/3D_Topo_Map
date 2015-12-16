@@ -19,6 +19,13 @@
       height: 100%;
       touch-action: none;
     }
+    .menu{
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      z-index: 30;
+      border: 2px solid #000000;
+    }
   </style>
   <script src="js/babylon.js"></script>
   <script src="js/hand.js"></script>
@@ -27,7 +34,9 @@
 </head>
 
 <body>
-
+<div class="menu">
+  <button id="addBlocks">Help</button>
+</div>
   <canvas id="renderCanvas"></canvas>
   <script type="text/javascript">
     // Get the canvas element from our HTML below
@@ -152,6 +161,11 @@
 scene.actionManager = new BABYLON.ActionManager(scene);
 
 // var actualY = theKnot.position.y;
+
+var coolButton = document.getElementById("addBlocks");
+coolButton.onclick = function () {
+    alert("This is the help menu");
+}
 
 //When pointer down event is raised
     scene.onPointerDown = function (evt, pickResult) {
