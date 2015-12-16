@@ -62,7 +62,12 @@
       light.diffuse = new BABYLON.Color3(1, 1, 1);
       light.specular = new BABYLON.Color3(1,1,1);
 
-      // var direction light
+      // fog --- darker sky environment
+      scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+      scene.fogStart = 20.0;
+      scene.fogEnd = 60.0;
+      scene.fogDensity = 0.001;
+      scene.fogColor = new BABYLON.Color3(0, 0, 0);
 
 
       // Dim the light a small amount
@@ -127,28 +132,6 @@
 // For each easing function, you can choose beetween EASEIN (default), EASEOUT, EASEINOUT
 //easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
 
-// Adding the easing function to the animation
-// animationBox.setEasingFunction(easingFunction);
-
-      // Animation keys
-    var keys = [];
-    //At the animation key 0, the value of scaling is "1"
-    keys.push({
-        frame: 0,
-        value: 15
-    });
-
-    //At the animation key 20, the value of scaling is "0.2"
-    keys.push({
-        frame: 20,
-        value: 30
-    });
-
-    //At the animation key 100, the value of scaling is "1"
-    keys.push({
-        frame: 100,
-        value: 40
-    });
 
     //Adding keys to the animation object
     //    animationBox.setKeys(keys);
@@ -234,7 +217,7 @@ var positions = [];
      particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
      // Set the gravity of all particles
-     particleSystem.gravity = new BABYLON.Vector3(0, 50, 0);
+     particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
 
      // Direction of each particle after it has been emitted
      particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
@@ -268,6 +251,63 @@ var positions = [];
   //  pickResult.pickedMesh.scaling.y += 1;
         }
     };
+
+
+  //  add box  for rain experiment
+    var rainBox = BABYLON.Mesh.CreateBox("theBox", 30.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+    rainBox.position = new BABYLON.Vector3(3, 50, 3);
+    rainBox.material = brick;
+
+    var rainSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+
+    //Texture of each particle
+    rainSystem.particleTexture = new BABYLON.Texture("textures/glow.png", scene);
+
+    // Where the particles come from
+  //  particleSystem.emitter = fountain; // the starting object, the emitter
+    rainSystem.emitter = rainBox;
+    rainSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
+    rainSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
+
+    // Colors of all particles
+    rainSystem.color1 = new BABYLON.Color4(0.2, 0.9, 0.3, 1.0);
+    rainSystem.color2 = new BABYLON.Color4(0.6, 0.9, 0.0, 1.0);
+    rainSystem.colorDead = new BABYLON.Color4(0, 0,0, 0.0);
+
+    // Size of each particle (random between...
+    rainSystem.minSize = 3;
+    rainSystem.maxSize = 8;
+
+    // Life time of each particle (random between...
+    rainSystem.minLifeTime = 1.5;
+    rainSystem.maxLifeTime = 9.5;
+
+    // Emission rate
+    rainSystem.emitRate = 5000;
+
+    // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+    rainSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+    // Set the gravity of all particles
+    rainSystem.gravity = new BABYLON.Vector3(0, -70, 0);
+
+    // Direction of each particle after it has been emitted
+    rainSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
+    rainSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+
+    // Angular speed, in radians
+    rainSystem.minAngularSpeed = 0;
+    rainSystem.maxAngularSpeed = Math.PI;
+
+    // Speed
+    rainSystem.minEmitPower = 4;
+    rainSystem.maxEmitPower = 6;
+    rainSystem.updateSpeed = 0.008;
+
+    // Start the particle system
+    rainSystem.start();
+
+
 
 
 // loading dynamic boxes into scene
