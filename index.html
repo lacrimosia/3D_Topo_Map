@@ -142,10 +142,16 @@
       // world material
       var world = new BABYLON.StandardMaterial("worldMap", scene);
       world.diffuseTexture =  new BABYLON.Texture("images/14-1-test.png", scene);
-      console.log("world texture", world.diffuseTexture);
+    //  console.log("world texture", world.diffuseTexture);
+
       // mountain material
       var mountain = new BABYLON.StandardMaterial("mountain", scene);
       mountain.diffuseTexture =  new BABYLON.Texture("images/mountain.jpg", scene);
+
+      // water material
+      var waterMaterial = new BABYLON.StandardMaterial("waterMaterial", scene);
+      // waterMaterial.diffuseTexture =  new BABYLON.Texture("images/water.jpg", scene);
+      waterMaterial.diffuseColor = new BABYLON.Color3(0, 0.4, 0.8);
 
       // Heightmap ground
       var groundPlane = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
@@ -153,30 +159,16 @@
        groundPlane.material = mountain;
 
        // ground lines
-       var groundLines = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
+       var groundLines = BABYLON.Mesh.CreateGroundFromHeightMap("groundLines", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
         groundLines.position = new BABYLON.Vector3(600, 0.11, 710);
         groundLines.material = wire;
       // ground mesh
     //  var groundPlane = BABYLON.Mesh.CreateGround("ground1", 1400, 1400, 2, scene);
 
-    // path function
-var pathFunction = function(k) {
-  var path = [];
-  for (var i = 0; i < 60; i++) {
-    var x = i - 30;
-    var y = 0;
-    var z = k;
-    path.push(new BABYLON.Vector3(3, 50, 30));
-  }
-  return path;
-};
-// ribbon creation
-var sideO = BABYLON.Mesh.BACKSIDE;
-var pathArray = [];
-for(var i = -20; i < 20; i++) {
-  pathArray.push(pathFunction(i * 2));
-}
-var mesh = BABYLON.Mesh.CreateRibbon("ribbon", pathArray, false, false, 0, scene, true, sideO);
+    // water
+    var waterArea = BABYLON.Mesh.CreateCylinder("waterArea", 100, 100, 100, 6, 1, scene);
+    waterArea.position = new BABYLON.Vector3(175, -45, 700);
+     waterArea.material = waterMaterial;
 
       // rotate plane
     //  groundPlane.position = new BABYLON.Vector3(600, 0, 710);
@@ -286,10 +278,10 @@ var zVal = pickResult.pickedPoint.z;
 
 
 // volcanic fire area
-for (a=0; a<10; a++){
+for (a=0; a<25; a++){
   var theBox2 = BABYLON.Mesh.CreateBox("theBox2"+a, 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
   var randomNumber = Math.floor((Math.random() * 790) + 20);
-  theBox2.position = new BABYLON.Vector3(randomNumber, -9, a*80);
+  theBox2.position = new BABYLON.Vector3(randomNumber, -9, randomNumber);
   theBox2.material = mountain;
 
   // Fire Particle System
@@ -349,9 +341,9 @@ for (a=0; a<10; a++){
 
 
   //  add box  for rain experiment
-    var rainBox = BABYLON.Mesh.CreateBox("theBox", 30.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
-    rainBox.position = new BABYLON.Vector3(-100, 50, 3);
-    rainBox.material = brick;
+    var rainBox = BABYLON.Mesh.CreateTorus("torus", 5, 7, 9, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+    rainBox.position = new BABYLON.Vector3(175, -2, 700);
+    rainBox.material = mountain;
 
     var rainSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
 
@@ -360,7 +352,8 @@ for (a=0; a<10; a++){
 
     // Where the particles come from
   //  particleSystem.emitter = fountain; // the starting object, the emitter
-    rainSystem.emitter = rainBox;
+   rainSystem.emitter = rainBox;
+  //  rainSystem.emitter = waterArea;
     rainSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
     rainSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
 
