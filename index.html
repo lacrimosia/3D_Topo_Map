@@ -74,7 +74,7 @@
       var scene = new BABYLON.Scene(engine);
       // init function
       function init(){
-      //  $('.menu').hide();
+      $('.menu').hide();
       }
       init();
 
@@ -256,14 +256,20 @@ var zVal = pickResult.pickedPoint.z;
    console.log("y value", yVal);
    console.log("z value", zVal);
 
-  function show_menu(){
-  //  $('.menu').fadeIn();
+function show_menu(){
+  $('.menu').fadeIn();
+
+  // add volcano
+  $('#add_Fire').click(function(){
+    var ABox = BABYLON.Mesh.CreateBox("theBox2", 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+     ABox.position = new BABYLON.Vector3(xVal, yVal, zVal);
+    ABox.material = brick;
+    $('.menu').fadeOut();
+  });
   }
   show_menu();
 
-// var theBox2 = BABYLON.Mesh.CreateBox("theBox2", 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
-// theBox2.position = new BABYLON.Vector3(pickResult.pickedPoint.x, pickResult.pickedPoint.y, pickResult.pickedPoint.z);
-// theBox2.material = brick;
+
 
   // remove mesh
 //  pickResult.pickedMesh.dispose();
@@ -280,8 +286,9 @@ var zVal = pickResult.pickedPoint.z;
 // volcanic fire area
 for (a=0; a<25; a++){
   var theBox2 = BABYLON.Mesh.CreateBox("theBox2"+a, 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
-  var randomNumber = Math.floor((Math.random() * 790) + 20);
-  theBox2.position = new BABYLON.Vector3(randomNumber, -9, randomNumber);
+  var randomNumber1 = Math.floor((Math.random() * 790) + 20);
+  var randomNumber2 = Math.floor((Math.random() * 790) + 20);
+  theBox2.position = new BABYLON.Vector3(randomNumber1, -9, randomNumber2);
   theBox2.material = mountain;
 
   // Fire Particle System
