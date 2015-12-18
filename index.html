@@ -19,7 +19,8 @@
       height: 100%;
       touch-action: none;
     }
-    .menu{
+
+    .menu {
       position: absolute;
       top: 0%;
       margin: 0;
@@ -33,7 +34,7 @@
       padding: 15px;
     }
 
-    .buttons{
+    .buttons {
       margin: 0 auto;
       -webkit-border-radius: 50px;
       -moz-border-radius: 50px;
@@ -54,13 +55,13 @@
 </head>
 
 <body>
-<div class="menu">
-  <button id="addBlocks" class="buttons">Help</button>
-  <button id="add_Fire" class="buttons">Add Volcano</button>
-  <button id="add_Moutain" class="buttons">Add Mountain</button>
-  <button id="add_Water" class="buttons">Add Water</button>
-  <button id="hide_showLines" class="buttons">Hide/Show Lines</button>
-</div>
+  <div class="menu">
+    <button id="addBlocks" class="buttons">Help</button>
+    <button id="add_Fire" class="buttons">Add Volcano</button>
+    <button id="add_Moutain" class="buttons">Add Mountain</button>
+    <button id="add_Water" class="buttons">Add Water</button>
+    <button id="hide_showLines" class="buttons">Hide/Show Lines</button>
+  </div>
   <canvas id="renderCanvas"></canvas>
   <script type="text/javascript">
     // Get the canvas element from our HTML below
@@ -73,8 +74,8 @@
       // Now create a basic Babylon Scene object
       var scene = new BABYLON.Scene(engine);
       // init function
-      function init(){
-      $('.menu').hide();
+      function init() {
+        $('.menu').hide();
       }
       init();
 
@@ -86,7 +87,7 @@
       camera.upperRadiusLimit = 300;
       camera.attachControl(canvas, true);
 
-    /*  var camerasBorderFunction = function () {
+      /*  var camerasBorderFunction = function () {
         //Angle
         if (camera.beta < 0.1)
             camera.beta = 0.1;
@@ -101,19 +102,21 @@
             camera.radius = 30;
     };*/
 
-//    scene.registerBeforeRender(camerasBorderFunction);
+      //    scene.registerBeforeRender(camerasBorderFunction);
+
+      
 
       // This creates a light, aiming 0,1,0 - to the sky.
       var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
       light.diffuse = new BABYLON.Color3(1, 1, 1);
-      light.specular = new BABYLON.Color3(1,1,1);
+      light.specular = new BABYLON.Color3(1, 1, 1);
 
       // fog --- darker sky environment
-    scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
-     scene.fogStart = 20.0;
-     scene.fogEnd = 60.0;
-   scene.fogDensity = 0.0004;
-   scene.fogColor = new BABYLON.Color3(0, 0, 0);
+      scene.fogMode = BABYLON.Scene.FOGMODE_EXP;
+      scene.fogStart = 20.0;
+      scene.fogEnd = 60.0;
+      scene.fogDensity = 0.0004;
+      scene.fogColor = new BABYLON.Color3(0, 0, 0);
 
       // Dim the light a small amount
       light.intensity = 1;
@@ -129,24 +132,24 @@
 
       // silk material
       var silk = new BABYLON.StandardMaterial("silk1", scene);
-      silk.diffuseTexture =  new BABYLON.Texture("images/silk.jpg", scene);
+      silk.diffuseTexture = new BABYLON.Texture("images/silk.jpg", scene);
 
       // laser material
       var laser = new BABYLON.StandardMaterial("laser", scene);
-      laser.diffuseTexture =  new BABYLON.Texture("images/smoke.jpg", scene);
+      laser.diffuseTexture = new BABYLON.Texture("images/smoke.jpg", scene);
 
       // brick material
       var brick = new BABYLON.StandardMaterial("laser", scene);
-      brick.diffuseTexture =  new BABYLON.Texture("images/brick.jpg", scene);
+      brick.diffuseTexture = new BABYLON.Texture("images/brick.jpg", scene);
 
       // world material
       var world = new BABYLON.StandardMaterial("worldMap", scene);
-      world.diffuseTexture =  new BABYLON.Texture("images/14-1-test.png", scene);
-    //  console.log("world texture", world.diffuseTexture);
+      world.diffuseTexture = new BABYLON.Texture("images/14-1-test.png", scene);
+      //  console.log("world texture", world.diffuseTexture);
 
       // mountain material
       var mountain = new BABYLON.StandardMaterial("mountain", scene);
-      mountain.diffuseTexture =  new BABYLON.Texture("images/mountain.jpg", scene);
+      mountain.diffuseTexture = new BABYLON.Texture("images/mountain.jpg", scene);
 
       // water material
       var waterMaterial = new BABYLON.StandardMaterial("waterMaterial", scene);
@@ -155,87 +158,87 @@
 
       // Heightmap ground
       var groundPlane = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
-       groundPlane.position = new BABYLON.Vector3(600, 0, 710);
-       groundPlane.material = mountain;
+      groundPlane.position = new BABYLON.Vector3(600, 0, 710);
+      groundPlane.material = mountain;
 
-       // ground lines
-       var groundLines = BABYLON.Mesh.CreateGroundFromHeightMap("groundLines", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
-        groundLines.position = new BABYLON.Vector3(600, 0.11, 710);
-        groundLines.material = wire;
+      // ground lines
+      var groundLines = BABYLON.Mesh.CreateGroundFromHeightMap("groundLines", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
+      groundLines.position = new BABYLON.Vector3(600, 0.11, 710);
+      groundLines.material = wire;
       // ground mesh
-    //  var groundPlane = BABYLON.Mesh.CreateGround("ground1", 1400, 1400, 2, scene);
+      //  var groundPlane = BABYLON.Mesh.CreateGround("ground1", 1400, 1400, 2, scene);
 
-    // water
-    var waterArea = BABYLON.Mesh.CreateCylinder("waterArea", 100, 100, 100, 6, 1, scene);
-    waterArea.position = new BABYLON.Vector3(175, -45, 700);
-     waterArea.material = waterMaterial;
+      // water
+      var waterArea = BABYLON.Mesh.CreateCylinder("waterArea", 100, 100, 100, 6, 1, scene);
+      waterArea.position = new BABYLON.Vector3(175, -45, 700);
+      waterArea.material = waterMaterial;
 
       // rotate plane
-    //  groundPlane.position = new BABYLON.Vector3(600, 0, 710);
-    //    groundPlane.position = new BABYLON.Vector3(0, 0, 0);
+      //  groundPlane.position = new BABYLON.Vector3(600, 0, 710);
+      //    groundPlane.position = new BABYLON.Vector3(0, 0, 0);
       // disable picking
-    //   groundPlane.isPickable = false;
+      //   groundPlane.isPickable = false;
 
       // add box - square
-    //  var theBox = BABYLON.Mesh.CreateBox("theBox", 20.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
-    //  theBox.position = new BABYLON.Vector3(3, 10, 3);
-    //  theBox.material = silk;
+      //  var theBox = BABYLON.Mesh.CreateBox("theBox", 20.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+      //  theBox.position = new BABYLON.Vector3(3, 10, 3);
+      //  theBox.material = silk;
 
       // adding polygon - torus
-//      var poly = BABYLON.Mesh.CreateTorus("torus", 14, 50, 10, scene, false, BABYLON.Mesh.DEFAULTSIDE);
-//      poly.position = new BABYLON.Vector3(55, 40, 3);
-  //    poly.material = groundMaterial;
+      //      var poly = BABYLON.Mesh.CreateTorus("torus", 14, 50, 10, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+      //      poly.position = new BABYLON.Vector3(55, 40, 3);
+      //    poly.material = groundMaterial;
 
       // adding knot
-  //    var theKnot = BABYLON.Mesh.CreateTorusKnot("knot", 15, 15, 100, 55, 2, 3, scene, false, BABYLON.Mesh.DEFAULTSIDE);
-  //    theKnot.position = new BABYLON.Vector3(-50, 30, 8);
-  //    theKnot.material = wire;
+      //    var theKnot = BABYLON.Mesh.CreateTorusKnot("knot", 15, 15, 100, 55, 2, 3, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+      //    theKnot.position = new BABYLON.Vector3(-50, 30, 8);
+      //    theKnot.material = wire;
 
       // animation
-  //    var animationBox = new BABYLON.Animation("myAnimation", "position.y", 100, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
-  //    scene.beginAnimation(poly, 0, 100, true);
+      //    var animationBox = new BABYLON.Animation("myAnimation", "position.y", 100, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+      //    scene.beginAnimation(poly, 0, 100, true);
 
       // shorthand Animation
-    //  BABYLON.Animation.CreateAndStartAnimation('boxScale', theBox, 'scaling.y', 30, 120, 1.0, 8.5);
-    //  BABYLON.Animation.CreateAndStartAnimation('boxScale', theBox, 'scaling.x', 30, 120, 1.0, 8.5);
+      //  BABYLON.Animation.CreateAndStartAnimation('boxScale', theBox, 'scaling.y', 30, 120, 1.0, 8.5);
+      //  BABYLON.Animation.CreateAndStartAnimation('boxScale', theBox, 'scaling.x', 30, 120, 1.0, 8.5);
 
-    // Creating an easing function
-//var easingFunction = new BABYLON.QuadraticEase();
+      // Creating an easing function
+      //var easingFunction = new BABYLON.QuadraticEase();
 
-// For each easing function, you can choose beetween EASEIN (default), EASEOUT, EASEINOUT
-//easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
-
-
-    //Adding keys to the animation object
-    //    animationBox.setKeys(keys);
-
-        //Then add the animation object to box1
-  //      theKnot.animations.push(animationBox);
-
-        //Finally, launch animations on box1, from key 0 to key 100 with loop activated
-  //      scene.beginAnimation(theKnot, 0, 100, true);
+      // For each easing function, you can choose beetween EASEIN (default), EASEOUT, EASEINOUT
+      //easingFunction.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
 
 
-  //When pointer down event is raised
-    // scene.onPointerDown = function (evt, pickResult) {
+      //Adding keys to the animation object
+      //    animationBox.setKeys(keys);
 
-scene.actionManager = new BABYLON.ActionManager(scene);
+      //Then add the animation object to box1
+      //      theKnot.animations.push(animationBox);
 
-// var actualY = theKnot.position.y;
-
-var coolButton = document.getElementById("addBlocks");
-coolButton.onclick = function (evt, pickResult) {
-    alert("This is the help menu");
-//  console.log('x',positions[pickResult.pickedMesh].x);
-}
-
-//storing clicked positions
-var positions = [];
+      //Finally, launch animations on box1, from key 0 to key 100 with loop activated
+      //      scene.beginAnimation(theKnot, 0, 100, true);
 
 
+      //When pointer down event is raised
+      // scene.onPointerDown = function (evt, pickResult) {
 
-//When pointer down event is raised
-    scene.onPointerDown = function (evt, pickResult) {
+      scene.actionManager = new BABYLON.ActionManager(scene);
+
+      // var actualY = theKnot.position.y;
+
+      var coolButton = document.getElementById("addBlocks");
+      coolButton.onclick = function(evt, pickResult) {
+        alert("This is the help menu");
+        //  console.log('x',positions[pickResult.pickedMesh].x);
+      }
+
+      //storing clicked positions
+      var positions = [];
+
+
+
+      //When pointer down event is raised
+      scene.onPointerDown = function(evt, pickResult) {
         // if the click hits the ground object, we change the impact position
         if (pickResult.hit) {
           // matching position on screen
@@ -243,206 +246,206 @@ var positions = [];
           //  theKnot.position.y = pickResult.pickedPoint.y;
           //  theKnot.position.z = pickResult.pickedPoint.z;
           // gets the selected mesh object and moves it up.
-    //  pickResult.pickedMesh.position.y += 7;
+          //  pickResult.pickedMesh.position.y += 7;
 
-    // matching the picked mesh to the current positions
-//   pickResult.pickedMesh.position.x = pickResult.pickedPoint.x;
-//   pickResult.pickedMesh.position.y = pickResult.pickedPoint.y;
-//   pickResult.pickedMesh.position.z = pickResult.pickedPoint.z;
-var xVal = pickResult.pickedPoint.x;
-var yVal = pickResult.pickedPoint.y;
-var zVal = pickResult.pickedPoint.z;
-   console.log("x value", xVal);
-   console.log("y value", yVal);
-   console.log("z value", zVal);
+          // matching the picked mesh to the current positions
+          //   pickResult.pickedMesh.position.x = pickResult.pickedPoint.x;
+          //   pickResult.pickedMesh.position.y = pickResult.pickedPoint.y;
+          //   pickResult.pickedMesh.position.z = pickResult.pickedPoint.z;
+          var xVal = pickResult.pickedPoint.x;
+          var yVal = pickResult.pickedPoint.y;
+          var zVal = pickResult.pickedPoint.z;
+          console.log("x value", xVal);
+          console.log("y value", yVal);
+          console.log("z value", zVal);
 
-function show_menu(){
-  $('.menu').fadeIn();
+          function show_menu() {
+            $('.menu').fadeIn();
 
-  // add volcano
-  $('#add_Fire').click(function(){
-    var ABox = BABYLON.Mesh.CreateBox("theBox2", 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
-     ABox.position = new BABYLON.Vector3(xVal, yVal, zVal);
-    ABox.material = brick;
-    $('.menu').fadeOut();
-  });
-  }
-  show_menu();
+            // add volcano
+            $('#add_Fire').click(function() {
+              var ABox = BABYLON.Mesh.CreateBox("theBox2", 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+              ABox.position = new BABYLON.Vector3(xVal, yVal, zVal);
+              ABox.material = brick;
+              $('.menu').fadeOut();
+            });
+          }
+          show_menu();
 
 
 
-  // remove mesh
-//  pickResult.pickedMesh.dispose();
+          // remove mesh
+          //  pickResult.pickedMesh.dispose();
 
-//  pickResult.pickedMesh.scaling.x = 0.5;
-//  pickResult.pickedMesh.scaling.y = 0.5;
-//  pickResult.pickedMesh.scaling.z = 0.5;
-    // scaling up the objects
-  //  pickResult.pickedMesh.scaling.y += 1;
+          //  pickResult.pickedMesh.scaling.x = 0.5;
+          //  pickResult.pickedMesh.scaling.y = 0.5;
+          //  pickResult.pickedMesh.scaling.z = 0.5;
+          // scaling up the objects
+          //  pickResult.pickedMesh.scaling.y += 1;
         }
-    };
+      };
 
 
-// volcanic fire area
-for (a=0; a<25; a++){
-  var theBox2 = BABYLON.Mesh.CreateBox("theBox2"+a, 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
-  var randomNumber1 = Math.floor((Math.random() * 790) + 20);
-  var randomNumber2 = Math.floor((Math.random() * 790) + 20);
-  theBox2.position = new BABYLON.Vector3(randomNumber1, -9, randomNumber2);
-  theBox2.material = mountain;
+      // volcanic fire area
+      for (a = 0; a < 25; a++) {
+        var theBox2 = BABYLON.Mesh.CreateBox("theBox2" + a, 20.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+        var randomNumber1 = Math.floor((Math.random() * 790) + 20);
+        var randomNumber2 = Math.floor((Math.random() * 790) + 20);
+        theBox2.position = new BABYLON.Vector3(randomNumber1, -9, randomNumber2);
+        theBox2.material = mountain;
 
-  // Fire Particle System
-   // particle emitter
-  //  var fountain = BABYLON.Mesh.CreateBox("fountain", 20.0, scene);
-   // Create a particle system
-       var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+        // Fire Particle System
+        // particle emitter
+        //  var fountain = BABYLON.Mesh.CreateBox("fountain", 20.0, scene);
+        // Create a particle system
+        var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
 
-       //Texture of each particle
-       particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
+        //Texture of each particle
+        particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
 
-       // Where the particles come from
-     //  particleSystem.emitter = fountain; // the starting object, the emitter
-       particleSystem.emitter = theBox2;
-       particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
-       particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
+        // Where the particles come from
+        //  particleSystem.emitter = fountain; // the starting object, the emitter
+        particleSystem.emitter = theBox2;
+        particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
+        particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
 
-       // Colors of all particles
-       particleSystem.color1 = new BABYLON.Color4(0.8, 0.1, 0, 1.0);
-       particleSystem.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
-       particleSystem.colorDead = new BABYLON.Color4(0, 0,0, 0.0);
+        // Colors of all particles
+        particleSystem.color1 = new BABYLON.Color4(0.8, 0.1, 0, 1.0);
+        particleSystem.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
+        particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
 
-       // Size of each particle (random between...
-       particleSystem.minSize = 5;
-       particleSystem.maxSize = 10;
+        // Size of each particle (random between...
+        particleSystem.minSize = 5;
+        particleSystem.maxSize = 10;
 
-       // Life time of each particle (random between...
-       particleSystem.minLifeTime = 0.3;
-       particleSystem.maxLifeTime = 1.5;
+        // Life time of each particle (random between...
+        particleSystem.minLifeTime = 0.3;
+        particleSystem.maxLifeTime = 1.5;
 
-       // Emission rate
-       particleSystem.emitRate = 2500;
+        // Emission rate
+        particleSystem.emitRate = 2500;
 
-       // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
-       particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+        // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+        particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
 
-       // Set the gravity of all particles
-       particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
+        // Set the gravity of all particles
+        particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
 
-       // Direction of each particle after it has been emitted
-       particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
-       particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+        // Direction of each particle after it has been emitted
+        particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
+        particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
 
-       // Angular speed, in radians
-       particleSystem.minAngularSpeed = 0;
-       particleSystem.maxAngularSpeed = Math.PI;
+        // Angular speed, in radians
+        particleSystem.minAngularSpeed = 0;
+        particleSystem.maxAngularSpeed = Math.PI;
 
-       // Speed
-       particleSystem.minEmitPower = 1;
-       particleSystem.maxEmitPower = 3;
-       particleSystem.updateSpeed = 0.005;
+        // Speed
+        particleSystem.minEmitPower = 1;
+        particleSystem.maxEmitPower = 3;
+        particleSystem.updateSpeed = 0.005;
 
-       // Start the particle system
-       particleSystem.start();
-}
-
-
-
-  //  add box  for rain experiment
-    var rainBox = BABYLON.Mesh.CreateTorus("torus", 5, 7, 9, scene, false, BABYLON.Mesh.DEFAULTSIDE);
-    rainBox.position = new BABYLON.Vector3(175, -2, 700);
-    rainBox.material = mountain;
-
-    var rainSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
-
-    //Texture of each particle
-    rainSystem.particleTexture = new BABYLON.Texture("textures/glow.png", scene);
-
-    // Where the particles come from
-  //  particleSystem.emitter = fountain; // the starting object, the emitter
-   rainSystem.emitter = rainBox;
-  //  rainSystem.emitter = waterArea;
-    rainSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
-    rainSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
-
-    // Colors of all particles
-    rainSystem.color1 = new BABYLON.Color4(0.2, 0.4, 1, 1.0);
-    rainSystem.color2 = new BABYLON.Color4(0.2, 0.1, 0.7, 1.0);
-    rainSystem.colorDead = new BABYLON.Color4(0, 0,0, 0.0);
-
-    // Size of each particle (random between...
-    rainSystem.minSize = 3;
-    rainSystem.maxSize = 8;
-
-    // Life time of each particle (random between...
-    rainSystem.minLifeTime = 1.5;
-    rainSystem.maxLifeTime = 9.5;
-
-    // Emission rate
-    rainSystem.emitRate = 5000;
-
-    // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
-    rainSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-
-    // Set the gravity of all particles
-    rainSystem.gravity = new BABYLON.Vector3(0, -70, 0);
-
-    // Direction of each particle after it has been emitted
-    rainSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
-    rainSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
-
-    // Angular speed, in radians
-    rainSystem.minAngularSpeed = 0;
-    rainSystem.maxAngularSpeed = Math.PI;
-
-    // Speed
-    rainSystem.minEmitPower = 4;
-    rainSystem.maxEmitPower = 6;
-    rainSystem.updateSpeed = 0.008;
-
-    // Start the particle system
-    rainSystem.start();
-
-// loading dynamic boxes into scene
-/*for(var w=1; w< 40; w++){
-  for(var x=1; x<40; x++){
-    var theBox = BABYLON.Mesh.CreateBox("theBox"+x, 40.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
-    theBox.position = new BABYLON.Vector3(x*30, 0, w * 30);
-    theBox.material = groundMaterial;
-  }
-}*/
+        // Start the particle system
+        particleSystem.start();
+      }
 
 
 
-// keyboard shortcuts tests
-scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function (evt) {
-   if (evt.sourceEvent.key == "u") {
-      //   theKnot.position.y += 5;
-   }
-    if (evt.sourceEvent.key == "d") {
-    //  theKnot.position.y -= 5;
-    }
-    if (evt.sourceEvent.key == "b") {
-    //  theKnot.position.z += 5;
-    }
-    if (evt.sourceEvent.key == "f") {
-    //  theKnot.position.z -= 5;
-    }
-    if (evt.sourceEvent.key == "r") {
-  //    theKnot.position.x += 5;
-    }
-    if (evt.sourceEvent.key == "l") {
-  //    theKnot.position.x -= 5;
-    }
-}));
+      //  add box  for rain experiment
+      var rainBox = BABYLON.Mesh.CreateTorus("torus", 5, 7, 9, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+      rainBox.position = new BABYLON.Vector3(175, -2, 700);
+      rainBox.material = mountain;
+
+      var rainSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+
+      //Texture of each particle
+      rainSystem.particleTexture = new BABYLON.Texture("textures/glow.png", scene);
+
+      // Where the particles come from
+      //  particleSystem.emitter = fountain; // the starting object, the emitter
+      rainSystem.emitter = rainBox;
+      //  rainSystem.emitter = waterArea;
+      rainSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
+      rainSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
+
+      // Colors of all particles
+      rainSystem.color1 = new BABYLON.Color4(0.2, 0.4, 1, 1.0);
+      rainSystem.color2 = new BABYLON.Color4(0.2, 0.1, 0.7, 1.0);
+      rainSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+      // Size of each particle (random between...
+      rainSystem.minSize = 3;
+      rainSystem.maxSize = 8;
+
+      // Life time of each particle (random between...
+      rainSystem.minLifeTime = 1.5;
+      rainSystem.maxLifeTime = 9.5;
+
+      // Emission rate
+      rainSystem.emitRate = 5000;
+
+      // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+      rainSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+      // Set the gravity of all particles
+      rainSystem.gravity = new BABYLON.Vector3(0, -70, 0);
+
+      // Direction of each particle after it has been emitted
+      rainSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
+      rainSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+
+      // Angular speed, in radians
+      rainSystem.minAngularSpeed = 0;
+      rainSystem.maxAngularSpeed = Math.PI;
+
+      // Speed
+      rainSystem.minEmitPower = 4;
+      rainSystem.maxEmitPower = 6;
+      rainSystem.updateSpeed = 0.008;
+
+      // Start the particle system
+      rainSystem.start();
+
+      // loading dynamic boxes into scene
+      /*for(var w=1; w< 40; w++){
+        for(var x=1; x<40; x++){
+          var theBox = BABYLON.Mesh.CreateBox("theBox"+x, 40.0, scene, false, BABYLON.Mesh.DEFAULTSIDE);
+          theBox.position = new BABYLON.Vector3(x*30, 0, w * 30);
+          theBox.material = groundMaterial;
+        }
+      }*/
+
+
+
+      // keyboard shortcuts tests
+      scene.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnKeyUpTrigger, function(evt) {
+        if (evt.sourceEvent.key == "u") {
+          //   theKnot.position.y += 5;
+        }
+        if (evt.sourceEvent.key == "d") {
+          //  theKnot.position.y -= 5;
+        }
+        if (evt.sourceEvent.key == "b") {
+          //  theKnot.position.z += 5;
+        }
+        if (evt.sourceEvent.key == "f") {
+          //  theKnot.position.z -= 5;
+        }
+        if (evt.sourceEvent.key == "r") {
+          //    theKnot.position.x += 5;
+        }
+        if (evt.sourceEvent.key == "l") {
+          //    theKnot.position.x -= 5;
+        }
+      }));
 
       // add cylinder
-  //    var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 40, 20, 15, 6, 1, scene);
-    //  cylinder.material = laser;
-  //    cylinder.position = new BABYLON.Vector3(10, 13, 30);
+      //    var cylinder = BABYLON.Mesh.CreateCylinder("cylinder", 40, 20, 15, 6, 1, scene);
+      //  cylinder.material = laser;
+      //    cylinder.position = new BABYLON.Vector3(10, 13, 30);
 
       // Skybox --- sky images
       var skybox = BABYLON.Mesh.CreateBox("skyBox", 4000.0, scene);
-    //  skybox.infiniteDistance = true;
+      //  skybox.infiniteDistance = true;
       var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
       skyboxMaterial.backFaceCulling = false;
       skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay", scene);
