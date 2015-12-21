@@ -59,7 +59,7 @@ var launch = function () {
   //  water.material = waterMaterial;
 
     // Elevation
-    var elevationControl = new WORLDMONGER.ElevationControl(ground);
+    var elevationControl = new mountain.elevateMoutain(ground);
 
     // Bloom
     var blurWidth = 2.0;
@@ -122,8 +122,6 @@ var launch = function () {
     var cameraButton = document.getElementById("cameraButton");
     var elevationButton = document.getElementById("elevationButton");
     var digButton = document.getElementById("digButton");
-    var help01 = document.getElementById("help01");
-    var help02 = document.getElementById("help02");
 
     window.oncontextmenu = function () {
         return false;
@@ -142,7 +140,7 @@ var launch = function () {
     });
 
     elevationButton.addEventListener("pointerdown", function () {
-      //  help01.className = "help";
+        //help01.className = "help";
       //  help02.className = "help";
 
         if (mode == "ELEVATION")
@@ -163,7 +161,7 @@ var launch = function () {
 
     digButton.addEventListener("pointerdown", function () {
       //  help01.className = "help";
-      //  help02.className = "help";
+    //    help02.className = "help";
 
         if (mode == "DIG")
             return;
@@ -181,79 +179,4 @@ var launch = function () {
         cameraButton.className = "controlButton";
     });
 
-    // Sliders
-
-    /*
-    $("#slider-vertical").slider({
-        orientation: "vertical",
-        range: "min",
-        min: 2,
-        max: 15,
-        value: 5,
-        slide: function (event, ui) {
-            elevationControl.radius = ui.value;
-        }
-    });
-
-    $("#slider-range").slider({
-        orientation: "vertical",
-        range: true,
-        min: 0,
-        max: 12,
-        values: [0, 11],
-        slide: function (event, ui) {
-            elevationControl.heightMin = ui.values[0];
-            elevationControl.heightMax = ui.values[1];
-        }
-    });
-
-    $("#qualitySlider").slider({
-        orientation: "vertical",
-        range: "min",
-        min: 0,
-        max: 3,
-        value: 3,
-        slide: function (event, ui) {
-            switch (ui.value) {
-                case 3:
-                    waterMaterial.refractionTexture.resize(512, true);
-                    waterMaterial.reflectionTexture.resize(512, true);
-                    scene.getEngine().setHardwareScalingLevel(1);
-                    scene.particlesEnabled = true;
-                    scene.postProcessesEnabled = true;
-                    break;
-                case 2:
-                    waterMaterial.refractionTexture.resize(256, true);
-                    waterMaterial.reflectionTexture.resize(256, true);
-                    scene.getEngine().setHardwareScalingLevel(1);
-                    scene.particlesEnabled = false;
-                    scene.postProcessesEnabled = false;
-                    break;
-                case 1:
-                    waterMaterial.refractionTexture.resize(256, true);
-                    waterMaterial.reflectionTexture.resize(256, true);
-                    scene.getEngine().setHardwareScalingLevel(2);
-                    scene.particlesEnabled = false;
-                    scene.postProcessesEnabled = false;
-                    break;
-                case 0:
-                    waterMaterial.refractionTexture.resize(256, true);
-                    waterMaterial.reflectionTexture.resize(256, true);
-                    scene.getEngine().setHardwareScalingLevel(3);
-                    scene.particlesEnabled = false;
-                    scene.postProcessesEnabled = false;
-                    break;
-            }
-        }
-    });
-
-    help01.className = "help shown";
-
-    setTimeout(function() {
-        help01.className = "help";
-        help02.className = "help shown";
-        setTimeout(function() {
-            help02.className = "help";
-        }, 5000);
-    }, 5000);*/
 };
