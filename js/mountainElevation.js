@@ -1,4 +1,4 @@
-// modified js --- from http://babylonjs.com/Scenes/Worldmonger/index.html
+// modified js -- from http://babylonjs.com/Scenes/Worldmonger/index.html
 
 var mountain = mountain || {};
 
@@ -95,6 +95,10 @@ mountain.elevateMoutain.prototype.detachControl = function (canvas) {
     window.removeEventListener("blur", this.onLostFocus);
 
     this.ground.getScene().unregisterBeforeRender(this.onBeforeRender);
+};
+
+mountain.elevateMountain.protoype.addFire = function(){
+
 };
 
 // evelvate mountain selections
