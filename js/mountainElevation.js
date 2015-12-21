@@ -1,3 +1,5 @@
+// modified js --- from http://babylonjs.com/Scenes/Worldmonger/index.html
+
 var mountain = mountain || {};
 
 // get the default values
