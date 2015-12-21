@@ -125,135 +125,23 @@ var launch = function () {
     var help01 = document.getElementById("help01");
     var help02 = document.getElementById("help02");
 
+    scene.onPointerDown = function (evt, pickResult) {
+            // if the click hits the ground object, we change the impact position
+            if (pickResult.hit) {
+                var x = pickResult.pickedPoint.x;
+                var y = pickResult.pickedPoint.y;
+                console.log('positions', x);
+                console.log('positions y', y);
+            }
+
+        };
+
+
+
     window.oncontextmenu = function () {
         return false;
     };
 
-  /*  cameraButton.addEventListener("pointerdown", function () {
-        if (mode == "CAMERA")
-            return;
-        camera.attachControl(canvas);
-        elevationControl.detachControl(canvas);
 
-        mode = "CAMERA";
-        cameraButton.className = "controlButton selected";
-        digButton.className = "controlButton";
-        elevationButton.className = "controlButton";
-    });*/
 
-    elevationButton.addEventListener("pointerdown", function () {
-      //  help01.className = "help";
-      //  help02.className = "help";
-
-      //  if (mode == "ELEVATION")
-      //      return;
-
-      //  if (mode == "CAMERA") {
-          //  camera.detachControl(canvas);
-          //  elevationControl.attachControl(canvas);
-    //    }
-
-      //  mode = "ELEVATION";
-        elevationControl.direction = 1;
-
-        elevationButton.className = "controlButton selected";
-        digButton.className = "controlButton";
-        cameraButton.className = "controlButton";
-    });
-
-    digButton.addEventListener("pointerdown", function () {
-      //  help01.className = "help";
-      //  help02.className = "help";
-
-    //    if (mode == "DIG")
-    //        return;
-
-    //    if (mode == "CAMERA") {
-    //        camera.detachControl(canvas);
-    //        elevationControl.attachControl(canvas);
-    //    }
-
-    //    mode = "DIG";
-  //      elevationControl.direction = -1;
-
-        digButton.className = "controlButton selected";
-        elevationButton.className = "controlButton";
-        cameraButton.className = "controlButton";
-    });
-
-    // Sliders
-
-    /*
-    $("#slider-vertical").slider({
-        orientation: "vertical",
-        range: "min",
-        min: 2,
-        max: 15,
-        value: 5,
-        slide: function (event, ui) {
-            elevationControl.radius = ui.value;
-        }
-    });
-
-    $("#slider-range").slider({
-        orientation: "vertical",
-        range: true,
-        min: 0,
-        max: 12,
-        values: [0, 11],
-        slide: function (event, ui) {
-            elevationControl.heightMin = ui.values[0];
-            elevationControl.heightMax = ui.values[1];
-        }
-    });
-
-    $("#qualitySlider").slider({
-        orientation: "vertical",
-        range: "min",
-        min: 0,
-        max: 3,
-        value: 3,
-        slide: function (event, ui) {
-            switch (ui.value) {
-                case 3:
-                    waterMaterial.refractionTexture.resize(512, true);
-                    waterMaterial.reflectionTexture.resize(512, true);
-                    scene.getEngine().setHardwareScalingLevel(1);
-                    scene.particlesEnabled = true;
-                    scene.postProcessesEnabled = true;
-                    break;
-                case 2:
-                    waterMaterial.refractionTexture.resize(256, true);
-                    waterMaterial.reflectionTexture.resize(256, true);
-                    scene.getEngine().setHardwareScalingLevel(1);
-                    scene.particlesEnabled = false;
-                    scene.postProcessesEnabled = false;
-                    break;
-                case 1:
-                    waterMaterial.refractionTexture.resize(256, true);
-                    waterMaterial.reflectionTexture.resize(256, true);
-                    scene.getEngine().setHardwareScalingLevel(2);
-                    scene.particlesEnabled = false;
-                    scene.postProcessesEnabled = false;
-                    break;
-                case 0:
-                    waterMaterial.refractionTexture.resize(256, true);
-                    waterMaterial.reflectionTexture.resize(256, true);
-                    scene.getEngine().setHardwareScalingLevel(3);
-                    scene.particlesEnabled = false;
-                    scene.postProcessesEnabled = false;
-                    break;
-            }
-        }
-    });
-
-    help01.className = "help shown";
-
-    setTimeout(function() {
-        help01.className = "help";
-        help02.className = "help shown";
-        setTimeout(function() {
-            help02.className = "help";
-        }, 5000);
-    }, 5000);*/
 };

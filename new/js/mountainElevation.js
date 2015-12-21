@@ -20,7 +20,85 @@ mountain.elevateMoutain.attachControl = function(canvas){
       if (pickInfo.pickedMesh != ground)
           return;
       that.elevateFaces(pickInfo, that.radius, 0.2);
+
+      var currentPosition;
+      var that = this;
+
+      this.onBeforeRender = function () {
+          if (!currentPosition) {
+              return;
+          }
+
+          var pickInfo = that._ground.getScene().pick(currentPosition.x, currentPosition.y);
+
+          if (!pickInfo.hit)
+              return;
+
+          if (pickInfo.pickedMesh != that.ground)
+              return;
+
+        //  that._particleSystem.emitter = pickInfo.pickedPoint.add(new BABYLON.Vector3(0, 3, 0));
+      //    that._particleSystem.manualEmitCount += 400;
+
+          that._elevateFaces(pickInfo, that.radius, 0.2);
+      };
+
+
+      this.onPointerDown = function (evt) {
+          evt.preventDefault();
+
+          currentPosition = {
+              x: evt.clientX,
+              y: evt.clientY
+          };
+
+          console.log('current', currentPosition.x);
+      };
+
+      this.onPointerUp = function (evt) {
+          evt.preventDefault();
+
+          currentPosition = null;
+      };
+
+      this.onPointerMove = function (evt) {
+          evt.preventDefault();
+
+          if (!currentPosition) {
+              return;
+          }
+
+          that._invertDirection = evt.button == 2 ? -1 : 1;
+
+          currentPosition = {
+              x: evt.clientX,
+              y: evt.clientY
+          };
+      };
+
+      this.onLostFocus = function () {
+          currentPosition = null;
+      };
+
+      canvas.addEventListener("pointerdown", this.onPointerDown, true);
+      canvas.addEventListener("pointerup", this.onPointerUp, true);
+      canvas.addEventListener("pointerout", this.onPointerUp, true);
+      canvas.addEventListener("pointermove", this.onPointerMove, true);
+      window.addEventListener("blur", this.onLostFocus, true);
+
+      this.ground.getScene().registerBeforeRender(this.onBeforeRender);
 };
+
+mountain.elevateMoutain.prototype.detachControl = function (canvas) {
+    canvas.removeEventListener("pointerdown", this.onPointerDown);
+    canvas.removeEventListener("pointerup", this.onPointerUp);
+    canvas.removeEventListener("pointerout", this.onPointerUp);
+    canvas.removeEventListener("pointermove", this.onPointerMove);
+    window.removeEventListener("blur", this.onLostFocus);
+
+    this.ground.getScene().unregisterBeforeRender(this.onBeforeRender);
+};
+
 
 mountain.elevateMoutain.prototype.dataElevation = function () {
     if (this.facesOfVertices == null) {
@@ -92,7 +170,7 @@ mountain.elevateMoutain.prototype.isBoxSphereIntersected = function(box, sphereC
 };
 
 mountain.elevateMoutain.prototype.elevateFaces = function (pickInfo, radius, height) {
-    this.prepareDataModelForElevation();
+    this.dataElevation();
     this.selectedVertices = [];
 
     // Impact zone
