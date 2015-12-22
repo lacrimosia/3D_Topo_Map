@@ -14,7 +14,10 @@ var launch = function() {
   var engine = new BABYLON.Engine(canvas, true);
   var scene = new BABYLON.Scene(engine);
   var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
-  var sun = new BABYLON.PointLight("Omni", new BABYLON.Vector3(20, 100, 2), scene);
+  var sun = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
+sun.diffuse = new BABYLON.Color3(1, 1, 1);
+sun.specular = new BABYLON.Color3(1, 1, 1);
+sun.intensity = 0.4;
 
   camera.setPosition(new BABYLON.Vector3(20, 40, 20));
   camera.attachControl(canvas);
@@ -36,20 +39,27 @@ var launch = function() {
   var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 200, 0, 100, scene, true);
   var groundMaterial = new BABYLON.StandardMaterial("mountain", scene);
   groundMaterial.diffuseTexture = new BABYLON.Texture("images/mountain.jpg", scene);
-//  groundMaterial.diffuseTexture.uScale = 60;
-//  groundMaterial.diffuseTexture.vScale = 40;
+ groundMaterial.diffuseTexture.uScale = 30;
+groundMaterial.diffuseTexture.vScale = 40;
   ground.material = groundMaterial;
   ground.position.y = -2.0;
 
   // Grounds Lines
-  /* var groundLines = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 200, 0, 100, scene, true);
+  /*var groundLines = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 200, 0, 100, scene, true);
       // wireframe material
-            var wire = new BABYLON.StandardMaterial("wires", scene);
-            wire.diffuseColor = new BABYLON.Color3(0, 0, 0);
-            wire.wireframe = true;
-      groundLines.material = wire;
-      groundLines.position.y = -2.0;*/
+    var wire = new BABYLON.StandardMaterial("wires", scene);
+    wire.diffuseColor = new BABYLON.Color3(0, 0, 0);
+    wire.wireframe = true;
+    groundLines.material = wire;
+    groundLines.position.y = -2.0;*/
 
+    // Creation of a lines mesh
+  /* var lines = BABYLON.Mesh.CreateLines("lines", [
+       new BABYLON.Vector3(-10, 0, 0),
+       new BABYLON.Vector3(10, 0, 0),
+       new BABYLON.Vector3(0, 0, -10),
+       new BABYLON.Vector3(0, 0, 10)
+   ], scene);*/
 
 // sand on the ground
   var extraGround = BABYLON.Mesh.CreateGround("extraGround", 1400, 1400, 1, scene, false);
@@ -57,7 +67,7 @@ var launch = function() {
   extraGroundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   extraGroundMaterial.diffuseTexture.uScale = 40;
   extraGroundMaterial.diffuseTexture.vScale = 40;
-  extraGround.position.y = -8;
+  extraGround.position.y = -14.0;
   extraGround.material = extraGroundMaterial;
 
   // Water
@@ -82,7 +92,7 @@ var launch = function() {
   var blurWidth = 2.0;
 
   var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
-  var postProcess1 = new BABYLON.PostProcess("Down sample", "./postprocesses/downsample", ["screenSize", "highlightThreshold"], null, 0.5, camera, BABYLON.Texture.DEFAULT_SAMPLINGMODE);
+  var postProcess1 = new BABYLON.PostProcess("Down sample", "./postprocesses/downsample", ["screenSize", "highlightThreshold"], null, 0.2, camera, BABYLON.Texture.DEFAULT_SAMPLINGMODE);
   postProcess1.onApply = function (effect) {
       effect.setFloat2("screenSize", postProcess1.width, postProcess1.height);
       effect.setFloat("highlightThreshold", 0.85);
@@ -97,23 +107,22 @@ var launch = function() {
       effect.setFloat("highlightIntensity", 1.5);
   };
 
-  /*var paths = [];
+/*  var paths = [];
 	for (var t = 1; t < 100; t++) {
 		var path = [];
-		for (var k = 0; k <= 25; k++) {
-		  var x = Math.sin(t);
-		  var y = k;
-		  var z = k*t;
+		for (var k = 0; k <= 100; k++) {
+		  var x = t;
+		 var y = k;
+		  var z = 10;
 		  path.push(new BABYLON.Vector3(x, y, z));
 		}
 		paths.push(path);
 		var lines = BABYLON.Mesh.CreateLines("par", path, scene);
-    lines.rotation.z = Math.PI;
-  lines.position.y = 10;
+  //  lines.rotation.z = Math.PI;
+lines.position.y = 10;
 }*/
 
-
-
+console.log("positions", getPOS);
 
   // Render loop
   var renderFunction = function() {
@@ -218,7 +227,7 @@ var launch = function() {
 
 
   //When click event is raised
-  window.addEventListener("click", function() {
+  /*window.addEventListener("click", function() {
     var pickResult = scene.pick(scene.pointerX, scene.pointerY);
 
 
@@ -226,9 +235,9 @@ var launch = function() {
       var xVal = pickResult.pickedPoint.x;
       var yVal = pickResult.pickedPoint.y;
       var zVal = pickResult.pickedPoint.z;
-      if (pickResult.hit) {
+      if (pickResult.hit) {*/
         var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
-        ABox.position = new BABYLON.Vector3(xVal, yVal, zVal);
+        ABox.position = new BABYLON.Vector3(-225, 10, -225);
         // Fire Particle System
         // particle emitter
         //  var fountain = BABYLON.Mesh.CreateBox("fountain", 20.0, scene);
@@ -281,9 +290,9 @@ var launch = function() {
 
         // Start the particle system
         particleSystem.start();
-      }
-    }
-  });
+  //    }
+//    }
+//  });
 
 
 
