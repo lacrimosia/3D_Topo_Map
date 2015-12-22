@@ -109,10 +109,10 @@ mountain.elevateMoutain.prototype.dataElevation = function () {
         this.groundIndices = this.ground.getIndices();
 
 // store the current ground positions in ground array
-        var groundPositions = [];
+        this.groundPositions = [];
         var index;
         for (index = 0; index < this.groundVerticesPositions.length; index += 3) {
-            groundPositions.push(new BABYLON.Vector3(this.groundVerticesPositions[index], this.groundVerticesPositions[index + 1], this.groundVerticesPositions[index + 2]));
+            this.groundPositions.push(new BABYLON.Vector3(this.groundVerticesPositions[index], this.groundVerticesPositions[index + 1], this.groundVerticesPositions[index + 2]));
 
           //  console.log('the ground pos', this.groundVerticesPositions[index]);
           //  console.log('the ground pos', this.groundVerticesPositions[index]);

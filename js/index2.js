@@ -122,7 +122,9 @@ groundMaterial.diffuseTexture.vScale = 40;
 lines.position.y = 10;
 }*/
 
-console.log("positions", getPOS);
+
+ // console.log("positions", getPositionsForLines());
+
 
   // Render loop
   var renderFunction = function() {

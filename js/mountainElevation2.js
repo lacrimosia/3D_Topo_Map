@@ -1,25 +1,28 @@
 // modified js -- from http://babylonjs.com/Scenes/Worldmonger/index.html
 
-var mountain = mountain || {};
+// var mountain = mountain || {};
 
 // get the default values
-mountain.elevateMoutain = function(ground){
-  this.ground = ground;          // mountain plane
-  this.radius = 15.0;           // selection radius
-  this.invertDirection = 1.0;   // direction for inversion
-  this.heightMin = -20.0;       // height min
-  this.heightMax = 60.0;       // max heigh of moutain
+var elevateMountain = function(ground){
+  var ground = ground;          // mountain plane
+  var radius = 15.0;           // selection radius
+  var invertDirection = 1.0;   // direction for inversion
+  var heightMin = -20.0;       // height min
+  var heightMax = 60.0;       // max heigh of moutain
 };
 
 // elevate area direction
-mountain.elevateMoutain.prototype.elevateDirection = 1;
+var elevateDirection = 1;
 
 // attach control for user
-mountain.elevateMoutain.prototype.attachControl = function (canvas) {
+var attachControl = function (canvas) {
     var currentPosition;    // get current position
-    var that = this;
+  //  var that = this;
 
-    this.onBeforeRender = function () {
+};
+
+
+var onBeforeRender = function () {
         if (!currentPosition) {
             return;
         }
@@ -33,16 +36,17 @@ mountain.elevateMoutain.prototype.attachControl = function (canvas) {
         if (pickInfo.pickedMesh != that.ground)
             return;
 
-      // add particle systems to rising mountain
-      //  that._particleSystem.emitter = pickInfo.pickedPoint.add(new BABYLON.Vector3(0, 3, 0));
-    //    that._particleSystem.manualEmitCount += 400;
+      onPointerDown(evt);
+      onPointerUp();
+      onPointerMove(evt);
+      onLostFocus();
 
     // elevate faces on user control
-        that.elevateFaces(pickInfo, that.radius, 0.3);
+        elevateFaces(pickInfo, that.radius, 0.3);
     };
 
 // get current position from client
-    this.onPointerDown = function (evt) {
+    var onPointerDown = function (evt) {
         evt.preventDefault();
 
         currentPosition = {
@@ -51,13 +55,13 @@ mountain.elevateMoutain.prototype.attachControl = function (canvas) {
         };
     };
 
-    this.onPointerUp = function (evt) {
+    var onPointerUp = function (evt) {
         evt.preventDefault();
 
         currentPosition = null;
     };
 
-    this.onPointerMove = function (evt) {
+    var onPointerMove = function (evt) {
         evt.preventDefault();
 
         if (!currentPosition) {
@@ -72,65 +76,55 @@ mountain.elevateMoutain.prototype.attachControl = function (canvas) {
         };
     };
 
-    this.onLostFocus = function () {
+    var onLostFocus = function () {
         currentPosition = null;
     };
 
 // add events to canvas.
-    canvas.addEventListener("pointerdown", this.onPointerDown, true);
-    canvas.addEventListener("pointerup", this.onPointerUp, true);
-    canvas.addEventListener("pointerout", this.onPointerUp, true);
-    canvas.addEventListener("pointermove", this.onPointerMove, true);
-    window.addEventListener("blur", this.onLostFocus, true);
+    canvas.addEventListener("pointerdown", onPointerDown(), true);
+    canvas.addEventListener("pointerup", onPointerUp(evt), true);
+    canvas.addEventListener("pointerout", onPointerUp(), true);
+    canvas.addEventListener("pointermove", onPointerMove(evt), true);
+    window.addEventListener("blur", onLostFocus(), true);
 
-    this.ground.getScene().registerBeforeRender(this.onBeforeRender);
-};
+     registerBeforeRender(onBeforeRender());
 
 // detach control when user clicks the camera button
-mountain.elevateMoutain.prototype.detachControl = function (canvas) {
-    canvas.removeEventListener("pointerdown", this.onPointerDown);
-    canvas.removeEventListener("pointerup", this.onPointerUp);
-    canvas.removeEventListener("pointerout", this.onPointerUp);
-    canvas.removeEventListener("pointermove", this.onPointerMove);
-    window.removeEventListener("blur", this.onLostFocus);
+var detachControl = function (canvas) {
+    canvas.removeEventListener("pointerdown", onPointerDown());
+    canvas.removeEventListener("pointerup", onPointerUp(evt));
+    canvas.removeEventListener("pointerout", onPointerUp(evt));
+    canvas.removeEventListener("pointermove", onPointerMove(evt));
+    window.removeEventListener("blur", onLostFocus());
 
-    this.ground.getScene().unregisterBeforeRender(this.onBeforeRender);
+    ground.getScene().unregisterBeforeRender(onBeforeRender());
 };
 
 // elevate mountain selections
-mountain.elevateMoutain.prototype.dataElevation = function () {
+var dataElevation = function () {
   // get faces
-    if (this.facesOfVertices == null) {
-        this.facesOfVertices = [];
+    if (facesOfVertices == null) {
+        facesOfVertices = [];
 
 // get vertices positions, Normals, and Indices
-        this.groundVerticesPositions = this.ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
-        this.groundVerticesNormals = this.ground.getVerticesData(BABYLON.VertexBuffer.NormalKind);
-        this.groundIndices = this.ground.getIndices();
+      var  groundVerticesPositions = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+      var  groundVerticesNormals = ground.getVerticesData(BABYLON.VertexBuffer.NormalKind);
+      var  groundIndices = ground.getIndices();
 
 // store the current ground positions in ground array
         var groundPositions = [];
         var index;
-        for (index = 0; index < this.groundVerticesPositions.length; index += 3) {
-            groundPositions.push(new BABYLON.Vector3(this.groundVerticesPositions[index], this.groundVerticesPositions[index + 1], this.groundVerticesPositions[index + 2]));
-
-          //  console.log('the ground pos', this.groundVerticesPositions[index]);
-          //  console.log('the ground pos', this.groundVerticesPositions[index]);
-
-          //this.lines = BABYLON.Mesh.CreateLines("par", this.groundPositions, scene);
-        //  console.log("positions", this.lines);
-        //  this.lines.diffuseColor = new BABYLON.Color3(1, 1, 1);
-
-
+        for (index = 0; index < groundVerticesPositions.length; index += 3) {
+            groundPositions.push(new BABYLON.Vector3(groundVerticesPositions[index], groundVerticesPositions[index + 1], groundVerticesPositions[index + 2]));
         }
 
 // get Face Normals
-        this.groundFacesNormals = [];
-        for (index = 0; index < this.ground.getTotalIndices() / 3; index++) {
-            this.computeFaceNormal(index);
+        groundFacesNormals = [];
+        for (index = 0; index < ground.getTotalIndices() / 3; index++) {
+            computeFaceNormal(index);
         }
 // get Face vertices
-        this.getFacesOfVertices();
+        getFacesOfVertices();
     }
 };
 
@@ -138,58 +132,58 @@ mountain.elevateMoutain.prototype.dataElevation = function () {
 
 
 // Get Face ID Index
-mountain.elevateMoutain.prototype.getFaceVerticesIndex = function (faceID) {
+var getFaceVerticesIndex = function (faceID) {
     return {
-        v1: this.groundIndices[faceID * 3],
-        v2: this.groundIndices[faceID * 3 + 1],
-        v3: this.groundIndices[faceID * 3 + 2]
+        v1: groundIndices[faceID * 3],
+        v2: groundIndices[faceID * 3 + 1],
+        v3: groundIndices[faceID * 3 + 2]
     };
 };
 
 // Get Face Normal
-mountain.elevateMoutain.prototype.computeFaceNormal = function (face) {
-    var faceInfo = this.getFaceVerticesIndex(face);
+var computeFaceNormal = function (face) {
+    var faceInfo = getFaceVerticesIndex(face);
 
-    var v1v2 = this.groundPositions[faceInfo.v1].subtract(this.groundPositions[faceInfo.v2]);
-    var v3v2 = this.groundPositions[faceInfo.v3].subtract(this.groundPositions[faceInfo.v2]);
+    var v1v2 = groundPositions[faceInfo.v1].subtract(groundPositions[faceInfo.v2]);
+    var v3v2 = groundPositions[faceInfo.v3].subtract(groundPositions[faceInfo.v2]);
 
-    this.groundFacesNormals[face] = BABYLON.Vector3.Normalize(BABYLON.Vector3.Cross(v1v2, v3v2));
+    var groundFacesNormals[face] = BABYLON.Vector3.Normalize(BABYLON.Vector3.Cross(v1v2, v3v2));
 };
 
 // get the faces of vertices and push values into array
 mountain.elevateMoutain.prototype.getFacesOfVertices = function () {
-    this.facesOfVertices = [];
-    this.subdivisionsOfVertices = [];
+    facesOfVertices = [];
+    subdivisionsOfVertices = [];
     var index;
 
-    for (index = 0; index < this.groundPositions.length; index++) {
-        this.facesOfVertices[index] = [];
-        this.subdivisionsOfVertices[index] = [];
+    for (index = 0; index < groundPositions.length; index++) {
+        facesOfVertices[index] = [];
+        subdivisionsOfVertices[index] = [];
     }
 
-    for (index = 0; index <  this.groundIndices.length; index++) {
-        this.facesOfVertices[this.groundIndices[index]].push((index / 3) | 0);
+    for (index = 0; index <  groundIndices.length; index++) {
+        facesOfVertices[groundIndices[index]].push((index / 3) | 0);
     }
 
-    for (var subIndex = 0; subIndex < this.ground.subMeshes.length; subIndex++) {
-        var subMesh = this.ground.subMeshes[subIndex];
+    for (var subIndex = 0; subIndex < ground.subMeshes.length; subIndex++) {
+        var subMesh = ground.subMeshes[subIndex];
         for (index = subMesh.verticesStart; index < subMesh.verticesStart + subMesh.verticesCount; index++) {
-            this.subdivisionsOfVertices[index].push(subMesh);
+            subdivisionsOfVertices[index].push(subMesh);
         }
     }
 };
 
 // get Sphere radius
-mountain.elevateMoutain.prototype.isBoxSphereIntersected = function(box, sphereCenter, sphereRadius) {
+var isBoxSphereIntersected = function(box, sphereCenter, sphereRadius) {
     var vector = BABYLON.Vector3.Clamp(sphereCenter, box.minimumWorld, box.maximumWorld);
     var num = BABYLON.Vector3.DistanceSquared(sphereCenter, vector);
     return (num <= (sphereRadius * sphereRadius));
 };
 
 // Elevate the mountain
-mountain.elevateMoutain.prototype.elevateFaces = function (pickInfo, radius, height) {
-    this.dataElevation();
-    this.selectedVertices = [];
+var elevateFaces = function (pickInfo, radius, height) {
+    dataElevation();
+    selectedVertices = [];
 
 
     // Impact Area
@@ -198,114 +192,114 @@ mountain.elevateMoutain.prototype.elevateFaces = function (pickInfo, radius, hei
     var index;
 
     // Determine list of vertices
-    for (var subIndex = 0; subIndex < this.ground.subMeshes.length; subIndex++) {
-        var subMesh = this.ground.subMeshes[subIndex];
+    for (var subIndex = 0; subIndex < ground.subMeshes.length; subIndex++) {
+        var subMesh = ground.subMeshes[subIndex];
 
-        if (!this.isBoxSphereIntersected(subMesh.getBoundingInfo().boundingBox, sphereCenter, radius)) {
+        if (!isBoxSphereIntersected(subMesh.getBoundingInfo().boundingBox, sphereCenter, radius)) {
             continue;
         }
 
         for (index = subMesh.verticesStart; index < subMesh.verticesStart + subMesh.verticesCount; index++) {
-            var position = this.groundPositions[index];
+            var position = groundPositions[index];
             sphereCenter.y = position.y;
 
             var distance = BABYLON.Vector3.Distance(position, sphereCenter);
 
             if (distance < radius) {
-                this.selectedVertices[index] = distance;
+                selectedVertices[index] = distance;
             }
         }
     }
 
     // Elevate vertices
-    for (var selectedVertice in this.selectedVertices) {
-        var position = this.groundPositions[selectedVertice];
-        var distance = this.selectedVertices[selectedVertice];
+    for (var selectedVertice in selectedVertices) {
+        var position = groundPositions[selectedVertice];
+        var distance = selectedVertices[selectedVertice];
 
 
-        var fullHeight = height * this.direction * this.invertDirection;
+        var fullHeight = height * direction * invertDirection;
         if (distance < radius * 0.3) {
             position.y += fullHeight;
         } else {
             position.y += fullHeight * (1.0 - (distance - radius * 0.3) / (radius * 0.7));
         }
 
-        if (position.y > this.heightMax)
-            position.y = this.heightMax;
-        else if (position.y < this.heightMin)
-            position.y = this.heightMin;
+        if (position.y > heightMax)
+            position.y = heightMax;
+        else if (position.y < heightMin)
+            position.y = heightMin;
 
-        this.groundVerticesPositions[selectedVertice * 3 + 1] = position.y;
+        groundVerticesPositions[selectedVertice * 3 + 1] = position.y;
 
-        this.updateSubdivisions(selectedVertice);
+        updateSubdivisions(selectedVertice);
     }
 
     // Normals
-    this.reComputeNormals();
+    reComputeNormals();
 
     // Update vertex buffer
-    this.ground.updateVerticesData(BABYLON.VertexBuffer.PositionKind, this.groundVerticesPositions);
-    this.ground.updateVerticesData(BABYLON.VertexBuffer.NormalKind,this.groundVerticesNormals);
+    ground.updateVerticesData(BABYLON.VertexBuffer.PositionKind, groundVerticesPositions);
+    ground.updateVerticesData(BABYLON.VertexBuffer.NormalKind,groundVerticesNormals);
 };
 
-mountain.elevateMoutain.prototype.reComputeNormals = function () {
+var reComputeNormals = function () {
     var faces = [];
     var face;
 
-    for (var selectedVertice in this.selectedVertices) {
-        var faceOfVertices = this.facesOfVertices[selectedVertice];
+    for (var selectedVertice in selectedVertices) {
+        var faceOfVertices = facesOfVertices[selectedVertice];
         for (var index = 0; index < faceOfVertices.length; index++) {
             faces[faceOfVertices[index]] = true;
         }
     }
 
     for (face in faces) {
-        this.computeFaceNormal(face);
+        computeFaceNormal(face);
     }
 
     for (face in faces) {
-        var faceInfo = this.getFaceVerticesIndex(face);
-        this.computeNormal(faceInfo.v1);
-        this.computeNormal(faceInfo.v2);
-        this.computeNormal(faceInfo.v3);
+        var faceInfo = getFaceVerticesIndex(face);
+        computeNormal(faceInfo.v1);
+        computeNormal(faceInfo.v2);
+        computeNormal(faceInfo.v3);
     }
 };
 
-mountain.elevateMoutain.prototype.computeNormal = function(vertexIndex) {
-    var faces = this.facesOfVertices[vertexIndex];
+var computeNormal = function(vertexIndex) {
+    var faces = facesOfVertices[vertexIndex];
 
     var normal = BABYLON.Vector3.Zero();
     for (var index = 0; index < faces.length; index++) {
-        normal = normal.add(this.groundFacesNormals[faces[index]]);
+        normal = normal.add(groundFacesNormals[faces[index]]);
     }
 
     normal = BABYLON.Vector3.Normalize(normal.scale(1.0 / faces.length));
 
-    this.groundVerticesNormals[vertexIndex * 3] = normal.x;
-    this.groundVerticesNormals[vertexIndex * 3 + 1] = normal.y;
-    this.groundVerticesNormals[vertexIndex * 3 + 2] = normal.z;
+    groundVerticesNormals[vertexIndex * 3] = normal.x;
+    groundVerticesNormals[vertexIndex * 3 + 1] = normal.y;
+    groundVerticesNormals[vertexIndex * 3 + 2] = normal.z;
 };
 
-mountain.elevateMoutain.prototype.updateSubdivisions = function (vertexIndex) {
-    for (var index = 0; index < this.subdivisionsOfVertices[vertexIndex].length; index++) {
-        var sub = this.subdivisionsOfVertices[vertexIndex][index];
+var updateSubdivisions = function (vertexIndex) {
+    for (var index = 0; index < subdivisionsOfVertices[vertexIndex].length; index++) {
+        var sub = subdivisionsOfVertices[vertexIndex][index];
         var boundingBox = sub.getBoundingInfo().boundingBox;
         var boundingSphere = sub.getBoundingInfo().boundingSphere;
 
-        if (this.groundPositions[vertexIndex].y < boundingBox.minimum.y) {
-            boundingSphere.radius += Math.abs(this.groundPositions[vertexIndex].y - boundingBox.minimum.y);
-            boundingBox.minimum.y = this.groundPositions[vertexIndex].y;
-        } else if (this.groundPositions[vertexIndex].y > boundingBox.maximum.y) {
-            boundingBox.maximum.y = this.groundPositions[vertexIndex].y;
+        if (groundPositions[vertexIndex].y < boundingBox.minimum.y) {
+            boundingSphere.radius += Math.abs(groundPositions[vertexIndex].y - boundingBox.minimum.y);
+            boundingBox.minimum.y = groundPositions[vertexIndex].y;
+        } else if (groundPositions[vertexIndex].y > boundingBox.maximum.y) {
+            boundingBox.maximum.y = groundPositions[vertexIndex].y;
         }
     }
 
-    var boundingBox = this.ground.getBoundingInfo().boundingBox;
-    var boundingSphere = this.ground.getBoundingInfo().boundingSphere;
-    if (this.groundPositions[vertexIndex].y < boundingBox.minimum.y) {
-        boundingSphere.Radius += Math.abs(this.groundPositions[vertexIndex].y - boundingBox.minimum.y);
-        boundingBox.minimum.y = this.groundPositions[vertexIndex].y;
-    } else if (this.groundPositions[vertexIndex].y > boundingBox.maximum.y) {
-        boundingBox.maximum.y = this.groundPositions[vertexIndex].y;
+    var boundingBox = ground.getBoundingInfo().boundingBox;
+    var boundingSphere = ground.getBoundingInfo().boundingSphere;
+    if (groundPositions[vertexIndex].y < boundingBox.minimum.y) {
+        boundingSphere.Radius += Math.abs(groundPositions[vertexIndex].y - boundingBox.minimum.y);
+        boundingBox.minimum.y = groundPositions[vertexIndex].y;
+    } else if (groundPositions[vertexIndex].y > boundingBox.maximum.y) {
+        boundingBox.maximum.y = groundPositions[vertexIndex].y;
     }
 };
