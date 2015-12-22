@@ -7,7 +7,7 @@ mountain.elevateMoutain = function(ground){
   this.ground = ground;          // mountain plane
   this.radius = 20.0;           // selection radius
   this.invertDirection = 1.0;   // direction for inversion
-  this.heightMin = -10.0;       // height min
+  this.heightMin = -20.0;       // height min
   this.heightMax = 60.0;       // max heigh of moutain
 };
 

@@ -4,64 +4,23 @@
 <head>
   <meta charset="utf-8">
   <title>3d Topographic Map</title>
-  <style>
-    html,
-    body {
-      overflow: hidden;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    #renderCanvas {
-      width: 100%;
-      height: 100%;
-      touch-action: none;
-    }
-
-    .menu {
-      position: absolute;
-      top: 0%;
-      margin: 0;
-      width: 100px;
-      min-width: 100px;
-      height: 100%;
-      z-index: 30;
-      /*border: 2px solid #000000;*/
-      background: #3F4B3E;
-      opacity: 0.6;
-      padding: 15px;
-    }
-
-    .buttons {
-      margin: 0 auto;
-      -webkit-border-radius: 50px;
-      -moz-border-radius: 50px;
-      -ms-border-radius: 50px;
-      -o-border-radius: 50px;
-      border-radius: 50px;
-      width: 100px;
-      height: 100px;
-      display: block;
-      margin-bottom: 10px;
-    }
-  </style>
-  <script src="js/babylon.js"></script>
+  <script src="http://cdn.babylonjs.com/2-2/babylon.js"></script>
   <script src="js/hand.js"></script>
   <script src="js/cannon.js"></script>
   <script src="js/mountainElevation.js"></script>
+  <script src="Shaders/Water/waterMaterial.js"></script>
   <script src="js/fire.js"></script>
   <script src="js/index2.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/map.css"/>
   <!-- optional physics engine -->
 </head>
 
 <body>
   <div class="menu">
-    <button class="controlButton selected" id="cameraButton" alt="Control the camera">Camera</button>
-    <button class="controlButton" id="elevationButton">up</button>
-    <button class="controlButton" id="digButton">down</button>
+    <button class="controlButton selected" id="cameraButton" alt="Control the camera">Camera Mode</button>
+    <button class="controlButton" id="elevationButton">Add Mountain</button>
+    <button class="controlButton" id="digButton">Add Water</button>
     <button class="controlButton" id="volcanoButton" alt="Add Volcano">Add Fire</button>
     <div id="fps"></div>
   </div>
