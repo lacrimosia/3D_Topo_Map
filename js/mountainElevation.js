@@ -38,7 +38,7 @@ mountain.elevateMoutain.prototype.attachControl = function (canvas) {
     //    that._particleSystem.manualEmitCount += 400;
 
     // elevate faces on user control
-        that.elevateFaces(pickInfo, that.radius, 0.5);
+        that.elevateFaces(pickInfo, that.radius, 0.3);
     };
 
 // get current position from client
@@ -97,11 +97,7 @@ mountain.elevateMoutain.prototype.detachControl = function (canvas) {
     this.ground.getScene().unregisterBeforeRender(this.onBeforeRender);
 };
 
-mountain.elevateMountain.protoype.addFire = function(){
-
-};
-
-// evelvate mountain selections
+// elevate mountain selections
 mountain.elevateMoutain.prototype.dataElevation = function () {
   // get faces
     if (this.facesOfVertices == null) {
@@ -183,6 +179,7 @@ mountain.elevateMoutain.prototype.elevateFaces = function (pickInfo, radius, hei
     this.dataElevation();
     this.selectedVertices = [];
 
+
     // Impact Area
     var sphereCenter = pickInfo.pickedPoint;
     sphereCenter.y = 0;
@@ -212,6 +209,7 @@ mountain.elevateMoutain.prototype.elevateFaces = function (pickInfo, radius, hei
     for (var selectedVertice in this.selectedVertices) {
         var position = this.groundPositions[selectedVertice];
         var distance = this.selectedVertices[selectedVertice];
+
 
         var fullHeight = height * this.direction * this.invertDirection;
         if (distance < radius * 0.3) {

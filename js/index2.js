@@ -2,6 +2,7 @@ var launch = function () {
     var canvas = document.getElementById("renderCanvas");
     var divFps = document.getElementById("fps");
     var mode = "CAMERA";
+    var clicked = false;
 
     if (!BABYLON.Engine.isSupported()) {
         document.getElementById("notSupported").className = "";
@@ -32,11 +33,22 @@ var launch = function () {
     skybox.isPickable = false;
 
     // Grounds
-    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
+    var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 200, 0, 100, scene, true);
     var groundMaterial = new BABYLON.StandardMaterial("mountain", scene);
-    groundMaterial.diffuseTexture = new BABYLON.Texture("images/mountain.jpg", scene);
+   groundMaterial.diffuseTexture = new BABYLON.Texture("images/mountain.jpg", scene);
     ground.material = groundMaterial;
     ground.position.y = -2.0;
+
+    // Grounds Lines
+/*  var groundLines = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 200, 0, 100, scene, true);
+    // wireframe material
+          var wire = new BABYLON.StandardMaterial("wires", scene);
+          wire.diffuseColor = new BABYLON.Color3(1, 1, 1);
+          wire.wireframe = true;
+    groundLines.material = wire;
+    groundLines.position.y = -2.0;
+*/
+
 
   //  var extraGround = BABYLON.Mesh.CreateGround("extraGround", 1000, 1000, 1, scene, false);
   /*  var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
@@ -60,6 +72,7 @@ var launch = function () {
 
     // Elevation
     var elevationControl = new mountain.elevateMoutain(ground);
+    // var elevationControl2 = new mountain.elevateMoutain(groundLines);
 
     // Bloom
     var blurWidth = 2.0;
@@ -79,6 +92,24 @@ var launch = function () {
         effect.setFloat("glowIntensity", 0.6);
         effect.setFloat("highlightIntensity", 1.5);
     };*/
+
+    var paths = [];
+	for (var t = 1; t < 100; t++) {
+		var path = [];
+		for (var k = 0; k <= 25; k++) {
+		  var x = Math.sin(t);
+		  var y = k;
+		  var z = k*t;
+		  path.push(new BABYLON.Vector3(x, y, z));
+		}
+		paths.push(path);
+		var lines = BABYLON.Mesh.CreateLines("par", path, scene);
+    lines.rotation.z = Math.PI;
+  lines.position.y = 10;
+	}
+
+
+
 
     // Render loop
     var renderFunction = function () {
@@ -122,6 +153,7 @@ var launch = function () {
     var cameraButton = document.getElementById("cameraButton");
     var elevationButton = document.getElementById("elevationButton");
     var digButton = document.getElementById("digButton");
+    var fireButton = document.getElementById("volcanoButton");
 
     window.oncontextmenu = function () {
         return false;
@@ -178,5 +210,90 @@ var launch = function () {
         elevationButton.className = "controlButton";
         cameraButton.className = "controlButton";
     });
+
+
+
+    //When click event is raised
+window.addEventListener("click", function () {
+  var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+
+
+if(clicked == true){
+  var xVal = pickResult.pickedPoint.x;
+  var yVal = pickResult.pickedPoint.y;
+  var zVal = pickResult.pickedPoint.z;
+  if(pickResult.hit){
+    var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+      ABox.position = new BABYLON.Vector3(xVal,yVal,zVal);
+      // Fire Particle System
+  // particle emitter
+ //  var fountain = BABYLON.Mesh.CreateBox("fountain", 20.0, scene);
+  // Create a particle system
+      var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+
+      //Texture of each particle
+      particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
+
+      // Where the particles come from
+    //  particleSystem.emitter = fountain; // the starting object, the emitter
+      particleSystem.emitter = ABox;
+      particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
+      particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
+
+      // Colors of all particles
+      particleSystem.color1 = new BABYLON.Color4(0.8, 0.1, 0, 1.0);
+      particleSystem.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
+      particleSystem.colorDead = new BABYLON.Color4(0, 0,0, 0.0);
+
+      // Size of each particle (random between...
+      particleSystem.minSize = 5;
+      particleSystem.maxSize = 10;
+
+      // Life time of each particle (random between...
+      particleSystem.minLifeTime = 0.3;
+      particleSystem.maxLifeTime = 1.5;
+
+      // Emission rate
+      particleSystem.emitRate = 2500;
+
+      // Blend mode : BLENDMODE_ONEONE, or BLENDMODE_STANDARD
+      particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+
+      // Set the gravity of all particles
+      particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
+
+      // Direction of each particle after it has been emitted
+      particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
+      particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+
+      // Angular speed, in radians
+      particleSystem.minAngularSpeed = 0;
+      particleSystem.maxAngularSpeed = Math.PI;
+
+      // Speed
+      particleSystem.minEmitPower = 1;
+      particleSystem.maxEmitPower = 3;
+      particleSystem.updateSpeed = 0.005;
+
+      // Start the particle system
+      particleSystem.start();
+  }
+}
+});
+
+
+
+    fireButton.addEventListener("pointerdown", function () {
+    var clicked = true;
+      fireButton.className = "controlButton selected";
+      digButton.className = "controlButton";
+      elevationButton.className = "controlButton";
+      cameraButton.className = "controlButton";
+      return;
+    });
+
+
+
+
 
 };
