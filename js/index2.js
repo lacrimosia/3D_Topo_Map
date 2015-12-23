@@ -36,30 +36,14 @@ sun.intensity = 0.4;
   skybox.isPickable = false;
 
   // Grounds
-  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 200, 0, 100, scene, true);
+  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
   var groundMaterial = new BABYLON.StandardMaterial("mountain", scene);
   groundMaterial.diffuseTexture = new BABYLON.Texture("images/mountain.jpg", scene);
+  ground.backFaceCulling = false;
  groundMaterial.diffuseTexture.uScale = 30;
 groundMaterial.diffuseTexture.vScale = 40;
   ground.material = groundMaterial;
   ground.position.y = -2.0;
-
-  // Grounds Lines
-  /*var groundLines = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 200, 0, 100, scene, true);
-      // wireframe material
-    var wire = new BABYLON.StandardMaterial("wires", scene);
-    wire.diffuseColor = new BABYLON.Color3(0, 0, 0);
-    wire.wireframe = true;
-    groundLines.material = wire;
-    groundLines.position.y = -2.0;*/
-
-    // Creation of a lines mesh
-  /* var lines = BABYLON.Mesh.CreateLines("lines", [
-       new BABYLON.Vector3(-10, 0, 0),
-       new BABYLON.Vector3(10, 0, 0),
-       new BABYLON.Vector3(0, 0, -10),
-       new BABYLON.Vector3(0, 0, 10)
-   ], scene);*/
 
 // sand on the ground
   var extraGround = BABYLON.Mesh.CreateGround("extraGround", 1400, 1400, 1, scene, false);
@@ -86,7 +70,6 @@ groundMaterial.diffuseTexture.vScale = 40;
 
   // Elevation
   var elevationControl = new mountain.elevateMoutain(ground);
-  // var elevationControl2 = new mountain.elevateMoutain(groundLines);
 
   // Bloom
   var blurWidth = 2.0;
@@ -107,10 +90,10 @@ groundMaterial.diffuseTexture.vScale = 40;
       effect.setFloat("highlightIntensity", 1.5);
   };
 
-/*  var paths = [];
-	for (var t = 1; t < 100; t++) {
+var paths = [];
+	for (var t = 1; t < 1400; t++) {
 		var path = [];
-		for (var k = 0; k <= 100; k++) {
+		for (var k = 0; k <= 1400; k++) {
 		  var x = t;
 		 var y = k;
 		  var z = 10;
@@ -120,7 +103,7 @@ groundMaterial.diffuseTexture.vScale = 40;
 		var lines = BABYLON.Mesh.CreateLines("par", path, scene);
   //  lines.rotation.z = Math.PI;
 lines.position.y = 10;
-}*/
+}
 
 
  // console.log("positions", getPositionsForLines());
