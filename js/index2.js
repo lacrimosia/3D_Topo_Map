@@ -93,7 +93,7 @@ groundMaterial.diffuseTexture.vScale = 40;
       effect.setFloat("highlightIntensity", 1.5);
   };
 
-var paths = [];
+/*var paths = [];
 	for (var t = 1; t < 1400; t++) {
 		var path = [];
 		for (var k = 0; k <= 1400; k++) {
@@ -106,7 +106,7 @@ var paths = [];
 		var lines = BABYLON.Mesh.CreateLines("par", path, scene);
   //  lines.rotation.z = Math.PI;
 lines.position.y = 10;
-}
+}*/
 
 
  // console.log("positions", getPositionsForLines());
