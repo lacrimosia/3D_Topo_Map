@@ -113,15 +113,6 @@ mountain.elevateMoutain.prototype.dataElevation = function () {
         var index;
         for (index = 0; index < this.groundVerticesPositions.length; index += 3) {
             this.groundPositions.push(new BABYLON.Vector3(this.groundVerticesPositions[index], this.groundVerticesPositions[index + 1], this.groundVerticesPositions[index + 2]));
-
-          //  console.log('the ground pos', this.groundVerticesPositions[index]);
-          //  console.log('the ground pos', this.groundVerticesPositions[index]);
-
-          //this.lines = BABYLON.Mesh.CreateLines("par", this.groundPositions, scene);
-        //  console.log("positions", this.lines);
-        //  this.lines.diffuseColor = new BABYLON.Color3(1, 1, 1);
-
-
         }
 
 // get Face Normals

@@ -45,6 +45,9 @@ groundMaterial.diffuseTexture.vScale = 40;
   ground.material = groundMaterial;
   ground.position.y = -2.0;
 
+//var groundPos = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+// console.log("verts", groundPos);
+
 // sand on the ground
   var extraGround = BABYLON.Mesh.CreateGround("extraGround", 1400, 1400, 1, scene, false);
   var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
