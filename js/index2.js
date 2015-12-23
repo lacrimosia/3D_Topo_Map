@@ -67,12 +67,12 @@ groundMaterial.diffuseTexture.vScale = 40;
   extraGroundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   extraGroundMaterial.diffuseTexture.uScale = 40;
   extraGroundMaterial.diffuseTexture.vScale = 40;
-  extraGround.position.y = -14.0;
+  extraGround.position.y = -2.0;
   extraGround.material = extraGroundMaterial;
 
   // Water
   var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
-  water.position.y = -2.0;
+  water.position.y = -1.0;
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
   waterMaterial.refractionTexture.renderList.push(extraGround);
