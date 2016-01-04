@@ -45,8 +45,11 @@ groundMaterial.diffuseTexture.vScale = 40;
   ground.material = groundMaterial;
   ground.position.y = -2.0;
 
-//var groundPos = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
-// console.log("verts", groundPos);
+
+// wire material
+var wireMaterial = new BABYLON.StandardMaterial("wires", scene);
+wireMaterial.diffuse = new BABYLON.Color3(1, 1, 1);
+wireMaterial.wire = true;
 
 // sand on the ground
   var extraGround = BABYLON.Mesh.CreateGround("extraGround", 1400, 1400, 1, scene, false);
@@ -72,7 +75,7 @@ groundMaterial.diffuseTexture.vScale = 40;
 
 
   // Elevation
-  var elevationControl = new mountain.elevateMoutain(ground);
+  var elevationControl = new mountain.elevateMountain(ground);
 
   // Bloom
   var blurWidth = 2.0;
@@ -92,25 +95,6 @@ groundMaterial.diffuseTexture.vScale = 40;
       effect.setFloat("glowIntensity", 0.6);
       effect.setFloat("highlightIntensity", 1.5);
   };
-
-/*var paths = [];
-	for (var t = 1; t < 1400; t++) {
-		var path = [];
-		for (var k = 0; k <= 1400; k++) {
-		  var x = t;
-		 var y = k;
-		  var z = 10;
-		  path.push(new BABYLON.Vector3(x, y, z));
-		}
-		paths.push(path);
-		var lines = BABYLON.Mesh.CreateLines("par", path, scene);
-  //  lines.rotation.z = Math.PI;
-lines.position.y = 10;
-}*/
-
-
- // console.log("positions", getPositionsForLines());
-
 
   // Render loop
   var renderFunction = function() {
@@ -140,9 +124,14 @@ lines.position.y = 10;
     skybox.rotation.y += 0.0001 * scene.getAnimationRatio();
   };
 
+// mountains
+console.log("positions", elevationControl.test());
+
+
   // Launch render loop
   scene.executeWhenReady(function() {
     engine.runRenderLoop(renderFunction);
+
   });
 
   // Resize
@@ -292,9 +281,5 @@ lines.position.y = 10;
     cameraButton.className = "controlButton";
     return;
   });
-
-
-
-
 
 };

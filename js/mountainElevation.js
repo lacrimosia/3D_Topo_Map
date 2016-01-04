@@ -1,22 +1,29 @@
-// modified js -- from http://babylonjs.com/Scenes/Worldmonger/index.html
+// modified js -- from http://babylonjs.com/Scenes/mountain/index.html
 
 var mountain = mountain || {};
 
 // get the default values
-mountain.elevateMoutain = function(ground){
+mountain.elevateMountain = function(ground){
   this.ground = ground;          // mountain plane
   this.radius = 15.0;           // selection radius
   this.invertDirection = 1.0;   // direction for inversion
   this.heightMin = -20.0;       // height min
   this.heightMax = 60.0;       // max heigh of moutain
   this.positions = [];
+
+};
+
+mountain.elevateMountain.prototype.test = function(){
+/*this.positions = this.ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+return this.positions;*/
+
 };
 
 // elevate area direction
-mountain.elevateMoutain.prototype.elevateDirection = 1;
+mountain.elevateMountain.prototype.elevateDirection = 1;
 
 // attach control for user
-mountain.elevateMoutain.prototype.attachControl = function (canvas) {
+mountain.elevateMountain.prototype.attachControl = function (canvas) {
     var currentPosition;    // get current position
     var that = this;
 
@@ -88,7 +95,7 @@ mountain.elevateMoutain.prototype.attachControl = function (canvas) {
 };
 
 // detach control when user clicks the camera button
-mountain.elevateMoutain.prototype.detachControl = function (canvas) {
+mountain.elevateMountain.prototype.detachControl = function (canvas) {
     canvas.removeEventListener("pointerdown", this.onPointerDown);
     canvas.removeEventListener("pointerup", this.onPointerUp);
     canvas.removeEventListener("pointerout", this.onPointerUp);
@@ -99,9 +106,9 @@ mountain.elevateMoutain.prototype.detachControl = function (canvas) {
 };
 
 // elevate mountain selections
-mountain.elevateMoutain.prototype.dataElevation = function () {
+mountain.elevateMountain.prototype.dataElevation = function () {
   // get faces
-    if (this.facesOfVertices == null) {
+if (this.facesOfVertices == null) {
         this.facesOfVertices = [];
 
 // get vertices positions, Normals, and Indices
@@ -110,7 +117,7 @@ mountain.elevateMoutain.prototype.dataElevation = function () {
         this.groundIndices = this.ground.getIndices();
 
 // store the current ground positions in ground array
-        this.groundPositions = [];
+    this.groundPositions = [];
         var index;
         for (index = 0; index < this.groundVerticesPositions.length; index += 3) {
             this.groundPositions.push(new BABYLON.Vector3(this.groundVerticesPositions[index], this.groundVerticesPositions[index + 1], this.groundVerticesPositions[index + 2]));
@@ -130,14 +137,14 @@ mountain.elevateMoutain.prototype.dataElevation = function () {
         }
 // get Face vertices
         this.getFacesOfVertices();
-    }
+}
 };
 
 
 
 
 // Get Face ID Index
-mountain.elevateMoutain.prototype.getFaceVerticesIndex = function (faceID) {
+mountain.elevateMountain.prototype.getFaceVerticesIndex = function (faceID) {
     return {
         v1: this.groundIndices[faceID * 3],
         v2: this.groundIndices[faceID * 3 + 1],
@@ -146,7 +153,7 @@ mountain.elevateMoutain.prototype.getFaceVerticesIndex = function (faceID) {
 };
 
 // Get Face Normal
-mountain.elevateMoutain.prototype.computeFaceNormal = function (face) {
+mountain.elevateMountain.prototype.computeFaceNormal = function (face) {
     var faceInfo = this.getFaceVerticesIndex(face);
 
     var v1v2 = this.groundPositions[faceInfo.v1].subtract(this.groundPositions[faceInfo.v2]);
@@ -156,7 +163,7 @@ mountain.elevateMoutain.prototype.computeFaceNormal = function (face) {
 };
 
 // get the faces of vertices and push values into array
-mountain.elevateMoutain.prototype.getFacesOfVertices = function () {
+mountain.elevateMountain.prototype.getFacesOfVertices = function () {
     this.facesOfVertices = [];
     this.subdivisionsOfVertices = [];
     var index;
@@ -176,17 +183,18 @@ mountain.elevateMoutain.prototype.getFacesOfVertices = function () {
             this.subdivisionsOfVertices[index].push(subMesh);
         }
     }
+    return this.subdivisionsOfVertices[index];
 };
 
 // get Sphere radius
-mountain.elevateMoutain.prototype.isBoxSphereIntersected = function(box, sphereCenter, sphereRadius) {
+mountain.elevateMountain.prototype.isBoxSphereIntersected = function(box, sphereCenter, sphereRadius) {
     var vector = BABYLON.Vector3.Clamp(sphereCenter, box.minimumWorld, box.maximumWorld);
     var num = BABYLON.Vector3.DistanceSquared(sphereCenter, vector);
     return (num <= (sphereRadius * sphereRadius));
 };
 
 // Elevate the mountain
-mountain.elevateMoutain.prototype.elevateFaces = function (pickInfo, radius, height) {
+mountain.elevateMountain.prototype.elevateFaces = function (pickInfo, radius, height) {
     this.dataElevation();
     this.selectedVertices = [];
 
@@ -247,7 +255,7 @@ mountain.elevateMoutain.prototype.elevateFaces = function (pickInfo, radius, hei
     this.ground.updateVerticesData(BABYLON.VertexBuffer.NormalKind,this.groundVerticesNormals);
 };
 
-mountain.elevateMoutain.prototype.reComputeNormals = function () {
+mountain.elevateMountain.prototype.reComputeNormals = function () {
     var faces = [];
     var face;
 
@@ -270,7 +278,7 @@ mountain.elevateMoutain.prototype.reComputeNormals = function () {
     }
 };
 
-mountain.elevateMoutain.prototype.computeNormal = function(vertexIndex) {
+mountain.elevateMountain.prototype.computeNormal = function(vertexIndex) {
     var faces = this.facesOfVertices[vertexIndex];
 
     var normal = BABYLON.Vector3.Zero();
@@ -285,7 +293,7 @@ mountain.elevateMoutain.prototype.computeNormal = function(vertexIndex) {
     this.groundVerticesNormals[vertexIndex * 3 + 2] = normal.z;
 };
 
-mountain.elevateMoutain.prototype.updateSubdivisions = function (vertexIndex) {
+mountain.elevateMountain.prototype.updateSubdivisions = function (vertexIndex) {
     for (var index = 0; index < this.subdivisionsOfVertices[vertexIndex].length; index++) {
         var sub = this.subdivisionsOfVertices[vertexIndex][index];
         var boundingBox = sub.getBoundingInfo().boundingBox;
