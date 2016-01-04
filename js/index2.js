@@ -48,6 +48,11 @@ groundMaterial.diffuseTexture.vScale = 40;
 //var groundPos = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
 // console.log("verts", groundPos);
 
+// wire material
+var wireMaterial = new BABYLON.StandardMaterial("wires", scene);
+wireMaterial.diffuse = new BABYLON.Color3(1, 1, 1);
+wireMaterial.wire = true;
+
 // sand on the ground
   var extraGround = BABYLON.Mesh.CreateGround("extraGround", 1400, 1400, 1, scene, false);
   var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
@@ -93,11 +98,6 @@ groundMaterial.diffuseTexture.vScale = 40;
       effect.setFloat("highlightIntensity", 1.5);
   };
 
-
- // console.log("positions", getPositionsForLines());
-
-
-
   // Render loop
   var renderFunction = function() {
     if (ground.isReady && ground.subMeshes.length == 1) {
@@ -131,7 +131,7 @@ groundMaterial.diffuseTexture.vScale = 40;
   // Launch render loop
   scene.executeWhenReady(function() {
     engine.runRenderLoop(renderFunction);
-    
+
   });
 
   // Resize
@@ -281,9 +281,5 @@ groundMaterial.diffuseTexture.vScale = 40;
     cameraButton.className = "controlButton";
     return;
   });
-
-
-
-
 
 };
