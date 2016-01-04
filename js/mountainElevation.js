@@ -9,6 +9,7 @@ mountain.elevateMoutain = function(ground){
   this.invertDirection = 1.0;   // direction for inversion
   this.heightMin = -20.0;       // height min
   this.heightMax = 60.0;       // max heigh of moutain
+  this.positions = [];
 };
 
 // elevate area direction
@@ -113,6 +114,13 @@ mountain.elevateMoutain.prototype.dataElevation = function () {
         var index;
         for (index = 0; index < this.groundVerticesPositions.length; index += 3) {
             this.groundPositions.push(new BABYLON.Vector3(this.groundVerticesPositions[index], this.groundVerticesPositions[index + 1], this.groundVerticesPositions[index + 2]));
+            this.positions.push(this.groundVerticesPositions[index]);
+          /*  this.positions.push({
+                x: this.groundVerticesPositions[index],
+                y: this.groundVerticesPositions[index + 1],
+                z: this.groundVerticesPositions[index + 2]
+              });*/
+            console.log("data x", this.positions);
         }
 
 // get Face Normals
