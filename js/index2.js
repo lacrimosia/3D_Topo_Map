@@ -125,7 +125,7 @@ wireMaterial.wire = true;
   };
 
 // mountains
-console.log("positions", elevationControl.test());
+// console.log("positions", elevationControl.getFacesOfVertices());
 
 
   // Launch render loop

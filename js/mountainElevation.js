@@ -121,13 +121,12 @@ if (this.facesOfVertices == null) {
         var index;
         for (index = 0; index < this.groundVerticesPositions.length; index += 3) {
             this.groundPositions.push(new BABYLON.Vector3(this.groundVerticesPositions[index], this.groundVerticesPositions[index + 1], this.groundVerticesPositions[index + 2]));
-            this.positions.push(this.groundVerticesPositions[index]);
+          //  this.positions.push(this.groundVerticesPositions[index]);
           /*  this.positions.push({
                 x: this.groundVerticesPositions[index],
                 y: this.groundVerticesPositions[index + 1],
                 z: this.groundVerticesPositions[index + 2]
               });*/
-            console.log("data x", this.positions);
         }
 
 // get Face Normals
@@ -160,6 +159,8 @@ mountain.elevateMountain.prototype.computeFaceNormal = function (face) {
     var v3v2 = this.groundPositions[faceInfo.v3].subtract(this.groundPositions[faceInfo.v2]);
 
     this.groundFacesNormals[face] = BABYLON.Vector3.Normalize(BABYLON.Vector3.Cross(v1v2, v3v2));
+
+  //  console.log("ground Normals", this.groundFacesNormals[face]);
 };
 
 // get the faces of vertices and push values into array
