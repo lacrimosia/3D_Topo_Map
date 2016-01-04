@@ -93,23 +93,9 @@ groundMaterial.diffuseTexture.vScale = 40;
       effect.setFloat("highlightIntensity", 1.5);
   };
 
-/*var paths = [];
-	for (var t = 1; t < 1400; t++) {
-		var path = [];
-		for (var k = 0; k <= 1400; k++) {
-		  var x = t;
-		 var y = k;
-		  var z = 10;
-		  path.push(new BABYLON.Vector3(x, y, z));
-		}
-		paths.push(path);
-		var lines = BABYLON.Mesh.CreateLines("par", path, scene);
-  //  lines.rotation.z = Math.PI;
-lines.position.y = 10;
-}*/
-
 
  // console.log("positions", getPositionsForLines());
+
 
 
   // Render loop
@@ -140,9 +126,12 @@ lines.position.y = 10;
     skybox.rotation.y += 0.0001 * scene.getAnimationRatio();
   };
 
+
+
   // Launch render loop
   scene.executeWhenReady(function() {
     engine.runRenderLoop(renderFunction);
+    
   });
 
   // Resize
