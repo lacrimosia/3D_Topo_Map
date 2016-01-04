@@ -45,8 +45,6 @@ groundMaterial.diffuseTexture.vScale = 40;
   ground.material = groundMaterial;
   ground.position.y = -2.0;
 
-//var groundPos = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
-// console.log("verts", groundPos);
 
 // wire material
 var wireMaterial = new BABYLON.StandardMaterial("wires", scene);
@@ -77,7 +75,7 @@ wireMaterial.wire = true;
 
 
   // Elevation
-  var elevationControl = new mountain.elevateMoutain(ground);
+  var elevationControl = new mountain.elevateMountain(ground);
 
   // Bloom
   var blurWidth = 2.0;
@@ -126,6 +124,8 @@ wireMaterial.wire = true;
     skybox.rotation.y += 0.0001 * scene.getAnimationRatio();
   };
 
+// mountains
+console.log("positions", elevationControl.test());
 
 
   // Launch render loop
