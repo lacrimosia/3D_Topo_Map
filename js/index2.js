@@ -13,14 +13,13 @@ var launch = function() {
   BABYLON.Engine.ShadersRepository = "Shaders/";
   var engine = new BABYLON.Engine(canvas, true);
   var scene = new BABYLON.Scene(engine);
-  var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
-  camera.setPosition(new BABYLON.Vector3(20, 40, 20));
+  var camera = new BABYLON.ArcRotateCamera("Camera", 3.8, 3.8, 10, new BABYLON.Vector3(20, 80, 20), scene);
   camera.attachControl(canvas);
 
   var sun = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
   sun.diffuse = new BABYLON.Color3(1, 1, 1);
   sun.specular = new BABYLON.Color3(1, 1, 1);
-  sun.intensity = 0.7;
+  sun.intensity = 0.8;
 
 
   var skybox = BABYLON.Mesh.CreateBox("skyBox", 4000.0, scene);
@@ -123,7 +122,7 @@ var launch = function() {
       camera.radius = 5;
 
     // Fps
-    divFps.innerHTML = engine.getFps().toFixed() + " fps";
+    // divFps.innerHTML = engine.getFps().toFixed() + " fps";
 
     // Render scene
     scene.render();
@@ -146,8 +145,8 @@ var launch = function() {
   // UI
   var cameraButton = document.getElementById("cameraButton");
   var elevationButton = document.getElementById("elevationButton");
-  //  var digButton = document.getElementById("digButton");
-  var fireButton = document.getElementById("volcanoButton");
+  var digButton = document.getElementById("digButton");
+//  var fireButton = document.getElementById("volcanoButton");
 
   window.oncontextmenu = function() {
     return false;
@@ -162,7 +161,7 @@ var launch = function() {
 
     mode = "CAMERA";
     cameraButton.className = "buttons selected";
-    // digButton.className = "buttons";
+    digButton.className = "buttons";
   //  fireButton.className = "buttons";
     elevationButton.className = "buttons";
   });
@@ -181,6 +180,26 @@ var launch = function() {
     elevationControl.direction = 1;
 
     elevationButton.className = "buttons selected";
+    cameraButton.className = "buttons";
+    digButton.className = "buttons";
+  //  fireButton.className = "buttons";
+  });
+
+  // Water Mode
+  digButton.addEventListener("pointerdown", function() {
+    if (mode == "DIG")
+        return;
+
+    if (mode == "CAMERA") {
+        camera.detachControl(canvas);
+        elevationControl.attachControl(canvas);
+    }
+
+    mode = "DIG";
+    elevationControl.direction = -1;
+
+    digButton.className = "buttons selected";
+    elevationButton.className = "buttons";
     cameraButton.className = "buttons";
   //  fireButton.className = "buttons";
   });
