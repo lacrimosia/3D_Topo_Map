@@ -11,15 +11,28 @@
   <script src="js/cannon.js"></script>
   <script src="js/mountainElevation.js"></script>
   <script src="Shaders/Water/waterMaterial.js"></script>
+  <script src="Shaders/Ground/groundMaterial.js"></script>
   <script src="js/fire.js"></script>
   <script src="js/index2.js"></script>
-  <script src="js/groundMaterial.js"></script>
+  <!--<script src="js/groundMaterial.js"></script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <link rel="stylesheet" href="css/map.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <script>
+      function writeViewPort() {
+          var ua = navigator.userAgent;
+          if (ua.indexOf("Android") >= 0 && ua.indexOf("AppleWebKit") >= 0) {
+              var webkitVersion = parseFloat(ua.slice(ua.indexOf("AppleWebKit") + 12));
+              // targets android browser, not chrome browser (http://jimbergman.net/webkit-version-in-android-version/)
+              if (webkitVersion < 535) {
+                  document.write('<meta name="viewport" content="initial-scale=1" />');
+              }
+          }
+      }
 
-  <!-- optional physics engine -->
+      writeViewPort();
+  </script>
 </head>
 
 <body>

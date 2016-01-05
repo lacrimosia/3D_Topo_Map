@@ -11,6 +11,33 @@ mountain.elevateMountain = function(ground){
   this.heightMax = 60.0;       // max heigh of moutain
   this.positions = [];
 
+    var scene = ground.getScene();
+  //  var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+    var particleSystem = new BABYLON.ParticleSystem("particles", 4000, scene);
+    particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
+    particleSystem.minAngularSpeed = -4.5;
+    particleSystem.maxAngularSpeed = 4.5;
+    particleSystem.minSize = 0.5;
+    particleSystem.maxSize = 4.0;
+    particleSystem.minLifeTime = 0.5;
+    particleSystem.maxLifeTime = 2.0;
+    particleSystem.minEmitPower = 0.5;
+    particleSystem.maxEmitPower = 1.0;
+    particleSystem.emitRate = 400;
+    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+    particleSystem.minEmitBox = new BABYLON.Vector3(0, 0, 0);
+    particleSystem.maxEmitBox = new BABYLON.Vector3(0, 0, 0);
+    particleSystem.direction1 = new BABYLON.Vector3(0, 1, 0);
+    particleSystem.direction2 = new BABYLON.Vector3(0, 1, 0);
+    particleSystem.color1 = new BABYLON.Color4(0, 0, 1, 1);
+    particleSystem.color2 = new BABYLON.Color4(1, 1, 1, 1);
+    particleSystem.gravity = new BABYLON.Vector3(0, 5, 0);
+    particleSystem.manualEmitCount = 0;
+    particleSystem.emitter = new BABYLON.Vector3(0, 0, 0);
+    particleSystem.start();
+
+    this._particleSystem = particleSystem;
+
 };
 
 mountain.elevateMountain.prototype.test = function(){
@@ -44,6 +71,9 @@ mountain.elevateMountain.prototype.attachControl = function (canvas) {
       // add particle systems to rising mountain
       //  that._particleSystem.emitter = pickInfo.pickedPoint.add(new BABYLON.Vector3(0, 3, 0));
     //    that._particleSystem.manualEmitCount += 400;
+
+    //  that._particleSystem.emitter = pickInfo.pickedPoint.add(new BABYLON.Vector3(0, 3, 0));
+    //   that._particleSystem.manualEmitCount += 400;
 
     // elevate faces on user control
         that.elevateFaces(pickInfo, that.radius, 0.3);

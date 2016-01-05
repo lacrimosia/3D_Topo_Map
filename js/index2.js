@@ -16,7 +16,7 @@ var launch = function() {
   var camera = new BABYLON.ArcRotateCamera("Camera", 3.8, 3.8, 10, new BABYLON.Vector3(20, 80, 20), scene);
   camera.attachControl(canvas);
 
-  var sun = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
+  var sun = new BABYLON.PointLight("Omni", new BABYLON.Vector3(20, 50, 2), scene);
   sun.diffuse = new BABYLON.Color3(1, 1, 1);
   sun.specular = new BABYLON.Color3(1, 1, 1);
   sun.intensity = 0.8;
@@ -37,18 +37,10 @@ var launch = function() {
 
   // Grounds
   var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
-  var groundMaterial = new BABYLON.StandardMaterial("mountain", scene);
-  groundMaterial.diffuseTexture = new BABYLON.Texture("images/mountain.jpg", scene);
-  ground.backFaceCulling = false;
-  groundMaterial.diffuseTexture.uScale = 30;
-  groundMaterial.diffuseTexture.vScale = 40;
+  var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
+  groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   ground.material = groundMaterial;
-  ground.position.y = 2.0;
-
-  // wire material
-  var wireMaterial = new BABYLON.StandardMaterial("wires", scene);
-  wireMaterial.diffuse = new BABYLON.Color3(1, 1, 1);
-  wireMaterial.wire = true;
+  ground.position.y = -2.0;
 
   // sand on the ground
   var extraGround = BABYLON.Mesh.CreateGround("extraGround", 1400, 1400, 1, scene, false);
@@ -56,12 +48,12 @@ var launch = function() {
   extraGroundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   extraGroundMaterial.diffuseTexture.uScale = 40;
   extraGroundMaterial.diffuseTexture.vScale = 40;
-  extraGround.position.y = 1.0;
+  extraGround.position.y = -2.05;
   extraGround.material = extraGroundMaterial;
 
   // Water
   var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
-  water.position.y = 8.0;
+  water.position.y = 3.0;
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
   waterMaterial.refractionTexture.renderList.push(extraGround);
@@ -74,11 +66,11 @@ var launch = function() {
 
 
   // Shadows
-  var shadowGenerator = new BABYLON.ShadowGenerator(1024, sun);
+/*  var shadowGenerator = new BABYLON.ShadowGenerator(1024, sun);
   shadowGenerator.getShadowMap().renderList.push(ground);
-  ground.receiveShadows = true;
+ ground.receiveShadows = true;
   shadowGenerator.useVarianceShadowMap = true;
-  shadowGenerator.usePoissonSampling = true;
+  shadowGenerator.usePoissonSampling = true;*/
 
 
   // Elevation
@@ -87,7 +79,7 @@ var launch = function() {
   var blurWidth = 2.0;
 
   // high threshold light
-  /*  var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
+ var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
     var postProcess1 = new BABYLON.PostProcess("Down sample", "./postprocesses/downsample", ["screenSize", "highlightThreshold"], null, 0.2, camera, BABYLON.Texture.DEFAULT_SAMPLINGMODE);
     postProcess1.onApply = function (effect) {
         effect.setFloat2("screenSize", postProcess1.width, postProcess1.height);
@@ -101,7 +93,7 @@ var launch = function() {
         effect.setFloat("sceneIntensity", 0.8);
         effect.setFloat("glowIntensity", 0.6);
         effect.setFloat("highlightIntensity", 1.5);
-    };*/
+    };
 
   // Render loop
   var renderFunction = function() {
@@ -128,7 +120,7 @@ var launch = function() {
     scene.render();
 
     // Animations
-    skybox.rotation.y += 0.0001 * scene.getAnimationRatio();
+  //  skybox.rotation.y += 0.0001 * scene.getAnimationRatio();
   };
 
   // Launch render loop
