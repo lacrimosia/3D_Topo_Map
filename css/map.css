@@ -39,10 +39,10 @@ body {
   height: 45px;
   display: block;
   margin-bottom: 10px;
-  background:url('../images/wood.jpg') no-repeat !important;
+  background:url('../images/wood-1.png') no-repeat !important;
   box-shadow: 3px 3px 3px #1a0b01;
   border: 1px solid #220d05;
-  color: #f6e5d8;
+  color: #dfb491;
   font-size: 0.9em;
   font-weight: bold;
   text-shadow: 1px 1px 1px #29130a;
@@ -59,14 +59,18 @@ body {
   height: 45px;
   display: block;
   margin-bottom: 10px;
-  background:url('../images/wood-1.png') no-repeat !important;
-  box-shadow: 2px 2px 2px #f2b990 inset;
+  background:url('../images/wood.jpg') no-repeat !important;
+  box-shadow: 3px 3px 3px #1a0b01;
   border: 1px solid #220d05;
-  color: #f6e5d8;
+  color: #2a1007;
   font-size: 0.9em;
   font-weight: bold;
-  text-shadow: 1px 1px 1px #29130a;
+  outline: none;
+/*  text-shadow: 1px 1px 1px #29130a;*/
+text-shadow: none;
 }
+
+
 
 .logo{
   position: relative;
