@@ -14,13 +14,14 @@ var launch = function() {
   var engine = new BABYLON.Engine(canvas, true);
   var scene = new BABYLON.Scene(engine);
   var camera = new BABYLON.ArcRotateCamera("Camera", 0, 0, 10, BABYLON.Vector3.Zero(), scene);
+  camera.setPosition(new BABYLON.Vector3(20, 40, 20));
+  camera.attachControl(canvas);
+
   var sun = new BABYLON.DirectionalLight("Dir0", new BABYLON.Vector3(0, -1, 0), scene);
   sun.diffuse = new BABYLON.Color3(1, 1, 1);
   sun.specular = new BABYLON.Color3(1, 1, 1);
   sun.intensity = 0.7;
 
-  camera.setPosition(new BABYLON.Vector3(20, 40, 20));
-  camera.attachControl(canvas);
 
   var skybox = BABYLON.Mesh.CreateBox("skyBox", 4000.0, scene);
   //  skybox.infiniteDistance = true;
@@ -44,7 +45,6 @@ var launch = function() {
   groundMaterial.diffuseTexture.vScale = 40;
   ground.material = groundMaterial;
   ground.position.y = 2.0;
-
 
   // wire material
   var wireMaterial = new BABYLON.StandardMaterial("wires", scene);
@@ -72,6 +72,16 @@ var launch = function() {
 
   water.isPickable = false;
   water.material = waterMaterial;
+
+
+  // Shadows
+  var shadowGenerator = new BABYLON.ShadowGenerator(1024, sun);
+  shadowGenerator.getShadowMap().renderList.push(ground);
+  ground.receiveShadows = true;
+  shadowGenerator.useVarianceShadowMap = true;
+  shadowGenerator.usePoissonSampling = true;
+
+
   // Elevation
   var elevationControl = new mountain.elevateMountain(ground);
   // Bloom
@@ -100,7 +110,7 @@ var launch = function() {
       ground.subdivide(20); // Subdivide to optimize picking
     }
 
-    // Camera
+    // Prevents camer from underground rotation
     if (camera.beta < 0.1)
       camera.beta = 0.1;
     else if (camera.beta > (Math.PI / 2) * 0.92)
@@ -153,7 +163,7 @@ var launch = function() {
     mode = "CAMERA";
     cameraButton.className = "buttons selected";
     // digButton.className = "buttons";
-    fireButton.className = "buttons";
+  //  fireButton.className = "buttons";
     elevationButton.className = "buttons";
   });
 
@@ -172,29 +182,7 @@ var launch = function() {
 
     elevationButton.className = "buttons selected";
     cameraButton.className = "buttons";
-    fireButton.className = "buttons";
-  });
-
-  elevationButton.addEventListener("pointerdown", function() {
-    if (mode == "FIRE"){
-    /*  if (pickResult.hit) {
-        ABox.position.x = pickResult.pickedPoint.x;
-        ABox.position.y = pickResult.pickedPoint.y;
-      }*/
-      return;
-    }
-
-
-    if (mode == "CAMERA") {
-      camera.detachControl(canvas);
-      elevationControl.attachControl(canvas);
-    }
-
-    mode = "FIRE";
-
-    elevationButton.className = "buttons";
-    cameraButton.className = "buttons";
-    fireButton.className = "buttons selected";
+  //  fireButton.className = "buttons";
   });
 
   // Fire Particle System
