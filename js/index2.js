@@ -156,9 +156,9 @@ wireMaterial.wire = true;
     elevationControl.detachControl(canvas);
 
     mode = "CAMERA";
-    cameraButton.className = "controlButton selected";
-    digButton.className = "controlButton";
-    elevationButton.className = "controlButton";
+    cameraButton.className = "buttons selected rotateCursor";
+    digButton.className = "buttons";
+    elevationButton.className = "buttons";
   });
 
   elevationButton.addEventListener("pointerdown", function() {
@@ -176,9 +176,9 @@ wireMaterial.wire = true;
     mode = "ELEVATION";
     elevationControl.direction = 1;
 
-    elevationButton.className = "controlButton selected";
-    digButton.className = "controlButton";
-    cameraButton.className = "controlButton";
+    elevationButton.className = "buttons selected";
+    digButton.className = "buttons";
+    cameraButton.className = "buttons";
   });
 
   digButton.addEventListener("pointerdown", function() {
@@ -196,9 +196,9 @@ wireMaterial.wire = true;
     mode = "DIG";
     elevationControl.direction = -1;
 
-    digButton.className = "controlButton selected";
-    elevationButton.className = "controlButton";
-    cameraButton.className = "controlButton";
+    digButton.className = "buttons selected";
+    elevationButton.className = "buttons";
+    cameraButton.className = "buttons";
   });
 
 
@@ -275,10 +275,10 @@ wireMaterial.wire = true;
 
   fireButton.addEventListener("pointerdown", function() {
     var clicked = true;
-    fireButton.className = "controlButton selected";
-    digButton.className = "controlButton";
-    elevationButton.className = "controlButton";
-    cameraButton.className = "controlButton";
+    fireButton.className = "buttons selected";
+    digButton.className = "buttons";
+    elevationButton.className = "buttons";
+    cameraButton.className = "buttons";
     return;
   });
 

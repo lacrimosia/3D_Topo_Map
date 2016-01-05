@@ -16,15 +16,19 @@
   <script src="js/groundMaterial.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <link rel="stylesheet" href="css/map.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
   <!-- optional physics engine -->
 </head>
 
 <body>
+
   <div class="menu">
-    <button class="controlButton selected" id="cameraButton" alt="Control the camera">Camera Mode</button>
-    <button class="controlButton" id="elevationButton">Add Mountain</button>
-    <button class="controlButton" id="digButton">Add Water</button>
-    <button class="controlButton" id="volcanoButton" alt="Add Volcano">Add Fire</button>
+    <img src="images/wood_plank.png" class="logo"/>
+    <button class="buttons selected" id="cameraButton" alt="Control the camera"><span><i class="fa fa-camera"></i> Camera Mode</span></button>
+    <button class="buttons" id="elevationButton"><span><i class="fa fa-arrow-circle-up"></i> Add Mountain</span></button>
+    <button class="buttons" id="digButton"><span><i class="fa fa-arrow-circle-down"></i> Add Water</span></button>
+    <!--<button class="buttons" id="volcanoButton" alt="Add Volcano"><span><i class="fa fa-fire"></i> Add Fire</span></button>-->
     <div id="fps"></div>
   </div>
   <canvas id="renderCanvas"></canvas>

@@ -83,11 +83,7 @@ var launch = function() {
     ground.position = new BABYLON.Vector3(600, 0, 710);
 
   // function Ribbon
-	// mesh : a BABYLON.Mesh object
-	// pathArray : array populated with paths; path = arrays of Vector3
-	// close : boolean, true if paths are circular => last point joins first point, default false
-	// offset : default  path length / 2, only for a single path
-	// scene : the current scene
+
 	var createRibbon = function(mesh, pathArray, close, offset, scene) {
 	  var positions = [];
 	  var indices = [];
@@ -115,7 +111,7 @@ var launch = function() {
 	  var i = 0;                    // positions array index
 	  var l1 = lg[p] - 1;           // path1 length
 	  var l2 = lg[p+1] - 1;         // path2 length
-	  var min = ( l1 < l2 ) ? l1 : l2 ;   
+	  var min = ( l1 < l2 ) ? l1 : l2 ;
 	  while ( i <= min && p < lg.length -1 ) {
 	    var shft = idx[p+1] - idx[p];
 	      // draw two triangles between path1 (p1) and path2 (p2) : (p1.i, p2.i, p1.i+1) and (p2.i+1, p1.i+1, p2.i) clockwise
