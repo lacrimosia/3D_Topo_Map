@@ -82,6 +82,66 @@ var launch = function() {
     var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
     ground.position = new BABYLON.Vector3(600, 0, 710);
 
+  // function Ribbon
+	// mesh : a BABYLON.Mesh object
+	// pathArray : array populated with paths; path = arrays of Vector3
+	// close : boolean, true if paths are circular => last point joins first point, default false
+	// offset : default  path length / 2, only for a single path
+	// scene : the current scene
+	var createRibbon = function(mesh, pathArray, close, offset, scene) {
+	  var positions = [];
+	  var indices = [];
+	  var normals = [];
+	  var lg = [];        // array of path lengths : nb of vertex per path
+	  var idx = [];       // array of path indexes : index of each path (first vertex) in positions array
+
+	  // positions
+	  var idc = 0;
+	  for(var p = 0; p < pathArray.length; p++) {
+	    var path = pathArray[p];
+	    var l = path.length;
+	    lg[p] = l;
+	    idx[p] = idc;
+	    var j = 0;
+	    while (j < l) {
+	      positions.push(path[j].x, path[j].y, path[j].z);
+	      j++;
+	    }
+	    idc += l;
+	  }
+
+	  // indices
+	  var p = 0;                    // path index
+	  var i = 0;                    // positions array index
+	  var l1 = lg[p] - 1;           // path1 length
+	  var l2 = lg[p+1] - 1;         // path2 length
+	  var min = ( l1 < l2 ) ? l1 : l2 ;   
+	  while ( i <= min && p < lg.length -1 ) {
+	    var shft = idx[p+1] - idx[p];
+	      // draw two triangles between path1 (p1) and path2 (p2) : (p1.i, p2.i, p1.i+1) and (p2.i+1, p1.i+1, p2.i) clockwise
+	      indices.push(i, i+shft, i+1);
+	      indices.push(i+shft+1, i+1, i+shft);
+	    i += 1;
+	    if ( i == min  ) {
+	      if (close) {
+	        indices.push(i, i+shft, idx[p]);
+	        indices.push(idx[p]+shft, idx[p], i+shft);
+	      }
+	      p++;
+	      l1 = lg[p] - 1;
+	      l2 = lg[p+1] - 1;
+	      i = idx[p];
+	      min = ( l1 < l2 ) ? l1 + i : l2 + i;
+	    }
+	  }
+
+	  BABYLON.VertexData.ComputeNormals(positions, indices, normals);
+
+	  g.setVerticesData(BABYLON.VertexBuffer.PositionKind, positions, false);
+	  mesh.setVerticesData(BABYLON.VertexBuffer.NormalKind, normals, false);
+	  mesh.setIndices(indices);
+	};
+
     //  groundPlane.material = mountain;
 
     // ground lines
