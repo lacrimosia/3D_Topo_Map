@@ -43,7 +43,7 @@ sun.intensity = 0.7;
  groundMaterial.diffuseTexture.uScale = 30;
 groundMaterial.diffuseTexture.vScale = 40;
   ground.material = groundMaterial;
-  ground.position.y = -2.0;
+  ground.position.y = 2.0;
 
 
 // wire material
@@ -57,12 +57,12 @@ wireMaterial.wire = true;
   extraGroundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   extraGroundMaterial.diffuseTexture.uScale = 40;
   extraGroundMaterial.diffuseTexture.vScale = 40;
-  extraGround.position.y = -2.0;
+  extraGround.position.y = 1.0;
   extraGround.material = extraGroundMaterial;
 
   // Water
   var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
-  water.position.y = -1.0;
+  water.position.y = 8.0;
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
   waterMaterial.refractionTexture.renderList.push(extraGround);
@@ -143,13 +143,14 @@ wireMaterial.wire = true;
   // UI
   var cameraButton = document.getElementById("cameraButton");
   var elevationButton = document.getElementById("elevationButton");
-  var digButton = document.getElementById("digButton");
+//  var digButton = document.getElementById("digButton");
   var fireButton = document.getElementById("volcanoButton");
 
   window.oncontextmenu = function() {
     return false;
   };
 
+// Camera Mode
   cameraButton.addEventListener("pointerdown", function() {
     if (mode == "CAMERA")
       return;
@@ -157,15 +158,13 @@ wireMaterial.wire = true;
     elevationControl.detachControl(canvas);
 
     mode = "CAMERA";
-    cameraButton.className = "buttons selected rotateCursor";
-    digButton.className = "buttons";
+    cameraButton.className = "buttons selected";
+    // digButton.className = "buttons";
     elevationButton.className = "buttons";
   });
 
+// Mountain Mode
   elevationButton.addEventListener("pointerdown", function() {
-    //help01.className = "help";
-    //  help02.className = "help";
-
     if (mode == "ELEVATION")
       return;
 
@@ -178,31 +177,8 @@ wireMaterial.wire = true;
     elevationControl.direction = 1;
 
     elevationButton.className = "buttons selected";
-    digButton.className = "buttons";
     cameraButton.className = "buttons";
   });
-
-  digButton.addEventListener("pointerdown", function() {
-    //  help01.className = "help";
-    //    help02.className = "help";
-
-    if (mode == "DIG")
-      return;
-
-    if (mode == "CAMERA") {
-      camera.detachControl(canvas);
-      elevationControl.attachControl(canvas);
-    }
-
-    mode = "DIG";
-    elevationControl.direction = -1;
-
-    digButton.className = "buttons selected";
-    elevationButton.className = "buttons";
-    cameraButton.className = "buttons";
-  });
-
-
 
   //When click event is raised
   /*window.addEventListener("click", function() {
@@ -272,15 +248,5 @@ wireMaterial.wire = true;
 //    }
 //  });
 
-
-
-  fireButton.addEventListener("pointerdown", function() {
-    var clicked = true;
-    fireButton.className = "buttons selected";
-    digButton.className = "buttons";
-    elevationButton.className = "buttons";
-    cameraButton.className = "buttons";
-    return;
-  });
 
 };
