@@ -14,16 +14,16 @@ var WORLDMONGER = WORLDMONGER || {};
         this.grassTexture.vScale = 6.0;
 
         this.snowTexture = new BABYLON.Texture("Shaders/Ground/snow.jpg", scene);
-        this.snowTexture.uScale = 20.0;
-        this.snowTexture.vScale = 20.0;
+        this.snowTexture.uScale = 6.0;
+        this.snowTexture.vScale = 6.0;
 
         this.sandTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
         this.sandTexture.uScale = 4.0;
         this.sandTexture.vScale = 4.0;
 
         this.rockTexture = new BABYLON.Texture("Shaders/Ground/rock.jpg", scene);
-        this.rockTexture.uScale = 15.0;
-        this.rockTexture.vScale = 15.0;
+        this.rockTexture.uScale = 16.0;
+        this.rockTexture.vScale = 16.0;
 
         this.blendTexture = new BABYLON.Texture("Shaders/Ground/blend.png", scene);
         this.blendTexture.uOffset = Math.random();
@@ -32,9 +32,9 @@ var WORLDMONGER = WORLDMONGER || {};
         this.blendTexture.wrapV = BABYLON.Texture.MIRROR_ADDRESSMODE;
 
 
-        this.sandLimit = 1;
-        this.rockLimit = 5;
-        this.snowLimit = 8;
+        this.sandLimit = 9;
+        this.rockLimit = 15;
+        this.snowLimit = 6;
     };
 
     WORLDMONGER.GroundMaterial.prototype = Object.create(BABYLON.Material.prototype);

@@ -38,6 +38,8 @@ mountain.elevateMountain = function(ground){
 
     this._particleSystem = particleSystem;
 
+    
+
 };
 
 mountain.elevateMountain.prototype.test = function(){

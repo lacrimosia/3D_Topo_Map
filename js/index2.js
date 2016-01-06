@@ -13,7 +13,7 @@ var launch = function() {
   BABYLON.Engine.ShadersRepository = "Shaders/";
   var engine = new BABYLON.Engine(canvas, true);
   var scene = new BABYLON.Scene(engine);
-  var camera = new BABYLON.ArcRotateCamera("Camera", 3.8, 3.8, 10, new BABYLON.Vector3(20, 80, 20), scene);
+  var camera = new BABYLON.ArcRotateCamera("Camera", 3.8, 0.97, 10, new BABYLON.Vector3(30, 150, 20), scene);
   camera.attachControl(canvas);
 
   var sun = new BABYLON.PointLight("Omni", new BABYLON.Vector3(20, 50, 2), scene);
@@ -36,7 +36,7 @@ var launch = function() {
   skybox.isPickable = false;
 
   // Grounds
-  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/worldHeightMap.jpg", 1400, 1400, 300, 0, 100, scene, true);
+  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/mountains2.png", 1400, 1400, 300, 0, 100, scene, true);
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   ground.material = groundMaterial;
