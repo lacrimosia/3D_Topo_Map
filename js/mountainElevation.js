@@ -9,7 +9,7 @@ mountain.elevateMountain = function(ground){
   this.invertDirection = 1.0;   // direction for inversion
   this.heightMin = -20.0;       // height min
   this.heightMax = 60.0;       // max heigh of moutain
-  this.positions = [];
+  this.groundPositions = [];
 
     var scene = ground.getScene();
   //  var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
@@ -38,7 +38,7 @@ mountain.elevateMountain = function(ground){
 
     this._particleSystem = particleSystem;
 
-    
+
 
 };
 
