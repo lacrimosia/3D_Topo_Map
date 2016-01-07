@@ -20,12 +20,17 @@ body {
   width: 180px;
   min-width: 100px;
   min-height: 350px;
-  height: 350px;
+  height: auto;
   z-index: 30;
   border-bottom-right-radius: 15px;
   background:url('../images/woodTexture.jpg') no-repeat;
   /*opacity: 0.7;*/
   padding: 15px;
+}
+
+p span{
+  color: #ffffff;
+  text-align: center;
 }
 
 .buttons {

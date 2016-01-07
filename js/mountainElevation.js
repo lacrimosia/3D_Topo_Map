@@ -8,7 +8,7 @@ mountain.elevateMountain = function(ground){
   this.radius = 15.0;           // selection radius
   this.invertDirection = 1.0;   // direction for inversion
   this.heightMin = -20.0;       // height min
-  this.heightMax = 60.0;       // max heigh of moutain
+  this.heightMax = 120.0;       // max heigh of mountain
   this.groundPositions = [];
 
     var scene = ground.getScene();
@@ -38,14 +38,11 @@ mountain.elevateMountain = function(ground){
 
     this._particleSystem = particleSystem;
 
-
-
 };
 
 mountain.elevateMountain.prototype.test = function(){
 /*this.positions = this.ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
 return this.positions;*/
-
 };
 
 // elevate area direction
@@ -69,6 +66,8 @@ mountain.elevateMountain.prototype.attachControl = function (canvas) {
 
         if (pickInfo.pickedMesh != that.ground)
             return;
+        that.picked = pickInfo.pickedPoint;
+      //  console.log("pickedMesh",that.picked);
 
       // add particle systems to rising mountain
       //  that._particleSystem.emitter = pickInfo.pickedPoint.add(new BABYLON.Vector3(0, 3, 0));
@@ -139,6 +138,7 @@ mountain.elevateMountain.prototype.detachControl = function (canvas) {
 
 // elevate mountain selections
 mountain.elevateMountain.prototype.dataElevation = function () {
+  var scene = this.ground.getScene();
   // get faces
 if (this.facesOfVertices == null) {
         this.facesOfVertices = [];
@@ -148,12 +148,15 @@ if (this.facesOfVertices == null) {
         this.groundVerticesNormals = this.ground.getVerticesData(BABYLON.VertexBuffer.NormalKind);
         this.groundIndices = this.ground.getIndices();
 
-// store the current ground positions in ground array
+
+// store the current ground position in ground array
     this.groundPositions = [];
         var index;
         for (index = 0; index < this.groundVerticesPositions.length; index += 3) {
            this.groundPositions.push(new BABYLON.Vector3(this.groundVerticesPositions[index], this.groundVerticesPositions[index + 1], this.groundVerticesPositions[index + 2]));
+        //  $("#text").html(this.groundPositions +"<br/>");
         }
+
 // get Face Normals
         this.groundFacesNormals = [];
         for (index = 0; index < this.ground.getTotalIndices() / 3; index++) {
@@ -163,9 +166,6 @@ if (this.facesOfVertices == null) {
         this.getFacesOfVertices();
 }
 };
-
-
-
 
 // Get Face ID Index
 mountain.elevateMountain.prototype.getFaceVerticesIndex = function (faceID) {
@@ -209,6 +209,7 @@ mountain.elevateMountain.prototype.getFacesOfVertices = function () {
             this.subdivisionsOfVertices[index].push(subMesh);
         }
     }
+
     return this.subdivisionsOfVertices[index];
 };
 
@@ -255,6 +256,7 @@ mountain.elevateMountain.prototype.elevateFaces = function (pickInfo, radius, he
         var position = this.groundPositions[selectedVertice];
         var distance = this.selectedVertices[selectedVertice];
 
+    //    console.log("position", position);
 
         var fullHeight = height * this.direction * this.invertDirection;
         if (distance < radius * 0.3) {

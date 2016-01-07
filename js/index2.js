@@ -16,10 +16,10 @@ var launch = function() {
   var camera = new BABYLON.ArcRotateCamera("Camera", 3.8, 0.97, 10, new BABYLON.Vector3(30, 150, 20), scene);
   camera.attachControl(canvas);
 
-  var sun = new BABYLON.PointLight("Omni", new BABYLON.Vector3(20, 50, 2), scene);
+  var sun = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 300, 0), scene);
   sun.diffuse = new BABYLON.Color3(1, 1, 1);
   sun.specular = new BABYLON.Color3(1, 1, 1);
-  sun.intensity = 0.9;
+  sun.intensity = 0.8;
 
 
   var skybox = BABYLON.Mesh.CreateBox("skyBox", 4000.0, scene);
@@ -37,11 +37,15 @@ var launch = function() {
 //  scene.clearColor = new BABYLON.Color3(0,0,0);
 
   // Grounds
-  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/island.jpg", 1400, 1400, 300, 0, 100, scene, true);
+  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 1400, 1400, 600, 0, 200, scene, true);
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   ground.material = groundMaterial;
   ground.position.y = -2.0;
+  ground.wireframe = true;
+
+  var Positions = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+  console.log("pos", Positions);
 
   // sand on the ground
   var extraGround = BABYLON.Mesh.CreateGround("extraGround", 1400, 1400, 1, scene, false);
@@ -54,7 +58,7 @@ var launch = function() {
 
   // Water
   var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
-  water.position.y = 3.0;
+  water.position.y = 10.0;
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
   waterMaterial.refractionTexture.renderList.push(extraGround);
@@ -65,19 +69,17 @@ var launch = function() {
   water.isPickable = false;
   water.material = waterMaterial;
 
-  // wire material
-  var wire = new BABYLON.StandardMaterial("texture1", scene);
-  wire.wireframe = true;
+
 
   // render text for grid
 for(var w=0; w<2; w++){
-  for(var d=1; d<10; d++){
-      var feet = d*1000;
+  for(var d=1; d<7; d++){
+      var feet = d*1500;
       var meters = Math.round((feet/3.2808));
     var textPlane = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
     // textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
   	textPlane.material = new BABYLON.StandardMaterial("outputplane", scene);
-  	textPlane.position = new BABYLON.Vector3(175*w, d*20, -700);
+  	textPlane.position = new BABYLON.Vector3(400*w, d*20, -700);
     textPlane.rotation.y = Math.PI;
   	textPlane.scaling.y = 0.4;
 
@@ -96,13 +98,13 @@ for(var w=0; w<2; w++){
 
 // render text for grid 2
 for(var w=0; w<2; w++){
-for(var d=1; d<10; d++){
-    var feet = d*200;
+for(var d=1; d<7; d++){
+    var feet = d*1500;
     var meters = Math.round((feet/3.2808));
   var textPlane2 = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
   // textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
   textPlane2.material = new BABYLON.StandardMaterial("outputplane", scene);
-  textPlane2.position = new BABYLON.Vector3(-700, d*20, 175*w);
+  textPlane2.position = new BABYLON.Vector3(-700, d*20, 400*w);
   textPlane2.rotation.y = Math.PI/-2;
   textPlane2.scaling.y = 0.4;
 
@@ -121,7 +123,7 @@ for(var d=1; d<10; d++){
 
 
 // horizontal grid lines
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < 7; i++) {
     var lines = BABYLON.Mesh.CreateLines("lines", [
   new BABYLON.Vector3(1400, 0, 0),
   new BABYLON.Vector3(1400, 0, 0),
@@ -157,15 +159,13 @@ for(var d=1; d<10; d++){
   shadowGenerator.useVarianceShadowMap = true;
   shadowGenerator.usePoissonSampling = true;*/
 
-
-
-// var vertices = extraGround.getVerticesData(BABYLON.VertexBuffer.PositionKind);
-var totVertices = ground.getTotalVertices();
-  console.log("ground Positions", totVertices);
+//var posVertices = ground.getIndices();
+//  console.log("ground Positions", posVertices);
 
 
   // Elevation
   var elevationControl = new mountain.elevateMountain(ground);
+
   // Bloom
   var blurWidth = 2.0;
 
@@ -261,6 +261,7 @@ var totVertices = ground.getTotalVertices();
 
     mode = "ELEVATION";
     elevationControl.direction = 1;
+
 
     elevationButton.className = "buttons selected";
     cameraButton.className = "buttons";
