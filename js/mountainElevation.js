@@ -152,15 +152,8 @@ if (this.facesOfVertices == null) {
     this.groundPositions = [];
         var index;
         for (index = 0; index < this.groundVerticesPositions.length; index += 3) {
-            this.groundPositions.push(new BABYLON.Vector3(this.groundVerticesPositions[index], this.groundVerticesPositions[index + 1], this.groundVerticesPositions[index + 2]));
-          //  this.positions.push(this.groundVerticesPositions[index]);
-          /*  this.positions.push({
-                x: this.groundVerticesPositions[index],
-                y: this.groundVerticesPositions[index + 1],
-                z: this.groundVerticesPositions[index + 2]
-              });*/
+           this.groundPositions.push(new BABYLON.Vector3(this.groundVerticesPositions[index], this.groundVerticesPositions[index + 1], this.groundVerticesPositions[index + 2]));
         }
-
 // get Face Normals
         this.groundFacesNormals = [];
         for (index = 0; index < this.ground.getTotalIndices() / 3; index++) {

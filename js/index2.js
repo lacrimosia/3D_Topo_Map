@@ -19,7 +19,7 @@ var launch = function() {
   var sun = new BABYLON.PointLight("Omni", new BABYLON.Vector3(20, 50, 2), scene);
   sun.diffuse = new BABYLON.Color3(1, 1, 1);
   sun.specular = new BABYLON.Color3(1, 1, 1);
-  sun.intensity = 0.8;
+  sun.intensity = 0.9;
 
 
   var skybox = BABYLON.Mesh.CreateBox("skyBox", 4000.0, scene);
@@ -34,9 +34,10 @@ var launch = function() {
   skybox.material = skyboxMaterial;
   // disable picking of object
   skybox.isPickable = false;
+//  scene.clearColor = new BABYLON.Color3(0,0,0);
 
   // Grounds
-  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/mountains2.png", 1400, 1400, 300, 0, 100, scene, true);
+  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/island.jpg", 1400, 1400, 300, 0, 100, scene, true);
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   ground.material = groundMaterial;
@@ -64,6 +65,90 @@ var launch = function() {
   water.isPickable = false;
   water.material = waterMaterial;
 
+  // wire material
+  var wire = new BABYLON.StandardMaterial("texture1", scene);
+  wire.wireframe = true;
+
+  // render text for grid
+for(var w=0; w<2; w++){
+  for(var d=1; d<10; d++){
+      var feet = d*1000;
+      var meters = Math.round((feet/3.2808));
+    var textPlane = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
+    // textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
+  	textPlane.material = new BABYLON.StandardMaterial("outputplane", scene);
+  	textPlane.position = new BABYLON.Vector3(175*w, d*20, -700);
+    textPlane.rotation.y = Math.PI;
+  	textPlane.scaling.y = 0.4;
+
+  	var textPlaneTexture = new BABYLON.DynamicTexture("dynamic texture", 1000, scene, true);
+  	textPlane.material.diffuseTexture = textPlaneTexture;
+    textPlaneTexture.hasAlpha = true;
+  	textPlane.material.specularColor = new BABYLON.Color3(1, 1, 1);
+    textPlane.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+  	textPlane.material.backFaceCulling = false;
+
+  // text, x, y, text settings, color, transparency
+  	textPlaneTexture.drawText(feet+" ft.", 0, 300, "bold 140px verdana", "black", "transparent");
+  //  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
+  }
+}
+
+// render text for grid 2
+for(var w=0; w<2; w++){
+for(var d=1; d<10; d++){
+    var feet = d*200;
+    var meters = Math.round((feet/3.2808));
+  var textPlane2 = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
+  // textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
+  textPlane2.material = new BABYLON.StandardMaterial("outputplane", scene);
+  textPlane2.position = new BABYLON.Vector3(-700, d*20, 175*w);
+  textPlane2.rotation.y = Math.PI/-2;
+  textPlane2.scaling.y = 0.4;
+
+  var textPlaneTexture = new BABYLON.DynamicTexture("dynamic texture", 1000, scene, true);
+  textPlane2.material.diffuseTexture = textPlaneTexture;
+  textPlaneTexture.hasAlpha = true;
+  textPlane2.material.specularColor = new BABYLON.Color3(1, 1, 1);
+  textPlane2.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+  textPlane2.material.backFaceCulling = false;
+
+// text, x, y, text settings, color, transparency
+  textPlaneTexture.drawText(feet+" ft.", 0, 300, "bold 140px verdana", "black", "transparent");
+//  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
+}
+}
+
+
+// horizontal grid lines
+  for (var i = 0; i < 10; i++) {
+    var lines = BABYLON.Mesh.CreateLines("lines", [
+  new BABYLON.Vector3(1400, 0, 0),
+  new BABYLON.Vector3(1400, 0, 0),
+  new BABYLON.Vector3(0, 0, 0),
+  new BABYLON.Vector3(0, 0, 1400)
+], scene);
+          lines.material = groundMaterial;
+          lines.position = new BABYLON.Vector3(-700, i*20, -700);
+          lines.color = new BABYLON.Color3(0, 0.2, 0.3);
+}
+
+// vertical grid lines
+
+/*  for (var a = 0; a < 100; a++) {
+    var lines = BABYLON.Mesh.CreateLines("lines", [
+      new BABYLON.Vector3(0, 205, 0),
+      new BABYLON.Vector3(0, 205, 0),
+      new BABYLON.Vector3(0, 0, 0),
+      new BABYLON.Vector3(0, 0, 205),
+      new BABYLON.Vector3(0, 0, 205)
+], scene);
+          lines.material = groundMaterial;
+          lines.position = new BABYLON.Vector3(a*-20, 0, -700);
+          lines.color = new BABYLON.Color3(0, 0.2, 0.3);
+        //  lines.rotation.x = Math.PI;
+}*/
+
 
   // Shadows
 /*  var shadowGenerator = new BABYLON.ShadowGenerator(1024, sun);
@@ -71,6 +156,12 @@ var launch = function() {
  ground.receiveShadows = true;
   shadowGenerator.useVarianceShadowMap = true;
   shadowGenerator.usePoissonSampling = true;*/
+
+
+
+// var vertices = extraGround.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+var totVertices = ground.getTotalVertices();
+  console.log("ground Positions", totVertices);
 
 
   // Elevation
@@ -91,8 +182,8 @@ var launch = function() {
     postProcess4.onApply = function (effect) {
         effect.setTextureFromPostProcess("sceneSampler", postProcess0);
         effect.setFloat("sceneIntensity", 0.8);
-        effect.setFloat("glowIntensity", 0.6);
-        effect.setFloat("highlightIntensity", 1.5);
+        effect.setFloat("glowIntensity", 0.3);
+        effect.setFloat("highlightIntensity", 0.5);
     };
 
   // Render loop
@@ -120,7 +211,7 @@ var launch = function() {
     scene.render();
 
     // Animations
-  //  skybox.rotation.y += 0.0001 * scene.getAnimationRatio();
+  skybox.rotation.y += 0.0001 * scene.getAnimationRatio();
   };
 
   // Launch render loop
