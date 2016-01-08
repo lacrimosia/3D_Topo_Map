@@ -37,9 +37,9 @@
         this.blendTexture.wrapV = BABYLON.Texture.MIRROR_ADDRESSMODE;
 
         this.sandLimit = 30;
-        this.grassLimit = 35;
-        this.rockLimit = 40;
-        this.snowLimit = 45;
+        this.grassLimit = 40;
+        this.rockLimit = 50;
+        this.snowLimit = 5;
     };
 
     mountain.GroundMaterial.prototype = Object.create(BABYLON.Material.prototype);
