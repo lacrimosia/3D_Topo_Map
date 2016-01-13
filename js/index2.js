@@ -37,31 +37,33 @@ var launch = function() {
 //  scene.clearColor = new BABYLON.Color3(0,0,0);
 
   // Grounds
-  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 1400, 1400, 600, 0, 150, scene, true);
+  // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 300, 300, 300, 0, 100, scene, true);
+  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 150, scene, true);
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   ground.material = groundMaterial;
-  ground.position.y = -2.0;
+  ground.position.y = 0.0;
   ground.wireframe = true;
 
 //  var Positions = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
 //  console.log("pos", Positions);
 
   // sand on the ground
-  var extraGround = BABYLON.Mesh.CreateGround("extraGround", 1400, 1400, 1, scene, false);
+/*var extraGround = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 1, scene, false);
   var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
   extraGroundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   extraGroundMaterial.diffuseTexture.uScale = 40;
   extraGroundMaterial.diffuseTexture.vScale = 40;
   extraGround.position.y = -2.05;
-  extraGround.material = extraGroundMaterial;
+  extraGround.material = extraGroundMaterial;*/
 
   // Water
-  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
-  water.position.y = 10.0;
+//  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
+var water = BABYLON.Mesh.CreateGround("water", 300, 300, 1, scene, false);
+  water.position.y = -1.0;
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
-  waterMaterial.refractionTexture.renderList.push(extraGround);
+//  waterMaterial.refractionTexture.renderList.push(extraGround);
 
   waterMaterial.reflectionTexture.renderList.push(ground);
   waterMaterial.reflectionTexture.renderList.push(skybox);
@@ -98,7 +100,7 @@ for(var w=0; w<2; w++){
 
 // render text for grid 2
 for(var w=0; w<2; w++){
-for(var d=1; d<7; d++){
+ for(var d=1; d<7; d++){
     var feet = d*1500;
     var meters = Math.round((feet/3.2808));
   var textPlane2 = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
@@ -118,20 +120,20 @@ for(var d=1; d<7; d++){
 // text, x, y, text settings, color, transparency
   textPlaneTexture.drawText(feet+" ft.", 0, 300, "bold 140px verdana", "black", "transparent");
 //  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
-}
+ }
 }
 
 
 // horizontal grid lines
   for (var i = 0; i < 7; i++) {
     var lines = BABYLON.Mesh.CreateLines("lines", [
-  new BABYLON.Vector3(1400, 0, 0),
-  new BABYLON.Vector3(1400, 0, 0),
+  new BABYLON.Vector3(300, 0, 0),
+  new BABYLON.Vector3(300, 0, 0),
   new BABYLON.Vector3(0, 0, 0),
-  new BABYLON.Vector3(0, 0, 1400)
+  new BABYLON.Vector3(0, 0, 300)
 ], scene);
           lines.material = groundMaterial;
-          lines.position = new BABYLON.Vector3(-700, i*10, -700);
+          lines.position = new BABYLON.Vector3(-300, i*10, -300);
           lines.color = new BABYLON.Color3(0, 0.2, 0.3);
 }
 
