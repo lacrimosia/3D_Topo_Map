@@ -41,6 +41,7 @@ scene.clearColor = new BABYLON.Color3(1,1,1);
   var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
+  groundMaterial.bumpTexture = new BABYLON.Texture("images/island_orig.jpg", scene);
   ground.material = groundMaterial;
   // ground.position = new BABYLON.Vector3(-150,0,-150);
   ground.position.x = 0.0;
@@ -48,8 +49,19 @@ scene.clearColor = new BABYLON.Color3(1,1,1);
   ground.position.z = 0.0;
   ground.wireframe = true;
 
-//  var Positions = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
-//  console.log("pos", Positions);
+/*var Positions = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+
+var thePositions = [];
+    var index;
+    for (index = 0; index < Positions.length; index+= 3) {
+  //  thePositions.push(new BABYLON.Vector3(thePositions[index], thePositions[index + 1], thePositions[index + 2]));
+  thePositions.push({
+    'y': Positions[index + 1]
+  });
+    //   console.log("the pos", thePositions);
+  }*/
+
+
 
   // sand on the ground
 /*var extraGround = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 1, scene, false);
