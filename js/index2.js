@@ -13,7 +13,7 @@ var launch = function() {
   BABYLON.Engine.ShadersRepository = "Shaders/";
   var engine = new BABYLON.Engine(canvas, true);
   var scene = new BABYLON.Scene(engine);
-  var camera = new BABYLON.ArcRotateCamera("Camera", 3.8, 0.97, 10, new BABYLON.Vector3(0, 50, 0), scene);
+  var camera = new BABYLON.ArcRotateCamera("Camera", 350.8, 0.97, -5.0, new BABYLON.Vector3(168, 150, -200), scene);
   camera.attachControl(canvas);
 
   var sun = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 300, 0), scene);
@@ -22,8 +22,8 @@ var launch = function() {
   sun.intensity = 0.8;
 
 
-  var skybox = BABYLON.Mesh.CreateBox("skyBox", 4000.0, scene);
-  //  skybox.infiniteDistance = true;
+  var skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, scene);
+  // skybox.infiniteDistance = true;
   var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
   skyboxMaterial.backFaceCulling = false;
   skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay", scene);
