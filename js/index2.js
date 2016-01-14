@@ -13,7 +13,7 @@ var launch = function() {
   BABYLON.Engine.ShadersRepository = "Shaders/";
   var engine = new BABYLON.Engine(canvas, true);
   var scene = new BABYLON.Scene(engine);
-  var camera = new BABYLON.ArcRotateCamera("Camera", 3.8, 0.97, 10, new BABYLON.Vector3(30, 150, 20), scene);
+  var camera = new BABYLON.ArcRotateCamera("Camera", 3.8, 0.97, 10, new BABYLON.Vector3(0, 50, 0), scene);
   camera.attachControl(canvas);
 
   var sun = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 300, 0), scene);
@@ -38,11 +38,14 @@ var launch = function() {
 
   // Grounds
   // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 300, 300, 300, 0, 100, scene, true);
-  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 150, scene, true);
+  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   ground.material = groundMaterial;
+  // ground.position = new BABYLON.Vector3(-150,0,-150);
+  ground.position.x = 0.0;
   ground.position.y = 0.0;
+  ground.position.z = 0.0;
   ground.wireframe = true;
 
 //  var Positions = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
@@ -60,7 +63,8 @@ var launch = function() {
   // Water
 //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
 var water = BABYLON.Mesh.CreateGround("water", 300, 300, 1, scene, false);
-  water.position.y = -1.0;
+//  water.position.y = -1.0;
+water.position = new BABYLON.Vector3(0.0,-1.0,0.0);
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
 //  waterMaterial.refractionTexture.renderList.push(extraGround);
@@ -81,7 +85,7 @@ for(var w=0; w<2; w++){
     var textPlane = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
     // textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
   	textPlane.material = new BABYLON.StandardMaterial("outputplane", scene);
-  	textPlane.position = new BABYLON.Vector3(400*w, d*10, -700);
+  	textPlane.position = new BABYLON.Vector3(400*w, d*10, -300);
     textPlane.rotation.y = Math.PI;
   	textPlane.scaling.y = 0.4;
 
@@ -106,7 +110,7 @@ for(var w=0; w<2; w++){
   var textPlane2 = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
   // textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
   textPlane2.material = new BABYLON.StandardMaterial("outputplane", scene);
-  textPlane2.position = new BABYLON.Vector3(-700, d*10, 400*w);
+  textPlane2.position = new BABYLON.Vector3(-300, d*10, 400*w);
   textPlane2.rotation.y = Math.PI/-2;
   textPlane2.scaling.y = 0.4;
 
@@ -130,10 +134,10 @@ for(var w=0; w<2; w++){
   new BABYLON.Vector3(300, 0, 0),
   new BABYLON.Vector3(300, 0, 0),
   new BABYLON.Vector3(0, 0, 0),
-  new BABYLON.Vector3(0, 0, 300)
+  new BABYLON.Vector3(0, 0, -300)
 ], scene);
           lines.material = groundMaterial;
-          lines.position = new BABYLON.Vector3(-300, i*10, -300);
+          lines.position = new BABYLON.Vector3(-150, i*10, 150);
           lines.color = new BABYLON.Color3(0, 0.2, 0.3);
 }
 
@@ -172,7 +176,7 @@ for(var w=0; w<2; w++){
   var blurWidth = 2.0;
 
   // high threshold light
- var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
+ /*var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
     var postProcess1 = new BABYLON.PostProcess("Down sample", "./postprocesses/downsample", ["screenSize", "highlightThreshold"], null, 0.2, camera, BABYLON.Texture.DEFAULT_SAMPLINGMODE);
     postProcess1.onApply = function (effect) {
         effect.setFloat2("screenSize", postProcess1.width, postProcess1.height);
@@ -186,7 +190,7 @@ for(var w=0; w<2; w++){
         effect.setFloat("sceneIntensity", 0.8);
         effect.setFloat("glowIntensity", 0.3);
         effect.setFloat("highlightIntensity", 0.5);
-    };
+    };*/
 
   // Render loop
   var renderFunction = function() {
