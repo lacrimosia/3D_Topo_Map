@@ -16,7 +16,7 @@ var launch = function() {
   var camera = new BABYLON.ArcRotateCamera("Camera", 350.8, 0.97, -5.0, new BABYLON.Vector3(168, 150, -200), scene);
   camera.attachControl(canvas);
 
-  var sun = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 300, 0), scene);
+  var sun = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 300, -200), scene);
   sun.diffuse = new BABYLON.Color3(1, 1, 1);
   sun.specular = new BABYLON.Color3(1, 1, 1);
   sun.intensity = 0.8;
@@ -25,7 +25,7 @@ var launch = function() {
   var skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, scene);
   // skybox.infiniteDistance = true;
   var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-  skyboxMaterial.backFaceCulling = false;
+  /*skyboxMaterial.backFaceCulling = false;
   skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay", scene);
   skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
   skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
@@ -33,8 +33,8 @@ var launch = function() {
   skyboxMaterial.disableLighting = true;
   skybox.material = skyboxMaterial;
   // disable picking of object
-  skybox.isPickable = false;
-//  scene.clearColor = new BABYLON.Color3(0,0,0);
+  skybox.isPickable = false;*/
+scene.clearColor = new BABYLON.Color3(1,1,1);
 
   // Grounds
   // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 300, 300, 300, 0, 100, scene, true);
@@ -139,21 +139,70 @@ water.position = new BABYLON.Vector3(0.0,-1.0,0.0);
           lines.color = new BABYLON.Color3(0, 0.2, 0.3);
 }
 
-// vertical grid lines
+// vertical grid lines  ---- positive
 
-/*  for (var a = 0; a < 100; a++) {
+ for (var a = 0; a < 10; a++) {
     var lines = BABYLON.Mesh.CreateLines("lines", [
-      new BABYLON.Vector3(0, 205, 0),
-      new BABYLON.Vector3(0, 205, 0),
+      new BABYLON.Vector3(0, 91, 0),
       new BABYLON.Vector3(0, 0, 0),
-      new BABYLON.Vector3(0, 0, 205),
-      new BABYLON.Vector3(0, 0, 205)
+      new BABYLON.Vector3(0, 0, 0),
+      new BABYLON.Vector3(0, 0, 0)
 ], scene);
           lines.material = groundMaterial;
-          lines.position = new BABYLON.Vector3(a*-20, 0, -700);
+          lines.position.x = a*15;
+          lines.position.y = 0;
+          lines.position.z = 150;
           lines.color = new BABYLON.Color3(0, 0.2, 0.3);
         //  lines.rotation.x = Math.PI;
-}*/
+}
+
+for (var b = 0; b < 10; b++) {
+   var lines = BABYLON.Mesh.CreateLines("lines", [
+     new BABYLON.Vector3(0, 91, 0),
+     new BABYLON.Vector3(0, 0, 0),
+     new BABYLON.Vector3(0, 0, 0),
+     new BABYLON.Vector3(0, 0, 0)
+], scene);
+         lines.material = groundMaterial;
+      //   lines.rotation.y = Math.PI;
+         lines.position.x = -150;
+         lines.position.y = 0;
+         lines.position.z = b*15;
+         lines.color = new BABYLON.Color3(0, 0.2, 0.3);
+       //  lines.rotation.x = Math.PI;
+}
+
+// vertical grid lines ------ negative
+for (var a = 0; a < 11; a++) {
+   var lines = BABYLON.Mesh.CreateLines("lines", [
+     new BABYLON.Vector3(0, 91, 0),
+     new BABYLON.Vector3(0, 0, 0),
+     new BABYLON.Vector3(0, 0, 0),
+     new BABYLON.Vector3(0, 0, 0)
+], scene);
+         lines.material = groundMaterial;
+         lines.position.x = a*-15;
+         lines.position.y = 0;
+         lines.position.z = 150;
+         lines.color = new BABYLON.Color3(0, 0.2, 0.3);
+       //  lines.rotation.x = Math.PI;
+}
+
+for (var b = 0; b < 10; b++) {
+   var lines = BABYLON.Mesh.CreateLines("lines", [
+     new BABYLON.Vector3(0, 91, 0),
+     new BABYLON.Vector3(0, 0, 0),
+     new BABYLON.Vector3(0, 0, 0),
+     new BABYLON.Vector3(0, 0, 0)
+], scene);
+         lines.material = groundMaterial;
+      //   lines.rotation.y = Math.PI;
+         lines.position.x = -150;
+         lines.position.y = 0;
+         lines.position.z = b*-15;
+         lines.color = new BABYLON.Color3(0, 0.2, 0.3);
+       //  lines.rotation.x = Math.PI;
+}
 
 
   // Shadows

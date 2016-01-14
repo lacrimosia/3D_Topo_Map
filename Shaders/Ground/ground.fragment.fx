@@ -53,7 +53,7 @@ void main(void) {
 	vec3 finalColor = vec3(0., 0., 0.);
 	vec2 uvOffset = vec2(1.0 / 512.0, 1.0 / 512.0);
 
-	if (vPositionW.y <= vLimits.x) 
+	if (vPositionW.y <= vLimits.x)
 	{
 		float lowLimit = vLimits.x - 2.;
 		float gradient = clamp((vPositionW.y - lowLimit) / (vLimits.x - lowLimit), 0., 1.);
