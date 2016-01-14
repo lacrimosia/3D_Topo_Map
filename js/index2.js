@@ -78,15 +78,14 @@ water.position = new BABYLON.Vector3(0.0,-1.0,0.0);
 
 
   // render text for grid
-for(var w=0; w<2; w++){
-  for(var d=1; d<7; d++){
-      var feet = d*1500;
+  for(var d=0; d<7; d++){
+      var feet = (d + 1)*1500;
       var meters = Math.round((feet/3.2808));
     var textPlane = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
     // textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
   	textPlane.material = new BABYLON.StandardMaterial("outputplane", scene);
-  	textPlane.position = new BABYLON.Vector3(400*w, d*10, -300);
-    textPlane.rotation.y = Math.PI;
+  	textPlane.position = new BABYLON.Vector3(150, d*13, 150);
+  //  textPlane.rotation.y = Math.PI/2;
   	textPlane.scaling.y = 0.4;
 
   	var textPlaneTexture = new BABYLON.DynamicTexture("dynamic texture", 1000, scene, true);
@@ -100,17 +99,16 @@ for(var w=0; w<2; w++){
   	textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "black", "transparent");
   //  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
   }
-}
+
 
 // render text for grid 2
-for(var w=0; w<2; w++){
- for(var d=1; d<7; d++){
-    var feet = d*1500;
+ for(var d=0; d<7; d++){
+    var feet = (d + 1)*1500;
     var meters = Math.round((feet/3.2808));
   var textPlane2 = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
   // textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
   textPlane2.material = new BABYLON.StandardMaterial("outputplane", scene);
-  textPlane2.position = new BABYLON.Vector3(-300, d*10, 400*w);
+  textPlane2.position = new BABYLON.Vector3(-150, d*13, -100);
   textPlane2.rotation.y = Math.PI/-2;
   textPlane2.scaling.y = 0.4;
 
@@ -122,14 +120,14 @@ for(var w=0; w<2; w++){
   textPlane2.material.backFaceCulling = false;
 
 // text, x, y, text settings, color, transparency
-  textPlaneTexture.drawText(feet+" ft.", 0, 300, "bold 140px verdana", "black", "transparent");
+  textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "black", "transparent");
 //  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
  }
-}
+
 
 
 // horizontal grid lines
-  for (var i = 0; i < 7; i++) {
+  for (var i = 0; i < 8; i++) {
     var lines = BABYLON.Mesh.CreateLines("lines", [
   new BABYLON.Vector3(300, 0, 0),
   new BABYLON.Vector3(300, 0, 0),
@@ -137,7 +135,7 @@ for(var w=0; w<2; w++){
   new BABYLON.Vector3(0, 0, -300)
 ], scene);
           lines.material = groundMaterial;
-          lines.position = new BABYLON.Vector3(-150, i*10, 150);
+          lines.position = new BABYLON.Vector3(-150, i*13, 150);
           lines.color = new BABYLON.Color3(0, 0.2, 0.3);
 }
 
