@@ -6,9 +6,9 @@
         this.light = light;
 
         // dark blue
-        this.groundTexture = new BABYLON.Texture("Shaders/Ground/ground.jpg", scene);
-        this.groundTexture.uScale = 5.0;
-        this.groundTexture.vScale = 5.0;
+      this.groundTexture = new BABYLON.Texture("Shaders/Ground/ground.jpg", scene);
+      this.groundTexture.uScale = 5.0;
+      this.groundTexture.vScale = 5.0;
 
         // green
         this.grassTexture = new BABYLON.Texture("Shaders/Ground/grass.jpg", scene);
@@ -22,8 +22,8 @@
 
         // really dark blue
         this.sandTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
-        this.sandTexture.uScale = 5.0;
-        this.sandTexture.vScale = 5.0;
+        this.sandTexture.uScale = 1.0;
+        this.sandTexture.vScale = 1.0;
 
         // yellow
         this.rockTexture = new BABYLON.Texture("Shaders/Ground/rock.jpg", scene);

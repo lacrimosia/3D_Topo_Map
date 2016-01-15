@@ -34,7 +34,7 @@ var launch = function() {
   skybox.material = skyboxMaterial;
   // disable picking of object
   skybox.isPickable = false;*/
-scene.clearColor = new BABYLON.Color3(1,1,1);
+scene.clearColor = new BABYLON.Color3(0,0,0);
 
   // Grounds
   // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 300, 300, 300, 0, 100, scene, true);
@@ -108,7 +108,7 @@ water.position = new BABYLON.Vector3(0.0,-1.0,0.0);
   	textPlane.material.backFaceCulling = false;
 
   // text, x, y, text settings, color, transparency
-  	textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "black", "transparent");
+  	textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "white", "transparent");
   //  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
   }
 
@@ -132,7 +132,7 @@ water.position = new BABYLON.Vector3(0.0,-1.0,0.0);
   textPlane2.material.backFaceCulling = false;
 
 // text, x, y, text settings, color, transparency
-  textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "black", "transparent");
+  textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "white", "transparent");
 //  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
  }
 
