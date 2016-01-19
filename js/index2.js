@@ -25,7 +25,7 @@ var launch = function() {
   var skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, scene);
   // skybox.infiniteDistance = true;
   var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-  /*skyboxMaterial.backFaceCulling = false;
+  skyboxMaterial.backFaceCulling = false;
   skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay", scene);
   skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
   skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
@@ -33,8 +33,10 @@ var launch = function() {
   skyboxMaterial.disableLighting = true;
   skybox.material = skyboxMaterial;
   // disable picking of object
-  skybox.isPickable = false;*/
+  skybox.isPickable = false;
 scene.clearColor = new BABYLON.Color3(0,0,0);
+  skybox.isPickable = false;
+scene.clearColor = new BABYLON.Color3(1,1,1);
 
   // Grounds
   // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 300, 300, 300, 0, 100, scene, true);
@@ -76,7 +78,7 @@ var thePositions = [];
 //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
 var water = BABYLON.Mesh.CreateGround("water", 300, 300, 1, scene, false);
 //  water.position.y = -1.0;
-water.position = new BABYLON.Vector3(0.0,-1.0,0.0);
+water.position = new BABYLON.Vector3(0.0,1.0,0.0);
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
 //  waterMaterial.refractionTexture.renderList.push(extraGround);
