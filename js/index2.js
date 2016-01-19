@@ -63,17 +63,15 @@ scene.clearColor = new BABYLON.Color3(1,1,1);
   // Water
 //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
 var water = BABYLON.Mesh.CreateGround("water", 300, 300, 1, scene, false);
-//  water.position.y = -1.0;
 water.position = new BABYLON.Vector3(0.0,1.0,0.0);
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
+// waterMaterial.bumpTexture = new BABYLON.Texture("images/bump.jpg", scene); // Set the bump texture
   waterMaterial.refractionTexture.renderList.push(ground);
 //  waterMaterial.refractionTexture.renderList.push(extraGround);
-
-  waterMaterial.reflectionTexture.renderList.push(ground);
   waterMaterial.reflectionTexture.renderList.push(skybox);
-
   water.isPickable = false;
   water.material = waterMaterial;
+
 
 
 
