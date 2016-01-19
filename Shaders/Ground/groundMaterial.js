@@ -31,10 +31,11 @@
         this.rockTexture.vScale = 5.0;
 
         this.blendTexture = new BABYLON.Texture("Shaders/Ground/blend.png", scene);
-      //  this.blendTexture.uOffset = Math.random();
-      //  this.blendTexture.vOffset = Math.random();
-      //  this.blendTexture.wrapU = BABYLON.Texture.MIRROR_ADDRESSMODE;
-      //  this.blendTexture.wrapV = BABYLON.Texture.MIRROR_ADDRESSMODE;
+        this.blendTexture.uOffset = Math.random();
+        this.blendTexture.vOffset = Math.random();
+        this.blendTexture.wrapU = BABYLON.Texture.MIRROR_ADDRESSMODE;
+        this.blendTexture.wrapV = BABYLON.Texture.MIRROR_ADDRESSMODE;
+        
         this.sandLimit = 20;
         this.grassLimit = 40;
         this.rockLimit = 50;
