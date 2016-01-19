@@ -237,7 +237,7 @@ for (var b = 0; b < 10; b++) {
   var blurWidth = 2.0;
 
   // high threshold light
- /*var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
+ var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
     var postProcess1 = new BABYLON.PostProcess("Down sample", "./postprocesses/downsample", ["screenSize", "highlightThreshold"], null, 0.2, camera, BABYLON.Texture.DEFAULT_SAMPLINGMODE);
     postProcess1.onApply = function (effect) {
         effect.setFloat2("screenSize", postProcess1.width, postProcess1.height);
@@ -251,7 +251,7 @@ for (var b = 0; b < 10; b++) {
         effect.setFloat("sceneIntensity", 0.8);
         effect.setFloat("glowIntensity", 0.3);
         effect.setFloat("highlightIntensity", 0.5);
-    };*/
+    };
 
   // Render loop
   var renderFunction = function() {
