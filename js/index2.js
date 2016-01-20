@@ -77,8 +77,7 @@ var thePositions = [];
   // Water
 //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
 var water = BABYLON.Mesh.CreateGround("water", 300, 300, 1, scene, false);
-//  water.position.y = -1.0;
-water.position = new BABYLON.Vector3(0.0,1.0,0.0);
+water.position = new BABYLON.Vector3(0.0,-1.0,0.0);
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
 //  waterMaterial.refractionTexture.renderList.push(extraGround);
@@ -110,7 +109,7 @@ water.position = new BABYLON.Vector3(0.0,1.0,0.0);
   	textPlane.material.backFaceCulling = false;
 
   // text, x, y, text settings, color, transparency
-  	textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "white", "transparent");
+  	textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "black", "transparent");
   //  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
   }
 
@@ -134,7 +133,7 @@ water.position = new BABYLON.Vector3(0.0,1.0,0.0);
   textPlane2.material.backFaceCulling = false;
 
 // text, x, y, text settings, color, transparency
-  textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "white", "transparent");
+  textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "black", "transparent");
 //  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
  }
 
@@ -237,7 +236,7 @@ for (var b = 0; b < 10; b++) {
   var blurWidth = 2.0;
 
   // high threshold light
- var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
+ /*var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
     var postProcess1 = new BABYLON.PostProcess("Down sample", "./postprocesses/downsample", ["screenSize", "highlightThreshold"], null, 0.2, camera, BABYLON.Texture.DEFAULT_SAMPLINGMODE);
     postProcess1.onApply = function (effect) {
         effect.setFloat2("screenSize", postProcess1.width, postProcess1.height);
@@ -251,7 +250,7 @@ for (var b = 0; b < 10; b++) {
         effect.setFloat("sceneIntensity", 0.8);
         effect.setFloat("glowIntensity", 0.3);
         effect.setFloat("highlightIntensity", 0.5);
-    };
+    };*/
 
   // Render loop
   var renderFunction = function() {
