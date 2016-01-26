@@ -23,18 +23,18 @@
             BABYLON.clipPlane = null;
         };
 
-        this.waterColor = new BABYLON.Color3(0.0, 0.3, 0.1);
-        this.waterColorLevel = 0.2;
-        this.fresnelLevel = 1.0;
-        this.reflectionLevel = 0.6;
-        this.refractionLevel = 0.8;
+    //    this.waterColor = new BABYLON.Color3(0.0, 0.3, 0.1);
+    //    this.waterColorLevel = 0.2;
+    //    this.fresnelLevel = 1.0;
+    //    this.reflectionLevel = 0.6;
+    //    this.refractionLevel = 0.8;
 
-        this.waveLength = 0.1;
-        this.waveHeight = 0.15;
+    //    this.waveLength = 0.1;
+    //    this.waveHeight = 0.15;
 
-        this.waterDirection = new BABYLON.Vector2(0, 1.0);
+    //    this.waterDirection = new BABYLON.Vector2(0, 1.0);
 
-        this._time = 0;
+      //  this._time = 0;
     };
 
     mountain.WaterMaterial.prototype = Object.create(BABYLON.Material.prototype);
