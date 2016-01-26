@@ -23,20 +23,16 @@
             BABYLON.clipPlane = null;
         };
 
-        this.waterColor = new BABYLON.Color3(0.1, 0.1, 0.6);
+        this.waterColor = new BABYLON.Color3(0.0, 0.3, 0.1);
         this.waterColorLevel = 0.2;
         this.fresnelLevel = 1.0;
         this.reflectionLevel = 0.6;
         this.refractionLevel = 0.8;
-        this.windForce = 45;
-        this.bumpHeight = 0.3;
-        this.windDirection = new BABYLON.Vector2(1.0, 1.0);
-        this.colorBlendFactor = 2.0;
 
         this.waveLength = 0.1;
-        this.waveHeight = 1.3;
+        this.waveHeight = 0.15;
 
-        this.waterDirection = new BABYLON.Vector2(1.0, 1.0);
+        this.waterDirection = new BABYLON.Vector2(0, 1.0);
 
         this._time = 0;
     };
