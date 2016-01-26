@@ -34,13 +34,16 @@ var launch = function() {
   skybox.material = skyboxMaterial;
   // disable picking of object
   skybox.isPickable = false;
+scene.clearColor = new BABYLON.Color3(0,0,0);
+  skybox.isPickable = false;
 scene.clearColor = new BABYLON.Color3(1,1,1);
 
   // Grounds
-  // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 300, 300, 300, 0, 100, scene, true);
-  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
+ var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 800, 800, 300, 0, 100, scene, true);
+//  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
+  groundMaterial.bumpTexture = new BABYLON.Texture("images/island_orig.jpg", scene);
   ground.material = groundMaterial;
   // ground.position = new BABYLON.Vector3(-150,0,-150);
   ground.position.x = 0.0;
@@ -48,8 +51,19 @@ scene.clearColor = new BABYLON.Color3(1,1,1);
   ground.position.z = 0.0;
   ground.wireframe = true;
 
-//  var Positions = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
-//  console.log("pos", Positions);
+/*var Positions = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
+
+var thePositions = [];
+    var index;
+    for (index = 0; index < Positions.length; index+= 3) {
+  //  thePositions.push(new BABYLON.Vector3(thePositions[index], thePositions[index + 1], thePositions[index + 2]));
+  thePositions.push({
+    'y': Positions[index + 1]
+  });
+    //   console.log("the pos", thePositions);
+  }*/
+
+
 
   // sand on the ground
 /*var extraGround = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 1, scene, false);
@@ -62,16 +76,17 @@ scene.clearColor = new BABYLON.Color3(1,1,1);
 
   // Water
 //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
-var water = BABYLON.Mesh.CreateGround("water", 300, 300, 1, scene, false);
-water.position = new BABYLON.Vector3(0.0,1.0,0.0);
+var water = BABYLON.Mesh.CreateGround("water", 800, 800, 1, scene, false);
+water.position = new BABYLON.Vector3(0.0,-1.0,0.0);
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
-// waterMaterial.bumpTexture = new BABYLON.Texture("images/bump.jpg", scene); // Set the bump texture
   waterMaterial.refractionTexture.renderList.push(ground);
 //  waterMaterial.refractionTexture.renderList.push(extraGround);
+
+  waterMaterial.reflectionTexture.renderList.push(ground);
   waterMaterial.reflectionTexture.renderList.push(skybox);
+
   water.isPickable = false;
   water.material = waterMaterial;
-
 
 
 
