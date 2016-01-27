@@ -39,7 +39,8 @@ scene.clearColor = new BABYLON.Color3(0,0,0);
 scene.clearColor = new BABYLON.Color3(1,1,1);
 
   // Grounds
- var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 800, 800, 300, 0, 100, scene, true);
+// var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 800, 800, 300, 0, 100, scene, true);
+ var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 300, 300, 300, 0, 100, scene, true);
 //  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
@@ -47,7 +48,7 @@ scene.clearColor = new BABYLON.Color3(1,1,1);
   ground.material = groundMaterial;
   // ground.position = new BABYLON.Vector3(-150,0,-150);
   ground.position.x = 0.0;
-  ground.position.y = 0.0;
+  ground.position.y = -10.0;
   ground.position.z = 0.0;
   ground.wireframe = true;
 
@@ -76,7 +77,7 @@ var thePositions = [];
 
   // Water
 //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
-var water = BABYLON.Mesh.CreateGround("water", 800, 800, 1, scene, false);
+var water = BABYLON.Mesh.CreateGround("water", 300, 300, 1, scene, false);
 water.position = new BABYLON.Vector3(0.0,-1.0,0.0);
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);

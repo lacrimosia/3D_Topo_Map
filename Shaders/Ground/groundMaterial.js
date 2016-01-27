@@ -33,12 +33,13 @@
         this.blendTexture = new BABYLON.Texture("Shaders/Ground/blend.png", scene);
       //  this.blendTexture.uOffset = Math.random();
       //  this.blendTexture.vOffset = Math.random();
-      //  this.blendTexture.wrapU = BABYLON.Texture.MIRROR_ADDRESSMODE;
-      //  this.blendTexture.wrapV = BABYLON.Texture.MIRROR_ADDRESSMODE;
-        this.sandLimit = 20;
-        this.grassLimit = 40;
-        this.rockLimit = 50;
-        this.snowLimit = 15;
+        this.blendTexture.wrapU = BABYLON.Texture.MIRROR_ADDRESSMODE;
+        this.blendTexture.wrapV = BABYLON.Texture.MIRROR_ADDRESSMODE;
+
+        this.sandLimit = 7;
+        this.grassLimit = 12;
+        this.rockLimit = 17;
+        this.snowLimit = 22;
     };
 
     mountain.GroundMaterial.prototype = Object.create(BABYLON.Material.prototype);
