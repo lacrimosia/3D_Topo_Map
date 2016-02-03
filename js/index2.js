@@ -89,16 +89,35 @@ water.position = new BABYLON.Vector3(0.0,-1.0,0.0);
   water.isPickable = false;
   water.material = waterMaterial;
 
+// text grid for mountain heights
+// params: start, end, x, y, z, feet, rotation
+textGrid(0,7,150,13,150,1500, null);
+// text grid 2 -- left text
+textGrid(0,7,-150,13,-100,1500, Math.PI/-2);
+// loading horizontal lines
+var one = [300, 0, 0];
+var two = [300, 0, 0];
+var three = [0, 0, 0];
+var four = [0, 0, -300];
+horizontalGridLines(0, 8, one, two, three, four, -150, 13, 150, 0, 0.2, 0.3);
 
 
+
+
+
+
+
+// the text grid function
+function textGrid(start, end, x, y, z, feets, rotation){
   // render text for grid
-  for(var d=0; d<7; d++){
-      var feet = (d + 1)*1500;
+  for(var d=start; d<end; d++){
+      var feet = (d + 1)*feets;
       var meters = Math.round((feet/3.2808));
     var textPlane = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
     // textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
   	textPlane.material = new BABYLON.StandardMaterial("outputplane", scene);
-  	textPlane.position = new BABYLON.Vector3(150, d*13, 150);
+  	textPlane.position = new BABYLON.Vector3(x, d*y, z);
+    textPlane.rotation.y = rotation;
   //  textPlane.rotation.y = Math.PI/2;
   	textPlane.scaling.y = 0.4;
 
@@ -113,46 +132,29 @@ water.position = new BABYLON.Vector3(0.0,-1.0,0.0);
   	textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "black", "transparent");
   //  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
   }
-
-
-// render text for grid 2
- for(var d=0; d<7; d++){
-    var feet = (d + 1)*1500;
-    var meters = Math.round((feet/3.2808));
-  var textPlane2 = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
-  // textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
-  textPlane2.material = new BABYLON.StandardMaterial("outputplane", scene);
-  textPlane2.position = new BABYLON.Vector3(-150, d*13, -100);
-  textPlane2.rotation.y = Math.PI/-2;
-  textPlane2.scaling.y = 0.4;
-
-  var textPlaneTexture = new BABYLON.DynamicTexture("dynamic texture", 1000, scene, true);
-  textPlane2.material.diffuseTexture = textPlaneTexture;
-  textPlaneTexture.hasAlpha = true;
-  textPlane2.material.specularColor = new BABYLON.Color3(1, 1, 1);
-  textPlane2.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
-  textPlane2.material.backFaceCulling = false;
-
-// text, x, y, text settings, color, transparency
-  textPlaneTexture.drawText(feet+" ft.", 0, 100, "bold 140px verdana", "black", "transparent");
-//  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
- }
-
-
-
-// horizontal grid lines
-  for (var i = 0; i < 8; i++) {
-    var lines = BABYLON.Mesh.CreateLines("lines", [
-  new BABYLON.Vector3(300, 0, 0),
-  new BABYLON.Vector3(300, 0, 0),
-  new BABYLON.Vector3(0, 0, 0),
-  new BABYLON.Vector3(0, 0, -300)
-], scene);
-          lines.material = groundMaterial;
-          lines.position = new BABYLON.Vector3(-150, i*13, 150);
-          lines.color = new BABYLON.Color3(0, 0.2, 0.3);
 }
 
+// Prints out the grid lines around the mountains
+// params: start, end, array vectorsLines 1-4 positions, Vectors positions (x,y,z), colors(r,g,b)
+function horizontalGridLines(start, end, linesA, linesB, linesC, linesD, x, y, z, r, g, b){
+  for (var i = start; i < end; i++) {
+    var lines = BABYLON.Mesh.CreateLines("lines", [
+  new BABYLON.Vector3(linesA[0], linesA[1], linesA[2]),
+  new BABYLON.Vector3(linesB[0], linesB[1], linesB[2]),
+  new BABYLON.Vector3(linesC[0], linesC[1], linesC[2]),
+  new BABYLON.Vector3(linesD[0], linesD[1], linesD[2])
+], scene);
+          lines.material = groundMaterial;
+          lines.position = new BABYLON.Vector3(x, i*y, z);
+          lines.color = new BABYLON.Color3(r, g, b);
+  }
+}
+
+// vertical lines function
+// params: start, end, y pos, positions(x,y,z), colors(r,g,b)
+function verticalGridLines(start, end, pos, x, y, z, r, g, b){
+
+}
 // vertical grid lines  ---- positive
 
  for (var a = 0; a < 10; a++) {
@@ -235,23 +237,6 @@ for (var b = 0; b < 10; b++) {
 
   // Bloom
   var blurWidth = 2.0;
-
-  // high threshold light
- /*var postProcess0 = new BABYLON.PassPostProcess("Scene copy", 1.0, camera);
-    var postProcess1 = new BABYLON.PostProcess("Down sample", "./postprocesses/downsample", ["screenSize", "highlightThreshold"], null, 0.2, camera, BABYLON.Texture.DEFAULT_SAMPLINGMODE);
-    postProcess1.onApply = function (effect) {
-        effect.setFloat2("screenSize", postProcess1.width, postProcess1.height);
-        effect.setFloat("highlightThreshold", 0.85);
-    };
-    var postProcess2 = new BABYLON.BlurPostProcess("Horizontal blur", new BABYLON.Vector2(1.0, 0), blurWidth, 0.5, camera, BABYLON.Texture.DEFAULT_SAMPLINGMODE);
-    var postProcess3 = new BABYLON.BlurPostProcess("Vertical blur", new BABYLON.Vector2(0, 1.0), blurWidth, 0.5, camera, BABYLON.Texture.DEFAULT_SAMPLINGMODE);
-    var postProcess4 = new BABYLON.PostProcess("Final compose", "./postprocesses/compose", ["sceneIntensity", "glowIntensity", "highlightIntensity"], ["sceneSampler"], 1, camera);
-    postProcess4.onApply = function (effect) {
-        effect.setTextureFromPostProcess("sceneSampler", postProcess0);
-        effect.setFloat("sceneIntensity", 0.8);
-        effect.setFloat("glowIntensity", 0.3);
-        effect.setFloat("highlightIntensity", 0.5);
-    };*/
 
   // Render loop
   var renderFunction = function() {
