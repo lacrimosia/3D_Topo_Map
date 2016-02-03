@@ -40,7 +40,7 @@ scene.clearColor = new BABYLON.Color3(1,1,1);
 
   // Grounds
 // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 800, 800, 300, 0, 100, scene, true);
- var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 300, 300, 300, 0, 100, scene, true);
+ var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 300, 300, 100, 0, 100, scene, true);
 //  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
@@ -53,13 +53,15 @@ scene.clearColor = new BABYLON.Color3(1,1,1);
   ground.wireframe = true;
 
   // sand on the ground
-/*var extraGround = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 1, scene, false);
+// var extraGround = BABYLON.Mesh.CreateGround("extraGround", 800, 800, 1, scene, false);
+var extraGround = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 800, 800, 200, 0, 100, scene, true);
   var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
-  extraGroundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
-  extraGroundMaterial.diffuseTexture.uScale = 40;
-  extraGroundMaterial.diffuseTexture.vScale = 40;
-  extraGround.position.y = -2.05;
-  extraGround.material = extraGroundMaterial;*/
+extraGroundMaterial.diffuseTexture = new BABYLON.Texture("images/dirt.jpg", scene);
+  extraGroundMaterial.diffuseTexture.uScale = 10;
+  extraGroundMaterial.diffuseTexture.vScale = 10;
+  extraGround.position.y = -10.05;
+  extraGround.material = extraGroundMaterial;
+  extraGround.isPickable = false;
 
   // Water
 //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);

@@ -13,6 +13,12 @@ body {
   touch-action: none;
 }
 
+.area{
+  width: 1280px;
+  height: 780px;
+  margin: 100px auto;
+}
+
 .menu {
   position: absolute;
   top: 0%;
