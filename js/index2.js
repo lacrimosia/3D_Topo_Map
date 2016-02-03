@@ -52,20 +52,6 @@ scene.clearColor = new BABYLON.Color3(1,1,1);
   ground.position.z = 0.0;
   ground.wireframe = true;
 
-/*var Positions = ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
-
-var thePositions = [];
-    var index;
-    for (index = 0; index < Positions.length; index+= 3) {
-  //  thePositions.push(new BABYLON.Vector3(thePositions[index], thePositions[index + 1], thePositions[index + 2]));
-  thePositions.push({
-    'y': Positions[index + 1]
-  });
-    //   console.log("the pos", thePositions);
-  }*/
-
-
-
   // sand on the ground
 /*var extraGround = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 1, scene, false);
   var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
@@ -100,11 +86,12 @@ var two = [300, 0, 0];
 var three = [0, 0, 0];
 var four = [0, 0, -300];
 horizontalGridLines(0, 8, one, two, three, four, -150, 13, 150, 0, 0.2, 0.3);
-
-
-
-
-
+// vertical lines
+// params: start, end, y pos, positions(x,y,z), colors(r,g,b)
+verticalXGridLines(0, 10, 91, 15, 0, 150, 0, 0.2, 0.3);
+verticalXGridLines(0, 11, 91, -15, 0, 150, 0, 0.2, 0.3);
+verticalYGridLines(0, 10, 91, -150, 0, 15, 0, 0.2, 0.3);
+verticalYGridLines(0, 10, 91, -150, 0, -15, 0, 0.2, 0.3);
 
 
 // the text grid function
@@ -152,74 +139,42 @@ function horizontalGridLines(start, end, linesA, linesB, linesC, linesD, x, y, z
 
 // vertical lines function
 // params: start, end, y pos, positions(x,y,z), colors(r,g,b)
-function verticalGridLines(start, end, pos, x, y, z, r, g, b){
-
-}
-// vertical grid lines  ---- positive
-
- for (var a = 0; a < 10; a++) {
-    var lines = BABYLON.Mesh.CreateLines("lines", [
-      new BABYLON.Vector3(0, 91, 0),
-      new BABYLON.Vector3(0, 0, 0),
-      new BABYLON.Vector3(0, 0, 0),
-      new BABYLON.Vector3(0, 0, 0)
-], scene);
-          lines.material = groundMaterial;
-          lines.position.x = a*15;
-          lines.position.y = 0;
-          lines.position.z = 150;
-          lines.color = new BABYLON.Color3(0, 0.2, 0.3);
-        //  lines.rotation.x = Math.PI;
+function verticalXGridLines(start, end, pos, x, y, z, r, g, b){
+  for (var a = start; a < end; a++) {
+     var lines = BABYLON.Mesh.CreateLines("lines", [
+       new BABYLON.Vector3(0, pos, 0),
+       new BABYLON.Vector3(0, 0, 0),
+       new BABYLON.Vector3(0, 0, 0),
+       new BABYLON.Vector3(0, 0, 0)
+ ], scene);
+           lines.material = groundMaterial;
+           lines.position.x = a*x;
+           lines.position.y = y;
+           lines.position.z = z;
+           lines.color = new BABYLON.Color3(r, g, b);
+         //  lines.rotation.x = Math.PI;
+ }
 }
 
-for (var b = 0; b < 10; b++) {
-   var lines = BABYLON.Mesh.CreateLines("lines", [
-     new BABYLON.Vector3(0, 91, 0),
-     new BABYLON.Vector3(0, 0, 0),
-     new BABYLON.Vector3(0, 0, 0),
-     new BABYLON.Vector3(0, 0, 0)
-], scene);
-         lines.material = groundMaterial;
-      //   lines.rotation.y = Math.PI;
-         lines.position.x = -150;
-         lines.position.y = 0;
-         lines.position.z = b*15;
-         lines.color = new BABYLON.Color3(0, 0.2, 0.3);
-       //  lines.rotation.x = Math.PI;
+// vertical lines function
+// params: start, end, y pos, positions(x,y,z), colors(r,g,b)
+function verticalYGridLines(start, end, pos, x, y, z, r, g, b){
+  for (var b = start; b < end; b++) {
+     var lines = BABYLON.Mesh.CreateLines("lines", [
+       new BABYLON.Vector3(0, pos, 0),
+       new BABYLON.Vector3(0, 0, 0),
+       new BABYLON.Vector3(0, 0, 0),
+       new BABYLON.Vector3(0, 0, 0)
+  ], scene);
+           lines.material = groundMaterial;
+        //   lines.rotation.y = Math.PI;
+           lines.position.x = x;
+           lines.position.y = y;
+           lines.position.z = b*z;
+           lines.color = new BABYLON.Color3(r, g, b);
+         //  lines.rotation.x = Math.PI;
+  }
 }
-
-// vertical grid lines ------ negative
-for (var a = 0; a < 11; a++) {
-   var lines = BABYLON.Mesh.CreateLines("lines", [
-     new BABYLON.Vector3(0, 91, 0),
-     new BABYLON.Vector3(0, 0, 0),
-     new BABYLON.Vector3(0, 0, 0),
-     new BABYLON.Vector3(0, 0, 0)
-], scene);
-         lines.material = groundMaterial;
-         lines.position.x = a*-15;
-         lines.position.y = 0;
-         lines.position.z = 150;
-         lines.color = new BABYLON.Color3(0, 0.2, 0.3);
-       //  lines.rotation.x = Math.PI;
-}
-
-for (var b = 0; b < 10; b++) {
-   var lines = BABYLON.Mesh.CreateLines("lines", [
-     new BABYLON.Vector3(0, 91, 0),
-     new BABYLON.Vector3(0, 0, 0),
-     new BABYLON.Vector3(0, 0, 0),
-     new BABYLON.Vector3(0, 0, 0)
-], scene);
-         lines.material = groundMaterial;
-      //   lines.rotation.y = Math.PI;
-         lines.position.x = -150;
-         lines.position.y = 0;
-         lines.position.z = b*-15;
-         lines.color = new BABYLON.Color3(0, 0.2, 0.3);
-       //  lines.rotation.x = Math.PI;
-}
-
 
   // Shadows
 /*  var shadowGenerator = new BABYLON.ShadowGenerator(1024, sun);
