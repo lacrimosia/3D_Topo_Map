@@ -5,10 +5,10 @@ var mountain = mountain || {};
 // get the default values
 mountain.elevateMountain = function(ground){
   this.ground = ground;          // mountain plane
-  this.radius = 15.0;           // selection radius
+  this.radius = 5.0;           // selection radius
   this.invertDirection = 1.0;   // direction for inversion
   this.heightMin = -5.0;       // height min
-  this.heightMax = 60.0;       // max heigh of mountain
+  this.heightMax = 40.0;       // max heigh of mountain
   this.groundPositions = [];
 
     var scene = ground.getScene();

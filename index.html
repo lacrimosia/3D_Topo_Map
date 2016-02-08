@@ -36,20 +36,29 @@
 </head>
 
 <body>
-
+<div class="loader">
+  <div class="around"><i class="fa fa-spinner fa-pulse spins"></i><p class="loadsText"></p></div>
+</div>
   <div class="menu">
-    <img src="images/wood_plank.png" class="logo"/>
+    <h3>3D Topographic Map</h3>
     <button class="buttons selected" id="cameraButton" alt="Control the camera"><span><i class="fa fa-camera"></i> Camera Mode</span></button>
     <button class="buttons" id="elevationButton"><span><i class="fa fa-arrow-circle-up"></i> Add Mountain</span></button>
-  <button class="buttons" id="digButton"><span><i class="fa fa-arrow-circle-down"></i> Dig</span></button>
-  <p><span><strong>Location:</strong> Red Rock Canyon</span></p>
+  <button class="buttons" id="digButton"><span><i class="fa fa-arrow-circle-down"></i> Add Water</span></button>
+  <button class="buttons" id="helpButton"><span><i class="fa fa-question-circle"></i> Help</span></button>
+  <span><strong>Location</strong></span><br/>
+  <span><strong><i class="fa fa-map-marker"></i></strong> Red Rock Canyon</span>
   <p><span id="text"></span><p>
-  <!--  <button class="buttons" id="volcanoButton" alt="Add Volcano"><span><i class="fa fa-fire"></i> Add Fire</span></button>-->
-  <!--  <div id="fps"></div>-->
+</div>
+<div class="banner">
+  <span class="bannerText"></span>
+</div>
+  <div class="area">
+  <!--  <h1>3D Topographic Map </h1> -->
+    <canvas id="renderCanvas"></canvas>
   </div>
-  <canvas id="renderCanvas"></canvas>
+
   <script>
-      launch();
+    launch();
   </script>
 
 </body>

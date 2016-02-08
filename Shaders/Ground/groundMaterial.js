@@ -35,11 +35,13 @@
         this.blendTexture.vOffset = Math.random();
         this.blendTexture.wrapU = BABYLON.Texture.MIRROR_ADDRESSMODE;
         this.blendTexture.wrapV = BABYLON.Texture.MIRROR_ADDRESSMODE;
-        
+
         this.sandLimit = 20;
         this.grassLimit = 40;
         this.rockLimit = 50;
         this.snowLimit = 15;
+      //  this.blendTexture.uOffset = Math.random();
+      //  this.blendTexture.vOffset = Math.random();
     };
 
     mountain.GroundMaterial.prototype = Object.create(BABYLON.Material.prototype);
