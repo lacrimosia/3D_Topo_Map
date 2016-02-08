@@ -51,7 +51,7 @@ h2, h1{
   width: 100%;
   float: left;
   position: absolute;
-  height: 50px;
+  height: auto;
   z-index: 1;
   color: #ecf0f1;
   text-align: center;

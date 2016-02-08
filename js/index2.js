@@ -57,27 +57,27 @@ var launch = function() {
   // disable picking of object
   skybox.isPickable = false;
   scene.clearColor = new BABYLON.Color3(0, 0, 0);
-  skybox.isPickable = false;
-  scene.clearColor = new BABYLON.Color3(1, 1, 1);
+//  skybox.isPickable = false;
+//  scene.clearColor = new BABYLON.Color3(1, 1, 1);
 
   // Grounds
   // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 800, 800, 300, 0, 100, scene, true);
-  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 300, 300, 100, 0, 100, scene, true);
-  //  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
+ //var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 300, 300, 75, 0, 125, scene, true);
+  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   groundMaterial.bumpTexture = new BABYLON.Texture("images/island_orig.jpg", scene);
   ground.material = groundMaterial;
   // ground.position = new BABYLON.Vector3(-150,0,-150);
   ground.position.x = 0.0;
-  ground.position.y = -10.0;
+  ground.position.y = 1.0;
   ground.position.z = 0.0;
   ground.wireframe = true;
 
   // Water
   //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
   var water = BABYLON.Mesh.CreateGround("water", 300, 300, 1, scene, false);
-  water.position = new BABYLON.Vector3(0.0, -1.0, 0.0);
+  water.position = new BABYLON.Vector3(0.0, 0.0, 0.0);
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
   //  waterMaterial.refractionTexture.renderList.push(extraGround);
@@ -90,9 +90,9 @@ var launch = function() {
 
   // text grid for mountain heights
   // params: start, end, x, y, z, feet, rotation
-  textGrid(0, 7, 150, 13, 150, 1500, null);
+  textGrid(0, 7, 150, 13, 150, 300, null);
   // text grid 2 -- left text
-  textGrid(0, 7, -150, 13, -100, 1500, Math.PI / -2);
+  textGrid(0, 7, -150, 13, -100, 300, Math.PI / -2);
   // loading horizontal lines
   var one = [300, 0, 0];
   var two = [300, 0, 0];
