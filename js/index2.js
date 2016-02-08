@@ -314,6 +314,7 @@ var launch = function() {
 
     // detect camera Mode
     function addBannerText(text, icon){
+      $('.bannerText').hide().fadeIn(200);
         $('.bannerText').html("<h2><i class='fa "+icon+"'></i> "+text+"</h2>");
     }
 
