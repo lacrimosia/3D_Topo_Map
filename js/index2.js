@@ -57,15 +57,15 @@ var launch = function() {
   // disable picking of object
   skybox.isPickable = false;
 // clear color
-scene.clearColor = new BABYLON.Color3(0,0,0);
+//scene.clearColor = new BABYLON.Color3(0,0,0);
   skybox.isPickable = false;
-scene.clearColor = new BABYLON.Color3(1,1,1);
+// scene.clearColor = new BABYLON.Color3(1,1,1);
 
   // Grounds
   // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 800, 800, 300, 0, 100, scene, true);
   var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 300, 300, 100, 0, 100, scene, true);
   //  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
->>>>>>> testing
+
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
   groundMaterial.bumpTexture = new BABYLON.Texture("images/island_orig.jpg", scene);
