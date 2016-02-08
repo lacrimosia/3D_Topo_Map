@@ -5,7 +5,6 @@ var launch = function() {
   var clicked = false;
   // hide on init
   $('.loader').hide();
-
   if (!BABYLON.Engine.isSupported()) {
     document.getElementById("notSupported").className = "";
     return;
@@ -21,10 +20,12 @@ var launch = function() {
   MyLoadingScreen.prototype.displayLoadingUI = function() {
     $('.loader').show();
     $('.loadsText').text("Loading Interactive...");
+    $('.menu').hide();
   };
   MyLoadingScreen.prototype.hideLoadingUI = function() {
     $('.loader').fadeOut(2000);
-    $('#renderCanvas, #menu, button').hide().fadeIn(3000);
+    $('#renderCanvas').fadeIn(3000);
+    $('.menu').fadeIn(3000);
   };
   // loading instance
   var loads = new MyLoadingScreen("Loading");
@@ -254,6 +255,9 @@ var launch = function() {
     return false;
   };
 
+  //camera init
+  addBannerText('Camera Mode','fa-camera');
+
   // Camera Mode
   cameraButton.addEventListener("pointerdown", function() {
     if (mode == "CAMERA")
@@ -265,6 +269,7 @@ var launch = function() {
     cameraButton.className = "buttons selected";
     digButton.className = "buttons";
     //  fireButton.className = "buttons";
+    addBannerText('Camera Mode','fa-camera');
     elevationButton.className = "buttons";
   });
 
@@ -281,7 +286,7 @@ var launch = function() {
     mode = "ELEVATION";
     elevationControl.direction = 1;
 
-
+    addBannerText('Mountain Mode','fa-arrow-up');
     elevationButton.className = "buttons selected";
     cameraButton.className = "buttons";
     digButton.className = "buttons";
@@ -300,12 +305,17 @@ var launch = function() {
 
     mode = "DIG";
     elevationControl.direction = -1;
-
+    addBannerText('Dig Mode','fa-arrow-down');
     digButton.className = "buttons selected";
     elevationButton.className = "buttons";
     cameraButton.className = "buttons";
     //  fireButton.className = "buttons";
   });
+
+    // detect camera Mode
+    function addBannerText(text, icon){
+        $('.bannerText').html("<h2><i class='fa "+icon+"'></i> "+text+"</h2>");
+    }
 
   // Fire Particle System
   /*  var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);

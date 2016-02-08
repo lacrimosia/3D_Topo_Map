@@ -14,16 +14,47 @@ body {
 }
 
 .loader{
-  background: #4AA3DF;
+  background: #3D566E;
   width: 100%;
   height: 100%;
   z-index: 5000;
 }
 
+h3, span{
+  font-family:sans-serif;
+  color: #FBFCFC;
+  font-size: 1em;
+}
+
+h2, h1{
+  font-family:sans-serif;
+  color: #FBFCFC;
+}
+
+@media screen and (max-width: 800px) {
+    h3, span{
+      font-size: 0.8em;
+    }
+}
+
+/*
 .area{
   width: 1280px;
   height: 780px;
   margin: 100px auto;
+}
+*/
+
+.banner{
+  background: #16a085;
+  opacity: 0.8;
+  width: 100%;
+  float: left;
+  position: absolute;
+  height: 50px;
+  z-index: 1;
+  color: #ecf0f1;
+  text-align: center;
 }
 
 .around{
@@ -44,15 +75,17 @@ body {
   position: absolute;
   top: 0%;
   margin: 0;
-  width: 180px;
-  min-width: 100px;
+  width: 10%;
+  min-width: 150px;
   min-height: 350px;
   height: auto;
   /*z-index: 30;*/
-  border-bottom-right-radius: 15px;
-  background:url('../images/woodTexture.jpg') no-repeat;
+/*  border-bottom-right-radius: 15px;*/
+  /*background:url('../images/woodTexture.jpg') no-repeat;*/
+  background: #3D566E;
   /*opacity: 0.7;*/
   padding: 15px;
+  z-index: 30;
 }
 
 p span{
@@ -62,47 +95,49 @@ p span{
 
 .buttons {
   margin: 0 auto;
-  -webkit-border-radius: 5px;
+/*  -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  border-radius: 5px;
-  width: 150px;
+  border-radius: 5px;*/
+  width: 80%;
   height: 45px;
   display: block;
   margin-bottom: 10px;
-  background:url('../images/wood-1.png') no-repeat !important;
-  box-shadow: 3px 3px 3px #1a0b01;
-  border: 1px solid #220d05;
-  color: #dfb491;
+  /* background:url('../images/wood-1.png') no-repeat !important;*/
+  background: #16a085;
+/*  box-shadow: 3px 3px 3px #1a0b01;*/
+/*  border: 1px solid #220d05; */
+border: none;
+  color: #ffffff;
   font-size: 0.9em;
   font-weight: bold;
-  text-shadow: 1px 1px 1px #29130a;
+  /*text-shadow: 1px 1px 1px #29130a;*/
 }
 
 .buttons.selected {
   margin: 0 auto;
-  -webkit-border-radius: 5px;
+/*  -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  border-radius: 5px;
-  width: 150px;
+  border-radius: 5px;*/
+  width: 80%;
   height: 45px;
   display: block;
   margin-bottom: 10px;
-  background:url('../images/wood.jpg') no-repeat !important;
-  box-shadow: 3px 3px 3px #1a0b01;
-  border: 1px solid #220d05;
-  color: #2a1007;
-  font-size: 0.9em;
+/*  background:url('../images/wood.jpg') no-repeat !important;*/
+background: #2ecc71;
+/*  box-shadow: 3px 3px 3px #1a0b01; */
+/*  border: 1px solid #220d05; */
+  color: #ffffff;
+  /*font-size: 0.9em;*/
   font-weight: bold;
   outline: none;
+  border: none;
 /*  text-shadow: 1px 1px 1px #29130a;*/
 text-shadow: none;
 }
-
-
 
 .logo{
   position: relative;

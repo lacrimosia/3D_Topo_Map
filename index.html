@@ -4,7 +4,9 @@
 <head>
   <meta charset="utf-8">
   <title>3d Topographic Map</title>
-  <script src="http://cdn.babylonjs.com/2-3/babylon.js"></script>
+  <script src="http://cdn.babylonjs.com/2-2/babylon.js"></script>
+  <script src="http://cdn.babylonjs.com/2-2/babylon.max.js"></script>
+  <script src="http://cdn.babylonjs.com/2-2/babylon.noworker.js"></script>
   <script src="js/hand.js"></script>
   <script src="js/cannon.js"></script>
   <script src="js/mountainElevation.js"></script>
@@ -37,19 +39,21 @@
 <div class="loader">
   <div class="around"><i class="fa fa-spinner fa-pulse spins"></i><p class="loadsText"></p></div>
 </div>
-  <!--<div class="menu">
-    <img src="images/wood_plank.png" class="logo"/>
+  <div class="menu">
+    <h3>3D Topographic Map</h3>
     <button class="buttons selected" id="cameraButton" alt="Control the camera"><span><i class="fa fa-camera"></i> Camera Mode</span></button>
     <button class="buttons" id="elevationButton"><span><i class="fa fa-arrow-circle-up"></i> Add Mountain</span></button>
-  <button class="buttons" id="digButton"><span><i class="fa fa-arrow-circle-down"></i> Dig</span></button>
-  <p><span><strong>Location:</strong> Red Rock Canyon</span></p>
+  <button class="buttons" id="digButton"><span><i class="fa fa-arrow-circle-down"></i> Add Water</span></button>
+  <button class="buttons" id="helpButton"><span><i class="fa fa-question-circle"></i> Help</span></button>
+  <span><strong>Location</strong></span><br/>
+  <span><strong><i class="fa fa-map-marker"></i></strong> Red Rock Canyon</span>
   <p><span id="text"></span><p>
-</div>-->
-<button class="buttons selected" id="cameraButton" alt="Control the camera"><span><i class="fa fa-camera"></i> Camera Mode</span></button>
-<button class="buttons" id="elevationButton"><span><i class="fa fa-arrow-circle-up"></i> Add Mountain</span></button>
-<button class="buttons" id="digButton"><span><i class="fa fa-arrow-circle-down"></i> Dig</span></button>
+</div>
+<div class="banner">
+  <span class="bannerText"></span>
+</div>
   <div class="area">
-    <h1>3D Topographic Map </h1>
+  <!--  <h1>3D Topographic Map </h1> -->
     <canvas id="renderCanvas"></canvas>
   </div>
 
