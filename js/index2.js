@@ -19,16 +19,16 @@ var launch = function() {
   }
   MyLoadingScreen.prototype.displayLoadingUI = function() {
     $('.loader').show();
-    $('.loadsText').text("Loading Interactive...");
+    $('.loadsText').text(this.loadingUIText);
     $('.menu').hide();
   };
-  MyLoadingScreen.prototype.hideLoadingUI = function() {
-    $('.loader').fadeOut(2000);
-    $('#renderCanvas').fadeIn(3000);
-    $('.menu').fadeIn(3000);
+  MyLoadingScreen.prototype.hideLoadingUI = function(fadeTime) {
+    $('.loader').fadeOut(fadeTime);
+    $('#renderCanvas').fadeIn(fadeTime);
+    $('.menu').fadeIn(fadeTime);
   };
   // loading instance
-  var loads = new MyLoadingScreen("Loading");
+  var loads = new MyLoadingScreen("Loading the Interactive...");
   loads.displayLoadingUI();
 
   // Babylon
@@ -76,7 +76,7 @@ var launch = function() {
 
   // Water
   //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
-  var water = BABYLON.Mesh.CreateGround("water", 300, 300, 1, scene, false);
+  var water = BABYLON.Mesh.CreateGround("water", 800, 800, 1, scene, false);
   water.position = new BABYLON.Vector3(0.0, 0.0, 0.0);
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
@@ -237,7 +237,7 @@ var launch = function() {
   // Launch render loop
   scene.executeWhenReady(function() {
     engine.runRenderLoop(renderFunction);
-    loads.hideLoadingUI();
+    loads.hideLoadingUI(2000);
   });
 
   // Resize
