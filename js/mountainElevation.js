@@ -8,7 +8,7 @@ mountain.elevateMountain = function(ground){
   this.radius = 20.0;           // selection radius
   this.invertDirection = 1.0;   // direction for inversion
   this.heightMin = 0.0;       // height min
-  this.heightMax = 11.0;       // max heigh of mountain
+  this.heightMax = 60.0;       // max heigh of mountain
   this.groundPositions = [];
 
     var scene = ground.getScene();
