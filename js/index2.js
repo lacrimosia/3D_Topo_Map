@@ -295,7 +295,7 @@ window.addEventListener("click", function () {
   var cameraButton = document.getElementById("cameraButton");
   var elevationButton = document.getElementById("elevationButton");
   var digButton = document.getElementById("digButton");
-  //  var fireButton = document.getElementById("volcanoButton");
+  var fireButton = document.getElementById("volcanoButton");
 
   window.oncontextmenu = function() {
     return false;
@@ -339,6 +339,18 @@ window.addEventListener("click", function () {
     //  fireButton.className = "buttons";
   });
 
+  fireButton.addEventListener("pointerdown", function(){
+    if (mode == "ELEVATION")
+      return;
+
+    if (mode == "CAMERA") {
+      camera.detachControl(canvas);
+      elevationControl.attachControl(canvas);
+    }
+
+      elevationControl.mountaintHeight();
+  });
+
   // Water Mode
   digButton.addEventListener("pointerdown", function() {
     if (mode == "DIG")
@@ -365,34 +377,6 @@ window.addEventListener("click", function () {
     }
 
   // Fire Particle System
-  /*  var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
-    var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
-    particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
-    particleSystem.emitter = ABox;
-    particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
-    particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
-
-    particleSystem.color1 = new BABYLON.Color4(0.8, 0.1, 0, 1.0);
-    particleSystem.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
-    particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
-
-    particleSystem.minSize = 5;
-    particleSystem.maxSize = 10;
-    particleSystem.minLifeTime = 0.3;
-    particleSystem.maxLifeTime = 1.5;
-    particleSystem.emitRate = 2500;
-
-    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-    particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
-    particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
-    particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
-
-    particleSystem.minAngularSpeed = 0;
-    particleSystem.maxAngularSpeed = Math.PI;
-    particleSystem.minEmitPower = 1;
-    particleSystem.maxEmitPower = 3;
-    particleSystem.updateSpeed = 0.005;
-
-    particleSystem.start();*/
+  /*  */
 
 };
