@@ -143,6 +143,43 @@ var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.
     }
   }
 
+
+// picked points
+window.addEventListener("click", function () {
+// mountainHeight(1000, 100);
+// var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+});
+
+  function mountainHeight(feet, textSize){
+    var textPlane = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
+    var mHeight = feet;
+  textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
+    textPlane.material = new BABYLON.StandardMaterial("outputplane", scene);
+    var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+    textPlane.position.x = pickResult.pickedPoint.x;
+    textPlane.position.y = pickResult.pickedPoint.y;
+  //  textPlane.rotation.y = rotation;
+    //  textPlane.rotation.y = Math.PI/2;
+    textPlane.scaling.y = 0.4;
+
+    var textPlaneTexture = new BABYLON.DynamicTexture("dynamic texture", 1000, scene, true);
+    textPlane.material.diffuseTexture = textPlaneTexture;
+    textPlaneTexture.hasAlpha = true;
+    textPlane.material.specularColor = new BABYLON.Color3(1, 1, 1);
+    textPlane.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    textPlane.material.backFaceCulling = false;
+
+    // text, x, y, text settings, color, transparency
+    textPlaneTexture.drawText(feet + " ft.", 0, 100, "bold "+textSize+"px verdana", "black", "transparent");
+  }
+
+  function getMHeight(ypos){
+    var mount = 100;
+    if(ypos >= 10){
+      return mount*2;
+    }
+  }
+
   // Prints out the grid lines around the mountains
   // params: start, end, array vectorsLines 1-4 positions, Vectors positions (x,y,z), colors(r,g,b)
   function horizontalGridLines(start, end, linesA, linesB, linesC, linesD, x, y, z, r, g, b) {

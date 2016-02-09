@@ -78,6 +78,7 @@ mountain.elevateMountain.prototype.attachControl = function (canvas) {
 
     // elevate faces on user control
         that.elevateFaces(pickInfo, that.radius, 0.3);
+        that.mountaintHeight(pickInfo);
     };
 
 // get current position from client
@@ -124,6 +125,13 @@ mountain.elevateMountain.prototype.attachControl = function (canvas) {
 
     this.ground.getScene().registerBeforeRender(this.onBeforeRender);
 };
+
+// get current points selected on the mountain
+mountain.elevateMountain.prototype.mountaintHeight = function(pickInfo){
+  var thePoints = pickInfo.pickedPoint.y;
+  console.log("the picked Points for y", thePoints);
+  return thePoints;
+}
 
 // detach control when user clicks the camera button
 mountain.elevateMountain.prototype.detachControl = function (canvas) {
