@@ -38,11 +38,11 @@ mountain.elevateMountain = function(ground){
 
     this._particleSystem = particleSystem;*/
 
-    // var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+  //  var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
       var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
       particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
     //  particleSystem.emitter = ABox;
-      particleSystem.emitter = new BABYLON.Vector3(0, 0, 0);
+    particleSystem.emitter = new BABYLON.Vector3(0, 0, 0);
       particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
       particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
 
@@ -71,11 +71,6 @@ mountain.elevateMountain = function(ground){
 
       this.particles = particleSystem;
 
-};
-
-mountain.elevateMountain.prototype.test = function(){
-/*this.positions = this.ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
-return this.positions;*/
 };
 
 // elevate area direction
@@ -110,8 +105,8 @@ mountain.elevateMountain.prototype.attachControl = function (canvas) {
     //   that._particleSystem.manualEmitCount += 400;
 
     // elevate faces on user control
-        that.elevateFaces(pickInfo, that.radius, 0.3);
-       that.mountaintHeight(pickInfo);
+      that.elevateFaces(pickInfo, that.radius, 0.3);
+      that.particles.emitter = pickInfo.pickedPoint;
     };
 
 // get current position from client
@@ -158,13 +153,6 @@ mountain.elevateMountain.prototype.attachControl = function (canvas) {
 
     this.ground.getScene().registerBeforeRender(this.onBeforeRender);
 };
-
-// get current points selected on the mountain
-mountain.elevateMountain.prototype.mountaintHeight = function(pickInfo){
-  var thePoints = pickInfo.pickedPoint.y;
-  console.log("the picked Points for y", thePoints);
-  return thePoints;
-}
 
 // detach control when user clicks the camera button
 mountain.elevateMountain.prototype.detachControl = function (canvas) {

@@ -62,7 +62,7 @@ var launch = function() {
 
   // Grounds
   // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 800, 800, 300, 0, 100, scene, true);
-var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 800, 800, 150, 0, 150, scene, true);
+var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 600, 600, 150, 0, 150, scene, true);
 //  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
@@ -75,7 +75,7 @@ var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.
   ground.wireframe = true;
 
 
-  var extraGround = BABYLON.Mesh.CreateGround("extraGround", 800, 800, 1, scene, false);
+  var extraGround = BABYLON.Mesh.CreateGround("extraGround", 600, 600, 1, scene, false);
   var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
   extraGroundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/thesand.jpg", scene);
   extraGroundMaterial.diffuseTexture.uScale = 10;
@@ -85,7 +85,7 @@ var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.
 
   // Water
   //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
-  var water = BABYLON.Mesh.CreateGround("water", 800, 800, 1, scene, false);
+  var water = BABYLON.Mesh.CreateGround("water", 600, 600, 1, scene, false);
   water.position = new BABYLON.Vector3(0.0, -9.0, 0.0);
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
@@ -339,17 +339,20 @@ window.addEventListener("click", function () {
     //  fireButton.className = "buttons";
   });
 
-  fireButton.addEventListener("pointerdown", function(){
-    if (mode == "ELEVATION")
+// volcano Button
+/*  fireButton.addEventListener("pointerdown", function(){
+    if (mode == "FIRE")
       return;
 
     if (mode == "CAMERA") {
       camera.detachControl(canvas);
       elevationControl.attachControl(canvas);
     }
-
-      elevationControl.mountaintHeight();
-  });
+      fireButton.className = "buttons selected";
+      elevationButton.className = "buttons";
+      cameraButton.className = "buttons";
+      digButton.className = "buttons";
+  });*/
 
   // Water Mode
   digButton.addEventListener("pointerdown", function() {
@@ -377,6 +380,37 @@ window.addEventListener("click", function () {
     }
 
   // Fire Particle System
-  /*  */
+  /*   //  var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+        var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+        particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
+      //  particleSystem.emitter = ABox;
+      particleSystem.emitter = new BABYLON.Vector3(0, 0, 0);
+        particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
+        particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
+
+        particleSystem.color1 = new BABYLON.Color4(0.8, 0.1, 0, 1.0);
+        particleSystem.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
+        particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+        particleSystem.minSize = 5;
+        particleSystem.maxSize = 10;
+        particleSystem.minLifeTime = 0.3;
+        particleSystem.maxLifeTime = 1.5;
+        particleSystem.emitRate = 2500;
+
+        particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+        particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
+        particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
+        particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+
+        particleSystem.minAngularSpeed = 0;
+        particleSystem.maxAngularSpeed = Math.PI;
+        particleSystem.minEmitPower = 1;
+        particleSystem.maxEmitPower = 3;
+        particleSystem.updateSpeed = 0.005;
+
+        particleSystem.start();
+
+        this.particles = particleSystem; */
 
 };
