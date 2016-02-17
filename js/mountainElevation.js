@@ -68,9 +68,45 @@ mountain.elevateMountain = function(ground){
       particleSystem.updateSpeed = 0.005;
 
       particleSystem.start();
-
       this.particles = particleSystem;
+
+
+      // water particles
+      var waterDrops = new BABYLON.ParticleSystem("waterParticles", 2000, scene);
+      waterDrops.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
+    //  particleSystem.emitter = ABox;
+    waterDrops.emitter = new BABYLON.Vector3(-50, 50, 0);
+      waterDrops.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
+      waterDrops.maxEmitBox = new BABYLON.Vector3(30, 0, 30); // To...
+
+      waterDrops.color1 = new BABYLON.Color4(0, 0.75, 1.0, 0.9);
+      waterDrops.color2 = new BABYLON.Color4(0, 0.43, 0.88, 1.0);
+      waterDrops.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+      waterDrops.minSize = 0.5;
+      waterDrops.maxSize = 2;
+      waterDrops.minLifeTime = 0.3;
+      waterDrops.maxLifeTime = 3.5;
+      waterDrops.emitRate = 6500;
+
+      waterDrops.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+      waterDrops.gravity = new BABYLON.Vector3(0, -35, 0);
+      waterDrops.direction1 = new BABYLON.Vector3(-7, -8, 3);
+      waterDrops.direction2 = new BABYLON.Vector3(7, -8, -3);
+
+      waterDrops.minAngularSpeed = 0;
+      waterDrops.maxAngularSpeed = Math.PI/2;
+      waterDrops.minEmitPower = 1;
+      waterDrops.maxEmitPower = 3;
+      waterDrops.updateSpeed = 0.015;
+
+      waterDrops.stop();
+
+      this.rainDrops = waterDrops;
 };
+
+// direction
+mountain.elevateMountain.prototype.waterDrop = false;     // used for rain drops
 
 // elevate area direction
 mountain.elevateMountain.prototype.elevateDirection = 1;
@@ -102,10 +138,18 @@ mountain.elevateMountain.prototype.attachControl = function (canvas) {
 
     //  that._particleSystem.emitter = pickInfo.pickedPoint.add(new BABYLON.Vector3(0, 3, 0));
     //   that._particleSystem.manualEmitCount += 400;
+    if(that.waterDrop == true){
+      console.log("I am TRUE");
+        that.rainDrops.emitter = pickInfo.pickedPoint;
+        that.rainDrops.start();
+   }
+   if(that.waterDrop == false){
+     that.rainDrops.stop();
+   }
 
     // elevate faces on user control
       that.elevateFaces(pickInfo, that.radius, 0.3);
-      that.particles.emitter = pickInfo.pickedPoint;
+  //    that.particles.emitter = pickInfo.pickedPoint;
     };
 
 // get current position from client
@@ -160,9 +204,10 @@ mountain.elevateMountain.prototype.detachControl = function (canvas) {
     canvas.removeEventListener("pointerout", this.onPointerUp);
     canvas.removeEventListener("pointermove", this.onPointerMove);
     window.removeEventListener("blur", this.onLostFocus);
-
+    this.rainDrops.stop();
     this.ground.getScene().unregisterBeforeRender(this.onBeforeRender);
 };
+
 
 // elevate mountain selections
 mountain.elevateMountain.prototype.dataElevation = function () {

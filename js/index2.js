@@ -313,11 +313,11 @@ window.addEventListener("click", function () {
     elevationControl.detachControl(canvas);
 
     mode = "CAMERA";
+    elevationControl.waterDrop = false;
     cameraButton.className = "buttons selected";
     digButton.className = "buttons";
     //  fireButton.className = "buttons";
     addBannerText('Camera Mode','fa-camera');
-    waterDroplets('stop');
     elevationButton.className = "buttons";
   });
 
@@ -333,7 +333,7 @@ window.addEventListener("click", function () {
 
     mode = "ELEVATION";
     elevationControl.direction = 1;
-    waterDroplets('stop');
+    elevationControl.waterDrop = false;
     addBannerText('Mountain Mode','fa-arrow-up');
     elevationButton.className = "buttons selected";
     cameraButton.className = "buttons";
@@ -368,8 +368,8 @@ window.addEventListener("click", function () {
 
     mode = "DIG";
     elevationControl.direction = -1;
+    elevationControl.waterDrop = true;
     addBannerText('Dig Mode','fa-arrow-down');
-    waterDroplets('start');
     digButton.className = "buttons selected";
     elevationButton.className = "buttons";
     cameraButton.className = "buttons";
@@ -382,48 +382,6 @@ window.addEventListener("click", function () {
         $('.bannerText').html("<h2><i class='fa "+icon+"'></i> "+text+"</h2>");
     }
 
-    // water particles
-    var waterDrops = new BABYLON.ParticleSystem("waterParticles", 2000, scene);
-    waterDrops.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
-  //  particleSystem.emitter = ABox;
-    waterDrops.emitter = new BABYLON.Vector3(-50, 50, 0);
-    waterDrops.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
-    waterDrops.maxEmitBox = new BABYLON.Vector3(30, 0, 30); // To...
-
-    waterDrops.color1 = new BABYLON.Color4(0, 0.75, 1.0, 0.9);
-    waterDrops.color2 = new BABYLON.Color4(0, 0.43, 0.88, 1.0);
-    waterDrops.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
-
-    waterDrops.minSize = 0.5;
-    waterDrops.maxSize = 2;
-    waterDrops.minLifeTime = 0.3;
-    waterDrops.maxLifeTime = 3.5;
-    waterDrops.emitRate = 6500;
-
-    waterDrops.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-    waterDrops.gravity = new BABYLON.Vector3(0, -35, 0);
-    waterDrops.direction1 = new BABYLON.Vector3(-7, -8, 3);
-    waterDrops.direction2 = new BABYLON.Vector3(7, -8, -3);
-
-    waterDrops.minAngularSpeed = 0;
-    waterDrops.maxAngularSpeed = Math.PI/2;
-    waterDrops.minEmitPower = 1;
-    waterDrops.maxEmitPower = 3;
-    waterDrops.updateSpeed = 0.015;
-
-    var rainDrops = waterDrops;
-
-// run rain drops
-function waterDroplets(start){
-      if(start == 'start'){
-        rainDrops.start();
-        return;
-      }
-      if(start == 'stop'){
-        rainDrops.stop();
-        return;
-      }
-    }
 
   // Fire Particle System
   /*   //  var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
