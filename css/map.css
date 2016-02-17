@@ -5,6 +5,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background: #3D566E;
 }
 
 #renderCanvas {
@@ -45,13 +46,20 @@ h2, h1{
 }
 */
 
+.menuToggle{
+  position: fixed;
+  width: 20%;
+  height: 20%;
+  z-index: 3;
+}
+
 .banner{
   background: #16a085;
   opacity: 0.8;
   width: 100%;
   float: left;
   position: absolute;
-  height: 50px;
+  height: auto;
   z-index: 1;
   color: #ecf0f1;
   text-align: center;

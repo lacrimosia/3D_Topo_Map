@@ -5,15 +5,15 @@ var mountain = mountain || {};
 // get the default values
 mountain.elevateMountain = function(ground){
   this.ground = ground;          // mountain plane
-  this.radius = 5.0;           // selection radius
+  this.radius = 20.0;           // selection radius
   this.invertDirection = 1.0;   // direction for inversion
-  this.heightMin = -5.0;       // height min
-  this.heightMax = 40.0;       // max heigh of mountain
+  this.heightMin = 0.0;       // height min
+  this.heightMax = 60.0;       // max heigh of mountain
   this.groundPositions = [];
 
     var scene = ground.getScene();
   //  var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
-    var particleSystem = new BABYLON.ParticleSystem("particles", 4000, scene);
+  /*  var particleSystem = new BABYLON.ParticleSystem("particles", 4000, scene);
     particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
     particleSystem.minAngularSpeed = -4.5;
     particleSystem.maxAngularSpeed = 4.5;
@@ -36,13 +36,41 @@ mountain.elevateMountain = function(ground){
     particleSystem.emitter = new BABYLON.Vector3(0, 0, 0);
     particleSystem.start();
 
-    this._particleSystem = particleSystem;
+    this._particleSystem = particleSystem;*/
 
-};
+  //  var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+      var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+      particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
+    //  particleSystem.emitter = ABox;
+    particleSystem.emitter = new BABYLON.Vector3(0, 0, 0);
+      particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
+      particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
 
-mountain.elevateMountain.prototype.test = function(){
-/*this.positions = this.ground.getVerticesData(BABYLON.VertexBuffer.PositionKind);
-return this.positions;*/
+      particleSystem.color1 = new BABYLON.Color4(0.8, 0.1, 0, 1.0);
+      particleSystem.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
+      particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+      particleSystem.minSize = 5;
+      particleSystem.maxSize = 10;
+      particleSystem.minLifeTime = 0.3;
+      particleSystem.maxLifeTime = 1.5;
+      particleSystem.emitRate = 2500;
+
+      particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+      particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
+      particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
+      particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+
+      particleSystem.minAngularSpeed = 0;
+      particleSystem.maxAngularSpeed = Math.PI;
+      particleSystem.minEmitPower = 1;
+      particleSystem.maxEmitPower = 3;
+      particleSystem.updateSpeed = 0.005;
+
+      particleSystem.start();
+
+      this.particles = particleSystem;
+
 };
 
 // elevate area direction
@@ -77,7 +105,8 @@ mountain.elevateMountain.prototype.attachControl = function (canvas) {
     //   that._particleSystem.manualEmitCount += 400;
 
     // elevate faces on user control
-        that.elevateFaces(pickInfo, that.radius, 0.3);
+      that.elevateFaces(pickInfo, that.radius, 0.3);
+      that.particles.emitter = pickInfo.pickedPoint;
     };
 
 // get current position from client

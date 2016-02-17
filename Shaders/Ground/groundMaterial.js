@@ -5,30 +5,26 @@
         BABYLON.Material.call(this, name, scene);
         this.light = light;
 
-        // dark blue
-      this.groundTexture = new BABYLON.Texture("Shaders/Ground/ground.jpg", scene);
-      this.groundTexture.uScale = 5.0;
-      this.groundTexture.vScale = 5.0;
+        this.groundTexture = new BABYLON.Texture("Shaders/Ground/ground.jpg", scene);
+        this.groundTexture.uScale = 6.0;
+        this.groundTexture.vScale = 6.0;
 
-        // green
         this.grassTexture = new BABYLON.Texture("Shaders/Ground/grass.jpg", scene);
-        this.grassTexture.uScale = 5.0;
-        this.grassTexture.vScale = 5.0;
+        this.grassTexture.uScale = 6.0;
+        this.grassTexture.vScale = 6.0;
 
-        // orange
         this.snowTexture = new BABYLON.Texture("Shaders/Ground/snow.jpg", scene);
-        this.snowTexture.uScale = 5.0;
-        this.snowTexture.vScale = 5.0;
+        this.snowTexture.uScale = 20.0;
+        this.snowTexture.vScale = 20.0;
 
-        // really dark blue
         this.sandTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
-        this.sandTexture.uScale = 1.0;
-        this.sandTexture.vScale = 1.0;
 
-        // yellow
+        this.sandTexture.uScale = 4.0;
+        this.sandTexture.vScale = 4.0;
+
         this.rockTexture = new BABYLON.Texture("Shaders/Ground/rock.jpg", scene);
-        this.rockTexture.uScale = 5.0;
-        this.rockTexture.vScale = 5.0;
+        this.rockTexture.uScale = 15.0;
+        this.rockTexture.vScale = 15.0;
 
         this.blendTexture = new BABYLON.Texture("Shaders/Ground/blend.png", scene);
         this.blendTexture.uOffset = Math.random();
@@ -36,12 +32,16 @@
         this.blendTexture.wrapU = BABYLON.Texture.MIRROR_ADDRESSMODE;
         this.blendTexture.wrapV = BABYLON.Texture.MIRROR_ADDRESSMODE;
 
-        this.sandLimit = 20;
-        this.grassLimit = 40;
-        this.rockLimit = 50;
-        this.snowLimit = 15;
+      //  this.sandLimit = 20;
+      //  this.grassLimit = 40;
+      //  this.rockLimit = 50;
+    //    this.snowLimit = 15;
       //  this.blendTexture.uOffset = Math.random();
       //  this.blendTexture.vOffset = Math.random();
+        this.sandLimit = 1;
+        this.rockLimit = 20;
+        this.snowLimit = 8;
+
     };
 
     mountain.GroundMaterial.prototype = Object.create(BABYLON.Material.prototype);

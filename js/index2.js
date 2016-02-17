@@ -5,6 +5,7 @@ var launch = function() {
   var clicked = false;
   // hide on init
   $('.loader').hide();
+  // $('.menu').css('display', 'none');
   if (!BABYLON.Engine.isSupported()) {
     document.getElementById("notSupported").className = "";
     return;
@@ -19,16 +20,16 @@ var launch = function() {
   }
   MyLoadingScreen.prototype.displayLoadingUI = function() {
     $('.loader').show();
-    $('.loadsText').text("Loading Interactive...");
+    $('.loadsText').text(this.loadingUIText);
     $('.menu').hide();
   };
-  MyLoadingScreen.prototype.hideLoadingUI = function() {
-    $('.loader').fadeOut(2000);
-    $('#renderCanvas').fadeIn(3000);
-    $('.menu').fadeIn(3000);
+  MyLoadingScreen.prototype.hideLoadingUI = function(fadeTime) {
+    $('.loader').fadeOut(fadeTime);
+    $('#renderCanvas').fadeIn(fadeTime);
+    $('.menu').fadeIn(fadeTime);
   };
   // loading instance
-  var loads = new MyLoadingScreen("Loading");
+  var loads = new MyLoadingScreen("Loading the Interactive...");
   loads.displayLoadingUI();
 
   // Babylon
@@ -56,34 +57,45 @@ var launch = function() {
   skybox.material = skyboxMaterial;
   // disable picking of object
   skybox.isPickable = false;
-// clear color
-//scene.clearColor = new BABYLON.Color3(0,0,0);
   skybox.isPickable = false;
 // scene.clearColor = new BABYLON.Color3(1,1,1);
 
+//  scene.clearColor = new BABYLON.Color3(0, 0, 0);
+//  skybox.isPickable = false;
+//  scene.clearColor = new BABYLON.Color3(1, 1, 1);
+
   // Grounds
   // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 800, 800, 300, 0, 100, scene, true);
-  var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 300, 300, 100, 0, 100, scene, true);
-  //  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
+var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 600, 600, 150, 0, 150, scene, true);
+//  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
 
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
-  groundMaterial.bumpTexture = new BABYLON.Texture("images/island_orig.jpg", scene);
+//  groundMaterial.bumpTexture = new BABYLON.Texture("images/island_orig.jpg", scene);
   ground.material = groundMaterial;
   // ground.position = new BABYLON.Vector3(-150,0,-150);
   ground.position.x = 0.0;
-  ground.position.y = -10.0;
+  ground.position.y = -25.0;
   ground.position.z = 0.0;
   ground.wireframe = true;
 
+
+  var extraGround = BABYLON.Mesh.CreateGround("extraGround", 600, 600, 1, scene, false);
+  var extraGroundMaterial = new BABYLON.StandardMaterial("extraGround", scene);
+  extraGroundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/thesand.jpg", scene);
+  extraGroundMaterial.diffuseTexture.uScale = 10;
+  extraGroundMaterial.diffuseTexture.vScale = 10;
+  extraGround.position.y = -10.05;
+  extraGround.material = extraGroundMaterial;
+
   // Water
   //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
-  var water = BABYLON.Mesh.CreateGround("water", 300, 300, 1, scene, false);
-  water.position = new BABYLON.Vector3(0.0, -1.0, 0.0);
+  var water = BABYLON.Mesh.CreateGround("water", 600, 600, 1, scene, false);
+  water.position = new BABYLON.Vector3(0.0, -9.0, 0.0);
 
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
-  //  waterMaterial.refractionTexture.renderList.push(extraGround);
+  waterMaterial.refractionTexture.renderList.push(extraGround);
 
   waterMaterial.reflectionTexture.renderList.push(ground);
   waterMaterial.reflectionTexture.renderList.push(skybox);
@@ -92,29 +104,29 @@ var launch = function() {
   water.material = waterMaterial;
 
   // text grid for mountain heights
-  // params: start, end, x, y, z, feet, rotation
-  textGrid(0, 7, 150, 13, 150, 1500, null);
+  // params: start, end, x, y, z, feet, rotation, text Size
+//  textGrid(0, 7, 150, 7, 150, 300, null, 50);
   // text grid 2 -- left text
-  textGrid(0, 7, -150, 13, -100, 1500, Math.PI / -2);
+//  textGrid(0, 7, -150, 7, -100, 300, Math.PI / -2, 50);
   // loading horizontal lines
   var one = [300, 0, 0];
   var two = [300, 0, 0];
   var three = [0, 0, 0];
   var four = [0, 0, -300];
-  horizontalGridLines(0, 8, one, two, three, four, -150, 13, 150, 0, 0.2, 0.3);
+//  horizontalGridLines(0, 8, one, two, three, four, -150, 5, 150, 0, 0, 0);
   // vertical lines
   // params: start, end, y pos, positions(x,y,z), colors(r,g,b)
-  verticalXGridLines(0, 10, 91, 15, 0, 150, 0, 0.2, 0.3);
-  verticalXGridLines(0, 11, 91, -15, 0, 150, 0, 0.2, 0.3);
-  verticalYGridLines(0, 10, 91, -150, 0, 15, 0, 0.2, 0.3);
-  verticalYGridLines(0, 10, 91, -150, 0, -15, 0, 0.2, 0.3);
+//  verticalXGridLines(0, 31, 29, 5, 0, 150, 0, 0, 0);
+//  verticalXGridLines(0, 31, 29, -5, 0, 150, 0, 0, 0);
+//  verticalYGridLines(0, 31, 29, -150, 0, 5, 0, 0, 0);
+//  verticalYGridLines(0, 31, 29, -150, 0, -5, 0, 0, 0);
 
 
   // the text grid function
-  function textGrid(start, end, x, y, z, feets, rotation) {
+  function textGrid(start, end, x, y, z, feets, rotation, textSize) {
     // render text for grid
     for (var d = start; d < end; d++) {
-      var feet = (d + 1) * feets;
+      var feet = Math.abs((d + 1) * feets);
       var meters = Math.round((feet / 3.2808));
       var textPlane = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
       // textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
@@ -132,8 +144,45 @@ var launch = function() {
       textPlane.material.backFaceCulling = false;
 
       // text, x, y, text settings, color, transparency
-      textPlaneTexture.drawText(feet + " ft.", 0, 100, "bold 140px verdana", "black", "transparent");
+      textPlaneTexture.drawText(feet + " ft.", 0, 100, "bold "+textSize+"px verdana", "black", "transparent");
       //  textPlaneTexture.drawText(" ("+meters+" m.)", 600, 300, "140px verdana", "blue", "transparent");
+    }
+  }
+
+
+// picked points
+window.addEventListener("click", function () {
+// mountainHeight(1000, 100);
+// var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+});
+
+  function mountainHeight(feet, textSize){
+    var textPlane = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
+    var mHeight = feet;
+  textPlane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
+    textPlane.material = new BABYLON.StandardMaterial("outputplane", scene);
+    var pickResult = scene.pick(scene.pointerX, scene.pointerY);
+    textPlane.position.x = pickResult.pickedPoint.x;
+    textPlane.position.y = pickResult.pickedPoint.y;
+  //  textPlane.rotation.y = rotation;
+    //  textPlane.rotation.y = Math.PI/2;
+    textPlane.scaling.y = 0.4;
+
+    var textPlaneTexture = new BABYLON.DynamicTexture("dynamic texture", 1000, scene, true);
+    textPlane.material.diffuseTexture = textPlaneTexture;
+    textPlaneTexture.hasAlpha = true;
+    textPlane.material.specularColor = new BABYLON.Color3(1, 1, 1);
+    textPlane.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    textPlane.material.backFaceCulling = false;
+
+    // text, x, y, text settings, color, transparency
+    textPlaneTexture.drawText(feet + " ft.", 0, 100, "bold "+textSize+"px verdana", "black", "transparent");
+  }
+
+  function getMHeight(ypos){
+    var mount = 100;
+    if(ypos >= 10){
+      return mount*2;
     }
   }
 
@@ -240,7 +289,7 @@ var launch = function() {
   // Launch render loop
   scene.executeWhenReady(function() {
     engine.runRenderLoop(renderFunction);
-    loads.hideLoadingUI();
+    loads.hideLoadingUI(2000);
   });
 
   // Resize
@@ -252,7 +301,7 @@ var launch = function() {
   var cameraButton = document.getElementById("cameraButton");
   var elevationButton = document.getElementById("elevationButton");
   var digButton = document.getElementById("digButton");
-  //  var fireButton = document.getElementById("volcanoButton");
+  var fireButton = document.getElementById("volcanoButton");
 
   window.oncontextmenu = function() {
     return false;
@@ -296,6 +345,21 @@ var launch = function() {
     //  fireButton.className = "buttons";
   });
 
+// volcano Button
+/*  fireButton.addEventListener("pointerdown", function(){
+    if (mode == "FIRE")
+      return;
+
+    if (mode == "CAMERA") {
+      camera.detachControl(canvas);
+      elevationControl.attachControl(canvas);
+    }
+      fireButton.className = "buttons selected";
+      elevationButton.className = "buttons";
+      cameraButton.className = "buttons";
+      digButton.className = "buttons";
+  });*/
+
   // Water Mode
   digButton.addEventListener("pointerdown", function() {
     if (mode == "DIG")
@@ -317,38 +381,42 @@ var launch = function() {
 
     // detect camera Mode
     function addBannerText(text, icon){
+      $('.bannerText').hide().fadeIn(200);
         $('.bannerText').html("<h2><i class='fa "+icon+"'></i> "+text+"</h2>");
     }
 
   // Fire Particle System
-  /*  var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
-    var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
-    particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
-    particleSystem.emitter = ABox;
-    particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
-    particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
+  /*   //  var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+        var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
+        particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
+      //  particleSystem.emitter = ABox;
+      particleSystem.emitter = new BABYLON.Vector3(0, 0, 0);
+        particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
+        particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
 
-    particleSystem.color1 = new BABYLON.Color4(0.8, 0.1, 0, 1.0);
-    particleSystem.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
-    particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+        particleSystem.color1 = new BABYLON.Color4(0.8, 0.1, 0, 1.0);
+        particleSystem.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
+        particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
 
-    particleSystem.minSize = 5;
-    particleSystem.maxSize = 10;
-    particleSystem.minLifeTime = 0.3;
-    particleSystem.maxLifeTime = 1.5;
-    particleSystem.emitRate = 2500;
+        particleSystem.minSize = 5;
+        particleSystem.maxSize = 10;
+        particleSystem.minLifeTime = 0.3;
+        particleSystem.maxLifeTime = 1.5;
+        particleSystem.emitRate = 2500;
 
-    particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-    particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
-    particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
-    particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
+        particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+        particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
+        particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
+        particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
 
-    particleSystem.minAngularSpeed = 0;
-    particleSystem.maxAngularSpeed = Math.PI;
-    particleSystem.minEmitPower = 1;
-    particleSystem.maxEmitPower = 3;
-    particleSystem.updateSpeed = 0.005;
+        particleSystem.minAngularSpeed = 0;
+        particleSystem.maxAngularSpeed = Math.PI;
+        particleSystem.minEmitPower = 1;
+        particleSystem.maxEmitPower = 3;
+        particleSystem.updateSpeed = 0.005;
 
-    particleSystem.start();*/
+        particleSystem.start();
+
+        this.particles = particleSystem; */
 
 };
