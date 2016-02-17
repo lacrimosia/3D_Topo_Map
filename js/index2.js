@@ -5,7 +5,6 @@ var launch = function() {
   var clicked = false;
   // hide on init
   $('.loader').hide();
-  // $('.menu').css('display', 'none');
   if (!BABYLON.Engine.isSupported()) {
     document.getElementById("notSupported").className = "";
     return;
@@ -57,9 +56,6 @@ var launch = function() {
   skybox.material = skyboxMaterial;
   // disable picking of object
   skybox.isPickable = false;
-  skybox.isPickable = false;
-// scene.clearColor = new BABYLON.Color3(1,1,1);
-
 //  scene.clearColor = new BABYLON.Color3(0, 0, 0);
 //  skybox.isPickable = false;
 //  scene.clearColor = new BABYLON.Color3(1, 1, 1);
@@ -68,7 +64,6 @@ var launch = function() {
   // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 800, 800, 300, 0, 100, scene, true);
 var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 600, 600, 150, 0, 150, scene, true);
 //  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
-
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
 //  groundMaterial.bumpTexture = new BABYLON.Texture("images/island_orig.jpg", scene);
@@ -92,7 +87,6 @@ var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.
   //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
   var water = BABYLON.Mesh.CreateGround("water", 600, 600, 1, scene, false);
   water.position = new BABYLON.Vector3(0.0, -9.0, 0.0);
-
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
   waterMaterial.refractionTexture.renderList.push(extraGround);

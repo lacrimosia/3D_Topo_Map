@@ -68,7 +68,7 @@ void main(void) {
 		float lowLimit = vLimits.y - 2.;
 		float gradient = clamp((vPositionW.y - lowLimit) / (vLimits.y - lowLimit), 0., 1.);
 
-//		float blend = texture2D(blendSampler, vGrassBlendUV.zw).r;
+		float blend = texture2D(blendSampler, vGrassBlendUV.zw).r;
 		vec3 currentColor = texture2D(groundSampler, vGroundSnowUV.xy).rgb * (1.0 - blend) + blend  * texture2D(grassSampler, vGrassBlendUV.xy).rgb;
 
 		finalColor = ndl * (currentColor * (1.0 - gradient) + gradient * texture2D(rockSampler, vRockSandUV.xy + uvOffset).rgb);

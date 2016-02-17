@@ -46,13 +46,6 @@ h2, h1{
 }
 */
 
-.menuToggle{
-  position: fixed;
-  width: 20%;
-  height: 20%;
-  z-index: 3;
-}
-
 .banner{
   background: #16a085;
   opacity: 0.8;
