@@ -5,6 +5,7 @@ var launch = function() {
   var clicked = false;
   // hide on init
   $('.loader').hide();
+  // $('.menu').css('display', 'none');
   if (!BABYLON.Engine.isSupported()) {
     document.getElementById("notSupported").className = "";
     return;
@@ -56,14 +57,13 @@ var launch = function() {
   skybox.material = skyboxMaterial;
   // disable picking of object
   skybox.isPickable = false;
-//  scene.clearColor = new BABYLON.Color3(0, 0, 0);
-//  skybox.isPickable = false;
-//  scene.clearColor = new BABYLON.Color3(1, 1, 1);
+
 
   // Grounds
   // var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock.jpg", 800, 800, 300, 0, 100, scene, true);
 var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.jpg", 600, 600, 150, 0, 150, scene, true);
 //  var ground = BABYLON.Mesh.CreateGround("extraGround", 300, 300, 300, scene, true);
+
   var groundMaterial = new mountain.GroundMaterial("ground", scene, sun);
   groundMaterial.diffuseTexture = new BABYLON.Texture("Shaders/Ground/sand.jpg", scene);
 //  groundMaterial.bumpTexture = new BABYLON.Texture("images/island_orig.jpg", scene);
@@ -87,6 +87,7 @@ var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.
   //  var water = BABYLON.Mesh.CreateGround("water", 1400, 1400, 1, scene, false);
   var water = BABYLON.Mesh.CreateGround("water", 600, 600, 1, scene, false);
   water.position = new BABYLON.Vector3(0.0, -9.0, 0.0);
+
   var waterMaterial = new mountain.WaterMaterial("water", scene, sun);
   waterMaterial.refractionTexture.renderList.push(ground);
   waterMaterial.refractionTexture.renderList.push(extraGround);
@@ -316,6 +317,7 @@ window.addEventListener("click", function () {
     digButton.className = "buttons";
     //  fireButton.className = "buttons";
     addBannerText('Camera Mode','fa-camera');
+    waterDroplets('stop');
     elevationButton.className = "buttons";
   });
 
@@ -331,7 +333,7 @@ window.addEventListener("click", function () {
 
     mode = "ELEVATION";
     elevationControl.direction = 1;
-
+    waterDroplets('stop');
     addBannerText('Mountain Mode','fa-arrow-up');
     elevationButton.className = "buttons selected";
     cameraButton.className = "buttons";
@@ -367,6 +369,7 @@ window.addEventListener("click", function () {
     mode = "DIG";
     elevationControl.direction = -1;
     addBannerText('Dig Mode','fa-arrow-down');
+    waterDroplets('start');
     digButton.className = "buttons selected";
     elevationButton.className = "buttons";
     cameraButton.className = "buttons";
@@ -377,6 +380,49 @@ window.addEventListener("click", function () {
     function addBannerText(text, icon){
       $('.bannerText').hide().fadeIn(200);
         $('.bannerText').html("<h2><i class='fa "+icon+"'></i> "+text+"</h2>");
+    }
+
+    // water particles
+    var waterDrops = new BABYLON.ParticleSystem("waterParticles", 2000, scene);
+    waterDrops.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
+  //  particleSystem.emitter = ABox;
+    waterDrops.emitter = new BABYLON.Vector3(-50, 50, 0);
+    waterDrops.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
+    waterDrops.maxEmitBox = new BABYLON.Vector3(30, 0, 30); // To...
+
+    waterDrops.color1 = new BABYLON.Color4(0, 0.75, 1.0, 0.9);
+    waterDrops.color2 = new BABYLON.Color4(0, 0.43, 0.88, 1.0);
+    waterDrops.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
+
+    waterDrops.minSize = 0.5;
+    waterDrops.maxSize = 2;
+    waterDrops.minLifeTime = 0.3;
+    waterDrops.maxLifeTime = 3.5;
+    waterDrops.emitRate = 6500;
+
+    waterDrops.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
+    waterDrops.gravity = new BABYLON.Vector3(0, -35, 0);
+    waterDrops.direction1 = new BABYLON.Vector3(-7, -8, 3);
+    waterDrops.direction2 = new BABYLON.Vector3(7, -8, -3);
+
+    waterDrops.minAngularSpeed = 0;
+    waterDrops.maxAngularSpeed = Math.PI/2;
+    waterDrops.minEmitPower = 1;
+    waterDrops.maxEmitPower = 3;
+    waterDrops.updateSpeed = 0.015;
+
+    var rainDrops = waterDrops;
+
+// run rain drops
+function waterDroplets(start){
+      if(start == 'start'){
+        rainDrops.start();
+        return;
+      }
+      if(start == 'stop'){
+        rainDrops.stop();
+        return;
+      }
     }
 
   // Fire Particle System

@@ -70,7 +70,6 @@ mountain.elevateMountain = function(ground){
       particleSystem.start();
 
       this.particles = particleSystem;
-
 };
 
 // elevate area direction
