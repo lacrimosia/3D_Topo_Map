@@ -342,7 +342,7 @@ window.addEventListener("click", function () {
   });
 
 // volcano Button
-/*  fireButton.addEventListener("pointerdown", function(){
+fireButton.addEventListener("pointerdown", function(){
     if (mode == "FIRE")
       return;
 
@@ -350,11 +350,13 @@ window.addEventListener("click", function () {
       camera.detachControl(canvas);
       elevationControl.attachControl(canvas);
     }
+
+      elevationControl.volcano = true;
       fireButton.className = "buttons selected";
       elevationButton.className = "buttons";
       cameraButton.className = "buttons";
       digButton.className = "buttons";
-  });*/
+  });
 
   // Water Mode
   digButton.addEventListener("pointerdown", function() {

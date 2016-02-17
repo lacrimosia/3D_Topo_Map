@@ -38,10 +38,10 @@ mountain.elevateMountain = function(ground){
 
     this._particleSystem = particleSystem;*/
 
-  //  var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
+     var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
       var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
       particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
-    //  particleSystem.emitter = ABox;
+    particleSystem.emitter = ABox;
     particleSystem.emitter = new BABYLON.Vector3(0, 0, 0);
       particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
       particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
@@ -67,7 +67,7 @@ mountain.elevateMountain = function(ground){
       particleSystem.maxEmitPower = 3;
       particleSystem.updateSpeed = 0.005;
 
-      particleSystem.start();
+
       this.particles = particleSystem;
 
 
@@ -77,17 +77,17 @@ mountain.elevateMountain = function(ground){
     //  particleSystem.emitter = ABox;
     waterDrops.emitter = new BABYLON.Vector3(-50, 50, 0);
       waterDrops.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
-      waterDrops.maxEmitBox = new BABYLON.Vector3(30, 0, 30); // To...
+      waterDrops.maxEmitBox = new BABYLON.Vector3(30, 150, 30); // To...
 
       waterDrops.color1 = new BABYLON.Color4(0, 0.75, 1.0, 0.9);
       waterDrops.color2 = new BABYLON.Color4(0, 0.43, 0.88, 1.0);
       waterDrops.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
 
-      waterDrops.minSize = 0.5;
-      waterDrops.maxSize = 2;
-      waterDrops.minLifeTime = 0.3;
-      waterDrops.maxLifeTime = 3.5;
-      waterDrops.emitRate = 6500;
+      waterDrops.minSize = 2.3;
+      waterDrops.maxSize = 6.5;
+      waterDrops.minLifeTime = 0.9;
+      waterDrops.maxLifeTime = 1.5;
+      waterDrops.emitRate = 10500;
 
       waterDrops.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
       waterDrops.gravity = new BABYLON.Vector3(0, -35, 0);
@@ -95,7 +95,7 @@ mountain.elevateMountain = function(ground){
       waterDrops.direction2 = new BABYLON.Vector3(7, -8, -3);
 
       waterDrops.minAngularSpeed = 0;
-      waterDrops.maxAngularSpeed = Math.PI/2;
+      waterDrops.maxAngularSpeed = Math.PI/4;
       waterDrops.minEmitPower = 1;
       waterDrops.maxEmitPower = 3;
       waterDrops.updateSpeed = 0.015;
@@ -105,8 +105,11 @@ mountain.elevateMountain = function(ground){
       this.rainDrops = waterDrops;
 };
 
-// direction
+// Raindrop area
 mountain.elevateMountain.prototype.waterDrop = false;     // used for rain drops
+
+// volcanic fireButton
+mountain.elevateMountain.prototype.volcano = false;       // toggle fire
 
 // elevate area direction
 mountain.elevateMountain.prototype.elevateDirection = 1;
@@ -138,13 +141,24 @@ mountain.elevateMountain.prototype.attachControl = function (canvas) {
 
     //  that._particleSystem.emitter = pickInfo.pickedPoint.add(new BABYLON.Vector3(0, 3, 0));
     //   that._particleSystem.manualEmitCount += 400;
+    // start the raindrops
     if(that.waterDrop == true){
       console.log("I am TRUE");
         that.rainDrops.emitter = pickInfo.pickedPoint;
         that.rainDrops.start();
    }
+   // stop the raindrops
    if(that.waterDrop == false){
      that.rainDrops.stop();
+   }
+
+   if(that.volcano == true){
+    that.particles.emitter = pickInfo.pickedPoint;
+     that.particles.start();
+   }
+
+   if(that.volcano == false){
+     that.particles.stop();
    }
 
     // elevate faces on user control
