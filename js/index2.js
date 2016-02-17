@@ -5,6 +5,7 @@ var launch = function() {
   var clicked = false;
   // hide on init
   $('.loader').hide();
+  // $('.menu').css('display', 'none');
   if (!BABYLON.Engine.isSupported()) {
     document.getElementById("notSupported").className = "";
     return;
