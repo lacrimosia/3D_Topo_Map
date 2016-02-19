@@ -46,7 +46,7 @@ var launch = function() {
 
 
   var skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, scene);
-  // skybox.infiniteDistance = true;
+  skybox.infiniteDistance = true;
   var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
   skyboxMaterial.backFaceCulling = false;
   skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay", scene);
@@ -144,12 +144,57 @@ var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "images/red_rock2.
     }
   }
 
+showClouds();
+function showClouds(){
+  var cloudMaterial = new BABYLON.ShaderMaterial("cloud", scene, {
+      vertexElement: "Clouds/clouds",
+      fragmentElement: "Clouds/clouds",
+  },
+  {
+      needAlphaBlending: true,
+      attributes: ["position", "uv"],
+      uniforms: ["worldViewProjection"],
+      samplers: ["textureSampler"]
+  });
+  cloudMaterial.setTexture("textureSampler", new BABYLON.Texture("Shaders/Clouds/cloud.png", scene));
+  cloudMaterial.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
+  cloudMaterial.setFloat("fogNear", -100);
+  cloudMaterial.setFloat("fogFar", 3000);
+  cloudMaterial.setColor3("fogColor", BABYLON.Color3.FromInts(69, 132, 180));
 
-// picked points
-window.addEventListener("click", function () {
-// mountainHeight(1000, 100);
-// var pickResult = scene.pick(scene.pointerX, scene.pointerY);
-});
+  size = 128;
+  var count = 8000;
+
+  var globalVertexData = new BABYLON.VertexData();
+
+  for (var i = 0; i < count; i++) {
+      var planeVertexData = BABYLON.VertexData.CreatePlane(128);
+
+      delete planeVertexData.normals; // We do not need normals
+
+      // Transform
+      var randomScaling = Math.random() * Math.random() * 1.5 + 0.5;
+      var transformMatrix = BABYLON.Matrix.Scaling(randomScaling, randomScaling, 1.0);
+      transformMatrix = transformMatrix.multiply(BABYLON.Matrix.RotationZ(Math.random() * Math.PI));
+      transformMatrix = transformMatrix.multiply(BABYLON.Matrix.Translation(Math.random() * 1000 - 500, -Math.random() * Math.random() * 100, count - i));
+
+      planeVertexData.transform(transformMatrix);
+
+      // Merge
+      globalVertexData.merge(planeVertexData);
+  }
+
+  var clouds = new BABYLON.Mesh("Clouds", scene);
+  globalVertexData.applyToMesh(clouds);
+
+  clouds.material = cloudMaterial;
+
+  var clouds2 = clouds.clone();
+  clouds2.position.z = -500;
+  clouds2.position.y = 100;
+
+  clouds2.rotation.y += 0.0001 * scene.getAnimationRatio();
+}
 
   function mountainHeight(feet, textSize){
     var textPlane = BABYLON.Mesh.CreatePlane("outputplane", 100, scene, false);
@@ -313,10 +358,11 @@ window.addEventListener("click", function () {
     elevationControl.detachControl(canvas);
 
     mode = "CAMERA";
+    sun.specular = new BABYLON.Color3(1, 1, 1);
     elevationControl.waterDrop = false;
     cameraButton.className = "buttons selected";
     digButton.className = "buttons";
-    //  fireButton.className = "buttons";
+    fireButton.className = "buttons";
     addBannerText('Camera Mode','fa-camera');
     elevationButton.className = "buttons";
   });
@@ -338,7 +384,7 @@ window.addEventListener("click", function () {
     elevationButton.className = "buttons selected";
     cameraButton.className = "buttons";
     digButton.className = "buttons";
-    //  fireButton.className = "buttons";
+    fireButton.className = "buttons";
   });
 
 // volcano Button
@@ -352,6 +398,7 @@ fireButton.addEventListener("pointerdown", function(){
     }
 
       elevationControl.volcano = true;
+      addBannerText('Volcano Mode','fa-star');
       fireButton.className = "buttons selected";
       elevationButton.className = "buttons";
       cameraButton.className = "buttons";
@@ -369,13 +416,14 @@ fireButton.addEventListener("pointerdown", function(){
     }
 
     mode = "DIG";
+    sun.specular = new BABYLON.Color3(0.5, 0.3, 0.7);
     elevationControl.direction = -1;
     elevationControl.waterDrop = true;
     addBannerText('Dig Mode','fa-arrow-down');
     digButton.className = "buttons selected";
     elevationButton.className = "buttons";
     cameraButton.className = "buttons";
-    //  fireButton.className = "buttons";
+    fireButton.className = "buttons";
   });
 
     // detect camera Mode
@@ -383,40 +431,5 @@ fireButton.addEventListener("pointerdown", function(){
       $('.bannerText').hide().fadeIn(200);
         $('.bannerText').html("<h2><i class='fa "+icon+"'></i> "+text+"</h2>");
     }
-
-
-  // Fire Particle System
-  /*   //  var ABox = BABYLON.Mesh.CreateBox("theBox2", 1.0, scene, true, BABYLON.Mesh.DEFAULTSIDE);
-        var particleSystem = new BABYLON.ParticleSystem("particles", 2000, scene);
-        particleSystem.particleTexture = new BABYLON.Texture("textures/Flare.png", scene);
-      //  particleSystem.emitter = ABox;
-      particleSystem.emitter = new BABYLON.Vector3(0, 0, 0);
-        particleSystem.minEmitBox = new BABYLON.Vector3(-1, 0, 0); // Starting all from
-        particleSystem.maxEmitBox = new BABYLON.Vector3(1, 0, 0); // To...
-
-        particleSystem.color1 = new BABYLON.Color4(0.8, 0.1, 0, 1.0);
-        particleSystem.color2 = new BABYLON.Color4(1, 0, 0, 1.0);
-        particleSystem.colorDead = new BABYLON.Color4(0, 0, 0, 0.0);
-
-        particleSystem.minSize = 5;
-        particleSystem.maxSize = 10;
-        particleSystem.minLifeTime = 0.3;
-        particleSystem.maxLifeTime = 1.5;
-        particleSystem.emitRate = 2500;
-
-        particleSystem.blendMode = BABYLON.ParticleSystem.BLENDMODE_ONEONE;
-        particleSystem.gravity = new BABYLON.Vector3(0, 35, 0);
-        particleSystem.direction1 = new BABYLON.Vector3(-7, 8, 3);
-        particleSystem.direction2 = new BABYLON.Vector3(7, 8, -3);
-
-        particleSystem.minAngularSpeed = 0;
-        particleSystem.maxAngularSpeed = Math.PI;
-        particleSystem.minEmitPower = 1;
-        particleSystem.maxEmitPower = 3;
-        particleSystem.updateSpeed = 0.005;
-
-        particleSystem.start();
-
-        this.particles = particleSystem; */
 
 };
