@@ -169,14 +169,16 @@ function showClouds(){
   for (var i = 0; i < count; i++) {
     // clouds size
     // default is 128
-      var planeVertexData = BABYLON.VertexData.CreatePlane(50);
-
+      var planeVertexData = BABYLON.VertexData.CreatePlane(90);
       delete planeVertexData.normals; // We do not need normals
 
       // Transform
       var randomScaling = Math.random() * Math.random() * 1.5 + 0.5;
       var transformMatrix = BABYLON.Matrix.Scaling(randomScaling, randomScaling, 1.0);
+      //default Math.random() * Math.PI
       transformMatrix = transformMatrix.multiply(BABYLON.Matrix.RotationZ(Math.random() * Math.PI));
+      transformMatrix = transformMatrix.multiply(BABYLON.Matrix.RotationX(Math.PI));
+      transformMatrix = transformMatrix.multiply(BABYLON.Matrix.RotationY(Math.PI));
       // default
     //  transformMatrix = transformMatrix.multiply(BABYLON.Matrix.Translation(Math.random() * 1000 - 500, -Math.random() * Math.random() * 100, count - i));
       transformMatrix = transformMatrix.multiply(BABYLON.Matrix.Translation(Math.random() * 800 - 500, -Math.random() * Math.random() * 10, count - i));

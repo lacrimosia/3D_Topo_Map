@@ -33,8 +33,8 @@
 
 
         this.sandLimit = 1;
-        this.rockLimit = 20;
-        this.snowLimit = 8;
+        this.rockLimit = 5;
+        this.snowLimit = 7;
     };
 
     mountain.GroundMaterial.prototype = Object.create(BABYLON.Material.prototype);
