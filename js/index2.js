@@ -46,7 +46,7 @@ var launch = function() {
 
 
   var skybox = BABYLON.Mesh.CreateBox("skyBox", 800.0, scene);
-  skybox.infiniteDistance = true;
+  // skybox.infiniteDistance = true;
   var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
   skyboxMaterial.backFaceCulling = false;
   skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay", scene);
@@ -157,7 +157,6 @@ function showClouds(){
       samplers: ["textureSampler"]
   });
   cloudMaterial.setTexture("textureSampler", new BABYLON.Texture("Shaders/Clouds/cloud.png", scene));
-  cloudMaterial.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_ALL;
   cloudMaterial.setFloat("fogNear", -100);
   cloudMaterial.setFloat("fogFar", 3000);
   cloudMaterial.setColor3("fogColor", BABYLON.Color3.FromInts(69, 132, 180));
@@ -168,7 +167,9 @@ function showClouds(){
   var globalVertexData = new BABYLON.VertexData();
 
   for (var i = 0; i < count; i++) {
-      var planeVertexData = BABYLON.VertexData.CreatePlane(128);
+    // clouds size
+    // default is 128
+      var planeVertexData = BABYLON.VertexData.CreatePlane(50);
 
       delete planeVertexData.normals; // We do not need normals
 
@@ -176,7 +177,9 @@ function showClouds(){
       var randomScaling = Math.random() * Math.random() * 1.5 + 0.5;
       var transformMatrix = BABYLON.Matrix.Scaling(randomScaling, randomScaling, 1.0);
       transformMatrix = transformMatrix.multiply(BABYLON.Matrix.RotationZ(Math.random() * Math.PI));
-      transformMatrix = transformMatrix.multiply(BABYLON.Matrix.Translation(Math.random() * 1000 - 500, -Math.random() * Math.random() * 100, count - i));
+      // default
+    //  transformMatrix = transformMatrix.multiply(BABYLON.Matrix.Translation(Math.random() * 1000 - 500, -Math.random() * Math.random() * 100, count - i));
+      transformMatrix = transformMatrix.multiply(BABYLON.Matrix.Translation(Math.random() * 800 - 500, -Math.random() * Math.random() * 10, count - i));
 
       planeVertexData.transform(transformMatrix);
 
@@ -190,10 +193,11 @@ function showClouds(){
   clouds.material = cloudMaterial;
 
   var clouds2 = clouds.clone();
-  clouds2.position.z = -500;
-  clouds2.position.y = 100;
+//  clouds2.position.z = -300;
+  clouds2.position = new BABYLON.Vector3(0, 100, -500);
+  clouds.position = new BABYLON.Vector3(0, 100, -500);
 
-  clouds2.rotation.y += 0.0001 * scene.getAnimationRatio();
+//  clouds.rotation.y += 0.0001 * scene.getAnimationRatio();
 }
 
   function mountainHeight(feet, textSize){
