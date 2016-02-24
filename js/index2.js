@@ -36,7 +36,7 @@ var launch = function() {
   BABYLON.Engine.ShadersRepository = "Shaders/";
   var engine = new BABYLON.Engine(canvas, true);
   var scene = new BABYLON.Scene(engine);
-  var camera = new BABYLON.ArcRotateCamera("Camera", 350.8, 0.97, -5.0, new BABYLON.Vector3(168, 150, -200), scene);
+  var camera = new BABYLON.ArcRotateCamera("Camera", 350.8, 0.97, -5.0, new BABYLON.Vector3(168, 0.5, -156), scene);
   camera.attachControl(canvas);
 
   var sun = new BABYLON.PointLight("Omni", new BABYLON.Vector3(0, 300, -200), scene);
@@ -179,6 +179,7 @@ function showClouds(){
       transformMatrix = transformMatrix.multiply(BABYLON.Matrix.RotationZ(Math.random() * Math.PI));
       transformMatrix = transformMatrix.multiply(BABYLON.Matrix.RotationX(Math.PI));
       transformMatrix = transformMatrix.multiply(BABYLON.Matrix.RotationY(Math.PI));
+
       // default
     //  transformMatrix = transformMatrix.multiply(BABYLON.Matrix.Translation(Math.random() * 1000 - 500, -Math.random() * Math.random() * 100, count - i));
       transformMatrix = transformMatrix.multiply(BABYLON.Matrix.Translation(Math.random() * 800 - 500, -Math.random() * Math.random() * 10, count - i));
@@ -191,7 +192,7 @@ function showClouds(){
 
   var clouds = new BABYLON.Mesh("Clouds", scene);
   globalVertexData.applyToMesh(clouds);
-
+  clouds.rotation.y += 0.0505 * scene.getAnimationRatio();
   clouds.material = cloudMaterial;
 
   var clouds2 = clouds.clone();
