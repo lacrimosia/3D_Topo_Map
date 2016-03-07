@@ -12,6 +12,10 @@ var launch = function() {
   }
 
 
+  // instructions dialog
+  
+
+
   // Loading everything
   // loader class
   function MyLoadingScreen(text) {
